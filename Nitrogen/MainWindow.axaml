@@ -1,22 +1,265 @@
 <Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Nitrogen.MainWindow"
-        Title="Nitrogen">
-    
-    <Grid>
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		x:Class="Nitrogen.MainWindow"
+		Title="Nitrogen">
+
+	<Window.Styles>
+		<Style Selector="Button">
+			<Setter Property="Background" Value="#F5F9FF"/>
+			<Setter Property="BorderThickness" Value="3"/>
+			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+			<Setter Property="VerticalAlignment" Value="Stretch"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border
+						Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}">
+							<ContentPresenter
+							Content="{TemplateBinding Content}"
+							HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+							VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<Style Selector="TextBlock.StyleTag">
+			<Setter Property="FontSize" Value="25"/>
+			<Setter Property="FontFamily" Value="Times New Roman"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="Opacity" Value="0.7"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="TextAlignment" Value="Center"/>
+		</Style>
+
+		<Style Selector="TextBlock.FTextBlock">
+			<Setter Property="Foreground" Value="Black"/>
+			<Setter Property="FontSize" Value="16"/>
+			<Setter Property="FontFamily" Value="Times New Roman"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="HorizontalAlignment" Value="Right"/>
+			<Setter Property="VerticalAlignment" Value="Top"/>
+			<Setter Property="TextAlignment" Value="Center"/>
+		</Style>
+
+		<Style Selector="TextBlock.StyleTextBlock_2">
+			<Setter Property="FontSize" Value="45"/>
+			<Setter Property="FontFamily" Value="Times New Roman"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+		</Style>
+
+		<Style Selector="TextBlock.StyleTextBlock_1">
+			<Setter Property="FontSize" Value="25"/>
+			<Setter Property="FontFamily" Value="Times New Roman"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="TextAlignment" Value="Center"/>
+		</Style>
+	</Window.Styles>
+
+	<Grid Background="#DCDDD8" >
 		<Grid.ColumnDefinitions >
 			<ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-    </Grid>
+		</Grid.RowDefinitions>
+
+		<!--Давление-->
+		<Button x:Name="Pressure" Grid.Column="0" Grid.Row="0"
+				Click="Pressure_Click">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="2*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0" Background="#C5E3F8">
+					<TextBlock Classes="StyleTag" Text="Давление"/>
+					<TextBlock Classes="FTextBlock" Text="F1"/>
+				</Grid>
+
+				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+						   Text="800 psi"/>
+				<Border Grid.Row="2" Background="#FBA9A3">
+					<TextBlock  Classes="StyleTextBlock_1"
+								Text="Отсечка 1000 psi"/>
+				</Border>
+			</Grid>
+		</Button>
+
+		<!--Температура выхода-->
+		<Button x:Name="TempOut" Grid.Column="1" Grid.Row="0">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="2*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0" Background="#C5E3F8">
+					<TextBlock Classes="StyleTag" Text="Температура Выход"/>
+					<TextBlock Classes="FTextBlock" Text="F2"/>
+				</Grid>
+				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+						   Text="40 °C"/>
+			</Grid>
+		</Button>
+
+		<!--Расход-->
+		<Button x:Name="Rate" Grid.Column="0" Grid.Row="1">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="2*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0" Background="#C5E3F8">
+					<TextBlock Classes="StyleTag" Text="Расход"/>
+					<TextBlock Classes="FTextBlock" Text="F3"/>
+				</Grid>
+				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+						   Text="300 SCF"/>
+			</Grid>
+		</Button>
+
+		<!--Температура теплообменника-->
+		<Button x:Name="TempHeatExchanger" Grid.Column="1" Grid.Row="1">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="2*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0" Background="#C5E3F8">
+					<TextBlock Classes="StyleTag" Text="Температура Теплооб"/>
+					<TextBlock Classes="FTextBlock" Text="F4"/>
+				</Grid>
+				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+						   Text="38 °C"/>
+			</Grid>
+		</Button>
+
+		<!--Объем цемента-->
+		<Button x:Name="Volume" Grid.Column="1" Grid.Row="2">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="2*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0" Background="#C5E3F8">
+					<TextBlock Classes="StyleTag" Text="Объем Цемента"/>
+					<TextBlock Classes="FTextBlock" Text="F5"/>
+				</Grid>
+				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+						   Text="110 bbl"/>
+			</Grid>
+		</Button>
+
+		<!--Engine-->
+		<Button x:Name="Engine" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2">
+			<Grid Background="#EFD4D4">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="7*"/>
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0" Background="#C5E3F8">
+					<TextBlock Classes="StyleTag" Text="Двигатель"/>
+				</Grid>
+
+				<Grid Grid.Row="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*"/>
+						<RowDefinition Height="1*"/>
+						<RowDefinition Height="1*"/>
+						<RowDefinition Height="1*"/>
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Column="0" Grid.Row="0" Classes="StyleTag"
+							   Text="Обороты"/>
+					<TextBlock Grid.Column="1" Grid.Row="0" Classes="StyleTag"
+							   Text="600 об/мин"/>
+					<TextBlock Grid.Column="0" Grid.Row="1" Classes="StyleTag"
+							   Text="Температура"/>
+					<TextBlock Grid.Column="1" Grid.Row="1" Classes="StyleTag"
+							   Text="96 °C"/>
+					<TextBlock Grid.Column="0" Grid.Row="2" Classes="StyleTag"
+							   Text="Масло"/>
+					<TextBlock Grid.Column="1" Grid.Row="2" Classes="StyleTag"
+							   Text="2 г/см³"/>
+					<TextBlock Grid.Column="0" Grid.Row="3" Classes="StyleTag"
+							   Text="Зарядка"/>
+					<TextBlock Grid.Column="1" Grid.Row="3" Classes="StyleTag"
+							   Text="13.8 В"/>
+
+				</Grid>
+			</Grid>
+		</Button>
+
+		<!--События Меню -->
+		<Grid Grid.Column="1" Grid.Row="3">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
+
+			<!--События-->
+			<Button Grid.Column="0">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*"/>
+						<RowDefinition Height="2*"/>
+						<RowDefinition Height="1*"/>
+					</Grid.RowDefinitions>
+					<Grid Grid.Row="0" >
+						<TextBlock Classes="FTextBlock" Text="F7"/>
+					</Grid>
+					<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+							   Text="Собт"/>
+					<TextBlock Grid.Row="2" Classes="StyleTag" Foreground="#99000000"
+							   Text="Стоп"/>
+				</Grid>
+			</Button>
+
+			<!--Меню-->
+			<Button Grid.Column="1">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*"/>
+						<RowDefinition Height="2*"/>
+						<RowDefinition Height="1*"/>
+					</Grid.RowDefinitions>
+					<Grid Grid.Row="0" >
+						<TextBlock Classes="FTextBlock" Text="F6"/>
+					</Grid>
+					<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+							   Text="Меню"/>
+					<TextBlock Grid.Row="2" Classes="StyleTag" Foreground="#99000000"
+							   Text="Time"/>
+				</Grid>
+			</Button>
+		</Grid>
+
+	</Grid>
 
 </Window>
