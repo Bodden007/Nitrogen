@@ -7,7 +7,8 @@
 		Title="Nitrogen">
 
 	<Window.Styles>
-		<Style Selector="Button">
+
+		<!-- <Style Selector="Button">
 			<Setter Property="Background" Value="#F5F9FF"/>
 			<Setter Property="BorderThickness" Value="3"/>
 			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -29,9 +30,9 @@
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
-		</Style>
+		</Style> -->
 
-		<Style Selector="TextBlock.StyleTag">
+		<!-- <Style Selector="TextBlock.StyleTag">
 			<Setter Property="FontSize" Value="25"/>
 			<Setter Property="FontFamily" Value="Times New Roman"/>
 			<Setter Property="FontWeight" Value="Bold"/>
@@ -66,10 +67,10 @@
 			<Setter Property="HorizontalAlignment" Value="Center"/>
 			<Setter Property="VerticalAlignment" Value="Center"/>
 			<Setter Property="TextAlignment" Value="Center"/>
-		</Style>
+		</Style> -->
 	</Window.Styles>
 
-	<Grid Background="#DCDDD8" >
+	<Grid Background="{DynamicResource PrimaryGridColor}" >
 		<Grid.ColumnDefinitions >
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="*"/>
@@ -90,7 +91,7 @@
 					<RowDefinition Height="2*"/>
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
-				<Grid Grid.Row="0" Background="#C5E3F8">
+				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
 					<TextBlock Classes="StyleTag" Text="Давление"/>
 					<TextBlock Classes="FTextBlock" Text="F1"/>
 				</Grid>
@@ -112,7 +113,7 @@
 					<RowDefinition Height="2*"/>
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
-				<Grid Grid.Row="0" Background="#C5E3F8">
+				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
 					<TextBlock Classes="StyleTag" Text="Температура Выход"/>
 					<TextBlock Classes="FTextBlock" Text="F2"/>
 				</Grid>
@@ -129,7 +130,7 @@
 					<RowDefinition Height="2*"/>
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
-				<Grid Grid.Row="0" Background="#C5E3F8">
+				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
 					<TextBlock Classes="StyleTag" Text="Расход"/>
 					<TextBlock Classes="FTextBlock" Text="F3"/>
 				</Grid>
@@ -146,7 +147,7 @@
 					<RowDefinition Height="2*"/>
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
-				<Grid Grid.Row="0" Background="#C5E3F8">
+				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
 					<TextBlock Classes="StyleTag" Text="Температура Теплооб"/>
 					<TextBlock Classes="FTextBlock" Text="F4"/>
 				</Grid>
@@ -163,7 +164,7 @@
 					<RowDefinition Height="2*"/>
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
-				<Grid Grid.Row="0" Background="#C5E3F8">
+				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
 					<TextBlock Classes="StyleTag" Text="Объем Цемента"/>
 					<TextBlock Classes="FTextBlock" Text="F5"/>
 				</Grid>
@@ -179,7 +180,7 @@
 					<RowDefinition Height="1*"/>
 					<RowDefinition Height="7*"/>
 				</Grid.RowDefinitions>
-				<Grid Grid.Row="0" Background="#C5E3F8">
+				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
 					<TextBlock Classes="StyleTag" Text="Двигатель"/>
 				</Grid>
 
@@ -211,7 +212,6 @@
 							   Text="Зарядка"/>
 					<TextBlock Grid.Column="1" Grid.Row="3" Classes="StyleTag"
 							   Text="13.8 В"/>
-
 				</Grid>
 			</Grid>
 		</Button>
@@ -242,7 +242,7 @@
 			</Button>
 
 			<!--Меню-->
-			<Button Grid.Column="1">
+			<Button x:Name="Menu" Grid.Column="1" Click="Menu_Click">
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="1*"/>
