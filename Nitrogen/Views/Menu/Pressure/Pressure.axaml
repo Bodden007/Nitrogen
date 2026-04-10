@@ -6,15 +6,6 @@
 		x:Class="Nitrogen.Pressure"
 		Title="Pressure">
 
-	<Window.Styles>
-		<Style Selector="Border">
-			<Setter Property="Background" Value="{DynamicResource PrimaryDashboardColor}"/>
-			<Setter Property="BorderThickness" Value="3"/>
-			<Setter Property="BorderBrush" Value="{DynamicResource PrimaryGridColor}"/>
-			<Setter Property="Padding" Value="2"/>
-		</Style>
-	</Window.Styles>
-
 	<Grid Background="{DynamicResource PrimaryGridColor}">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="1*"/>
@@ -31,18 +22,31 @@
 			<TextBlock Classes="StyleTag" Text="Давление"/>
 		</Grid>
 
-		<!-- Уставки отсечки -->
+		<!-- Уставка нуля датчика давления -->
 		<Border Grid.Column="0" Grid.Row="1">
+			<TextBlock Classes="StyleTextBlock_2" Background="Red" Text="800 psi"/>
+		</Border>
+
+		<!-- Уставки отсечки -->
+		<Border Grid.Column="1" Grid.Row="1" >
 			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+				<TextBlock  Grid.Row="1" Classes="StyleTextBlock_2" Text="Отсечка"/>
+				<Grid Grid.Row="3">
+					<TextBox  Text="1000 psi"/>
+					<TextBlock Classes="FTextBlock" Text="F4"/>
+				</Grid>
 
 			</Grid>
 		</Border>
 
-		<!-- Уставка нуля датчика давления -->
-		<Border Grid.Column="1" Grid.Row="1" >
-
-		</Border>
-
+		<!-- Блок Кнопок -->
 		<Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="1*"/>
@@ -51,14 +55,38 @@
 				<ColumnDefinition Width="1*"/>
 			</Grid.ColumnDefinitions>
 
+			<!-- Обнуление датчика давления -->
+			<Button x:Name="SetZero" Grid.Column="0" Click="SetZero_Click">
+				<Grid>
+					<TextBlock Classes="StyleTextBlock_2" TextAlignment="Center">
+						<Run Text="Уст"/>
+						<LineBreak/>
+						<Run Text="Ноль"/>
+					</TextBlock>
+					<TextBlock Classes="FTextBlock" Text="F1"/>
+				</Grid>
+			</Button>
+
+			<!-- Сброс Обнуления датчика давления -->
+			<Button x:Name="ResetZero" Grid.Column="1" Click="SetZero_Click">
+				<Grid>
+					<TextBlock Classes="StyleTextBlock_2" TextAlignment="Center">
+						<Run Text="Сброс"/>
+						<LineBreak/>
+						<Run Text="Ноль"/>
+					</TextBlock>
+					<TextBlock Classes="FTextBlock" Text="F2"/>
+				</Grid>
+			</Button>
+
 			<!-- Уст отсечки -->
 			<Button x:Name="SetShutdown" Grid.Column="2" Click="SetShutdown_Click">
 				<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-					 <TextBlock Classes="StyleTextBlock_2" TextAlignment="Center">
+					<TextBlock Classes="StyleTextBlock_2" TextAlignment="Center">
 						<Run  Text="Уст"/>
 						<LineBreak/>
 						<Run Text="Отсечка"/>
-					</TextBlock> 					
+					</TextBlock>
 					<TextBlock Classes="FTextBlock" Text="F3"/>
 				</Grid>
 			</Button>

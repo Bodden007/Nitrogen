@@ -27,7 +27,11 @@ public partial class Menu : Window
 
             case Key.F1: new Nitrogen.Pressure().Show(); break;
 
+            case Key.F5: new Nitrogen.Volume().Show(); break;
+
             case Key.F7: Environment.Exit(0); break;
+
+            case Key.F8: new Nitrogen.Settings().Show(); break;
         }
     }
     private void Pressure_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -36,11 +40,22 @@ public partial class Menu : Window
         pressure.Show();
     }
 
+    private void Volume_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Nitrogen.Volume volume = new Nitrogen.Volume();
+        volume.Show();
+    }
+
     private void CloseApp_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         //TODO Разобраться с корректным закрытием приложения
         //Avalonia.Application.Current?.Shutdown();
         Environment.Exit(0);
+    }
+    private void Settings_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Nitrogen.Settings settings = new Nitrogen.Settings();
+        settings.Show();
     }
 
     private void Exit_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -53,5 +68,4 @@ public partial class Menu : Window
         this.KeyDown -= Menu_KeyDown;
         Closed -= Menu_Closed;
     }
-
 }

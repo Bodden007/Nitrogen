@@ -18,7 +18,7 @@
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
 
-		<!--Давление-->
+		<!-- Давление -->
 		<Button x:Name="Pressure" Grid.Column="0" Grid.Row="0" Click="Pressure_Click">
 			<Grid>
 				<TextBlock Classes="StyleTextBlock_2" Text="Давление"/>
@@ -26,11 +26,31 @@
 			</Grid>
 		</Button>
 
-		<!--Закрыть приложение-->
+		<!-- Объем -->
+		<Button x:Name="Volume" Grid.Column="1" Grid.Row="1" Click="Volume_Click">
+			<Grid>
+				<TextBlock Classes="StyleTextBlock_2" TextAlignment="Center" >
+					<Run Text="Объем"/>
+					<LineBreak/>
+					<Run Text="Цемента"/>
+				</TextBlock>
+				<TextBlock Classes="FTextBlock" Text="F5"/>
+			</Grid>
+		</Button>
+
+		<!-- Закрыть приложение -->
 		<Button x:Name="CloseApp" Grid.Column="2" Grid.Row="0" Click="CloseApp_Click">
 			<Grid>
 				<TextBlock Classes="StyleTextBlock_2" Text="Закрыть"/>
 				<TextBlock Classes="FTextBlock" Text="F7"/>
+			</Grid>
+		</Button>
+
+		<!-- Настройки приложение -->
+		<Button x:Name="Settings" Grid.Column="2" Grid.Row="1" Click="Settings_Click">
+			<Grid>
+				<TextBlock Classes="StyleTextBlock_2" Text="Настройки"/>
+				<TextBlock Classes="FTextBlock" Text="F8"/>
 			</Grid>
 		</Button>
 

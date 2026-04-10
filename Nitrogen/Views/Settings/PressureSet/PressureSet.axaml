@@ -1,0 +1,123 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		x:Class="Nitrogen.PressureSet"
+		Title="PressureSet">
+
+	<Grid Background="{DynamicResource PrimaryGridColor}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="5*"/>
+			<RowDefinition Height="2*"/>
+		</Grid.RowDefinitions>
+
+		<!-- Header -->
+		<Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource PrimaryHeaderBrush}">
+			<TextBlock  Classes="StyleTag" Text="Калибровки Давления"/>
+		</Grid>
+
+		<!-- Настройка милиАмпер -->
+		<Border Grid.Column="0" Grid.Row="1">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+
+				<!-- Милиамперы Мин.. -->
+				<TextBlock Grid.Row="0" Classes="StyleTag"
+						   Text="Мин. мА"/>
+				<Grid Grid.Row="1">
+					<TextBox Text="4.00"/>
+					<TextBlock Classes="FTextBlock" Text="F3"/>
+				</Grid>
+
+				<!-- Милиамперы Макс.. -->
+				<TextBlock Grid.Row="2" Classes="StyleTag"
+						   Text="Макс. мА"/>
+				<Grid Grid.Row="3">
+					<TextBox Text="20.00"/>
+					<TextBlock Classes="FTextBlock" Text="F4"/>
+				</Grid>
+
+				<!-- Текущие Значения -->
+				<TextBlock Grid.Row="4" Classes="StyleTextBlock_2" Background="Red" Text="800 psi"/>
+
+			</Grid>
+		</Border>
+
+		<!-- Настройка Значений -->
+		<Border Grid.Column="1" Grid.Row="1">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+
+				<!-- Милиамперы Мин.. -->
+				<TextBlock Grid.Row="0" Classes="StyleTag"
+						   Text="Мин. psi"/>
+				<Grid Grid.Row="1">
+					<TextBox Text="0.00"/>
+					<TextBlock Classes="FTextBlock" Text="F5"/>
+				</Grid>
+
+				<!-- Милиамперы Макс.. -->
+				<TextBlock Grid.Row="2" Classes="StyleTag"
+						   Text="Макс. psi"/>
+				<Grid Grid.Row="3">
+					<TextBox Text="15000"/>
+					<TextBlock Classes="FTextBlock" Text="F6"/>
+				</Grid>
+
+			</Grid>
+		</Border>
+
+		<!-- Блок Кнопок -->
+		<Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
+
+			<!-- Сохранить -->
+			<Button x:Name="Save" Grid.Column="0" >
+				<Grid>
+					<TextBlock Classes="StyleTextBlock_2" Text="Сохранить"/>
+					<TextBlock Classes="FTextBlock" Text="F1"/>
+				</Grid>
+			</Button>
+
+			<!-- Заглушка -->
+			<Border Grid.Column="1">
+
+			</Border>
+
+			<!-- Выход -->
+			<Button x:Name="Exit" Grid.Column="2"  Click="Exit_Click">
+				<Grid>
+					<TextBlock Classes="StyleTextBlock_2" Text="Выход"/>
+					<TextBlock Classes="FTextBlock" Text="ESC"/>
+				</Grid>
+			</Button>
+		</Grid>
+
+
+
+	</Grid>
+</Window>

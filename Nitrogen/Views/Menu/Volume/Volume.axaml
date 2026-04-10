@@ -1,0 +1,131 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		x:Class="Nitrogen.Volume"
+		Title="Volume">
+
+	<Grid Background="{DynamicResource PrimaryGridColor}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="5*"/>
+			<RowDefinition Height="2*"/>
+		</Grid.RowDefinitions>
+
+		<!-- Header -->
+		<Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource PrimaryHeaderBrush}">
+			<TextBlock  Classes="StyleTag"
+						Text="Объем Цемента"/>
+		</Grid>
+
+		<!-- Строки Объемов-->
+		<Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+
+				<!-- Общий Объем -->
+				<Border Grid.Row="0">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="1*"/>
+						</Grid.ColumnDefinitions>
+						<TextBlock Grid.Column="0" Classes="StyleTextBlock_2"
+								   Text="Общий цемент"/>
+						<Grid Grid.Column="1">
+							<TextBox Text="110"/>
+							<TextBlock Classes="FTextBlock" Text="F3"/>
+						</Grid>
+					</Grid>
+				</Border>
+
+				<!-- Водительская сторона Объем -->
+				<Border Grid.Row="1">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="1*"/>
+						</Grid.ColumnDefinitions>
+						<TextBlock Grid.Column="0" Classes="StyleTextBlock_2"
+								   Text="ВС Объем"/>
+						<Grid Grid.Column="1">
+							<TextBox Text="60"/>
+							<TextBlock Classes="FTextBlock" Text="F4"/>
+						</Grid>
+					</Grid>
+				</Border>
+
+				<!-- Пассажирская сторона Объем -->
+				<Border Grid.Row="2">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="1*"/>
+						</Grid.ColumnDefinitions>
+						<TextBlock Grid.Column="0" Classes="StyleTextBlock_2"
+								   Text="ПС Объем"/>
+						<Grid Grid.Column="1">
+							<TextBox Text="50"/>
+							<TextBlock Classes="FTextBlock" Text="F5"/>
+						</Grid>
+					</Grid>
+				</Border>
+
+			</Grid>
+		</Border>
+
+
+		<!-- Блок Кнопок -->
+		<Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
+
+			<!-- Установка значений Объема -->
+			<Button x:Name="SetVolume" Grid.Column="0"  Click="SetVolume_Click">
+				<Grid>
+					<TextBlock Classes="StyleTextBlock_2" TextAlignment="Center" >
+						<Run Text="Уст"/>
+						<LineBreak/>
+						<Run Text="Объем"/>
+					</TextBlock>
+					<TextBlock Classes="FTextBlock" Text="F1"/>
+				</Grid>
+			</Button>
+
+			<!-- Сброс значений Объема -->
+			<Button x:Name="ZeroVolume" Grid.Column="1"  Click="ZeroVolume_Click">
+				<Grid>
+					<TextBlock Classes="StyleTextBlock_2" TextAlignment="Center" >
+						<Run Text="Сброс"/>
+						<LineBreak/>
+						<Run Text="Объем"/>
+					</TextBlock>
+					<TextBlock Classes="FTextBlock" Text="F2"/>
+				</Grid>
+			</Button>
+
+			<!-- Выход -->
+			<Button x:Name="Exit" Grid.Column="2"  Click="Exit_Click">
+				<Grid>
+					<TextBlock Classes="StyleTextBlock_2" Text="Выход"/>
+					<TextBlock Classes="FTextBlock" Text="ESC"/>
+				</Grid>
+			</Button>
+
+		</Grid>
+
+
+	</Grid>
+</Window>

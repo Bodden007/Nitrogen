@@ -25,6 +25,9 @@ public partial class Pressure : Window
             case Avalonia.Input.Key.Escape: Close(); e.Handled = true; break;
         }
     }
+    private void SetZero_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+    }
     private void SetShutdown_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
     }
@@ -38,6 +41,4 @@ public partial class Pressure : Window
         this.KeyDown -= Pressure_KeyDown;
         Closed -= Pressure_Closed;
     }
-
-
 }

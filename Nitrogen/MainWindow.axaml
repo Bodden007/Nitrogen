@@ -6,69 +6,6 @@
 		x:Class="Nitrogen.MainWindow"
 		Title="Nitrogen">
 
-	<Window.Styles>
-
-		<!-- <Style Selector="Button">
-			<Setter Property="Background" Value="#F5F9FF"/>
-			<Setter Property="BorderThickness" Value="3"/>
-			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
-			<Setter Property="HorizontalAlignment" Value="Stretch"/>
-			<Setter Property="VerticalAlignment" Value="Stretch"/>
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="Button">
-						<Border
-						Background="{TemplateBinding Background}"
-						BorderBrush="{TemplateBinding BorderBrush}"
-						BorderThickness="{TemplateBinding BorderThickness}">
-							<ContentPresenter
-							Content="{TemplateBinding Content}"
-							HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-							VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-						</Border>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style> -->
-
-		<!-- <Style Selector="TextBlock.StyleTag">
-			<Setter Property="FontSize" Value="25"/>
-			<Setter Property="FontFamily" Value="Times New Roman"/>
-			<Setter Property="FontWeight" Value="Bold"/>
-			<Setter Property="Opacity" Value="0.7"/>
-			<Setter Property="HorizontalAlignment" Value="Center"/>
-			<Setter Property="VerticalAlignment" Value="Center"/>
-			<Setter Property="TextAlignment" Value="Center"/>
-		</Style>
-
-		<Style Selector="TextBlock.FTextBlock">
-			<Setter Property="Foreground" Value="Black"/>
-			<Setter Property="FontSize" Value="16"/>
-			<Setter Property="FontFamily" Value="Times New Roman"/>
-			<Setter Property="FontWeight" Value="Bold"/>
-			<Setter Property="HorizontalAlignment" Value="Right"/>
-			<Setter Property="VerticalAlignment" Value="Top"/>
-			<Setter Property="TextAlignment" Value="Center"/>
-		</Style>
-
-		<Style Selector="TextBlock.StyleTextBlock_2">
-			<Setter Property="FontSize" Value="45"/>
-			<Setter Property="FontFamily" Value="Times New Roman"/>
-			<Setter Property="FontWeight" Value="Bold"/>
-			<Setter Property="VerticalAlignment" Value="Center"/>
-			<Setter Property="HorizontalAlignment" Value="Center"/>
-		</Style>
-
-		<Style Selector="TextBlock.StyleTextBlock_1">
-			<Setter Property="FontSize" Value="25"/>
-			<Setter Property="FontFamily" Value="Times New Roman"/>
-			<Setter Property="FontWeight" Value="Bold"/>
-			<Setter Property="HorizontalAlignment" Value="Center"/>
-			<Setter Property="VerticalAlignment" Value="Center"/>
-			<Setter Property="TextAlignment" Value="Center"/>
-		</Style> -->
-	</Window.Styles>
 
 	<Grid Background="{DynamicResource PrimaryGridColor}" >
 		<Grid.ColumnDefinitions >
@@ -156,20 +93,42 @@
 			</Grid>
 		</Button>
 
-		<!--Объем цемента-->
-		<Button x:Name="Volume" Grid.Column="1" Grid.Row="2">
+		<!-- Объем цемента -->
+		<Button x:Name="Volume" Grid.Column="1" Grid.Row="2" Click="Volume_Click" >
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="1*"/>
 					<RowDefinition Height="2*"/>
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
-				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
-					<TextBlock Classes="StyleTag" Text="Объем Цемента"/>
+
+				<!-- Суммарный объем -->
+				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}" >
+					<TextBlock x:Name="CombiHeader" Classes="StyleTag" Text="Σ Объем Цемента"/>
 					<TextBlock Classes="FTextBlock" Text="F5"/>
 				</Grid>
-				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
-						   Text="110 bbl"/>
+				<TextBlock x:Name="CombiVolume" Grid.Row="1" Classes="StyleTextBlock_2"
+						   Text="110 bbl" />
+
+				<!-- Раздельный объем -->
+				<!-- Водительская сторона -->
+				<Grid Grid.Row="1">
+					<TextBlock x:Name="DsStage" Classes="StyleTextBlock_1"
+							   HorizontalAlignment="Left"
+							   Text="ВС Насос" IsVisible="False"/>
+					<TextBlock x:Name="DsVolume" Grid.Row="1" Classes="StyleTextBlock_1"
+							   HorizontalAlignment="Center"
+							   Text="60 bbl" IsVisible="False"/>
+					<TextBlock Classes="FTextBlock"  VerticalAlignment="Bottom" Text="2"/>
+				</Grid>
+
+				<!-- Пассажирская сторона -->
+				<TextBlock x:Name="PsStage" Grid.Row="2" Classes="StyleTextBlock_1"
+						   HorizontalAlignment="Left"
+						   Text="ПС Насос" IsVisible="False"/>
+				<TextBlock x:Name="PsVolume" Grid.Row="2" Classes="StyleTextBlock_1"
+						   HorizontalAlignment="Center"
+						   Text="50 bbl" IsVisible="False"/>
 			</Grid>
 		</Button>
 
