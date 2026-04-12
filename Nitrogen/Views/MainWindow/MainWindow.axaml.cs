@@ -11,7 +11,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        SystemDecorations = SystemDecorations.None;
+        //SystemDecorations = SystemDecorations.None;
         WindowState = WindowState.FullScreen;
 
         this.KeyDown += MainWindow_KeyDown;

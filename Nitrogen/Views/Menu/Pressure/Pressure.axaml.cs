@@ -10,7 +10,7 @@ public partial class Pressure : Window
     {
         InitializeComponent();
 
-        SystemDecorations = SystemDecorations.None;
+        //SystemDecorations = SystemDecorations.None;
         WindowState = WindowState.FullScreen;
 
         this.KeyDown += Pressure_KeyDown;

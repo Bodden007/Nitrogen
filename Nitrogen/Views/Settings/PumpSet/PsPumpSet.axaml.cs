@@ -5,33 +5,34 @@ using Avalonia.Input;
 
 namespace Nitrogen;
 
-public partial class PressureSet : Window
+public partial class PsPumpSet : Window
 {
-    public PressureSet()
+    public PsPumpSet()
     {
         InitializeComponent();
 
         //SystemDecorations = SystemDecorations.None;
         WindowState = WindowState.FullScreen;
 
-        this.KeyDown += PressureSet_KeyDown;
+        this.KeyDown += PsPumpSet_KeyDown;
 
-        Closed += PressureSet_Closed;
+        Closed += PsPumpSet_Closed;
     }
-    private void PressureSet_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
+    private void PsPumpSet_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
         switch (e.Key)
         {
             case Key.Escape: Close(); break;
         }
+
     }
     private void Exit_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         Close();
     }
-    private void PressureSet_Closed(object? sender, System.EventArgs e)
+    private void PsPumpSet_Closed(object? sender, System.EventArgs e)
     {
-        this.KeyDown -= PressureSet_KeyDown;
-        Closed -= PressureSet_Closed;
+        this.KeyDown -= PsPumpSet_KeyDown;
+        Closed -= PsPumpSet_Closed;
     }
 }

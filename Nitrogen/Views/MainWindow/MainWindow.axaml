@@ -85,7 +85,7 @@
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
 				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
-					<TextBlock Classes="StyleTag" Text="Температура Теплооб"/>
+					<TextBlock Classes="StyleTag" Text="Температура Вапарайзер"/>
 					<TextBlock Classes="FTextBlock" Text="F4"/>
 				</Grid>
 				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
@@ -119,16 +119,19 @@
 					<TextBlock x:Name="DsVolume" Grid.Row="1" Classes="StyleTextBlock_1"
 							   HorizontalAlignment="Center"
 							   Text="60 bbl" IsVisible="False"/>
-					<TextBlock Classes="FTextBlock"  VerticalAlignment="Bottom" Text="2"/>
+
 				</Grid>
 
 				<!-- Пассажирская сторона -->
-				<TextBlock x:Name="PsStage" Grid.Row="2" Classes="StyleTextBlock_1"
-						   HorizontalAlignment="Left"
-						   Text="ПС Насос" IsVisible="False"/>
-				<TextBlock x:Name="PsVolume" Grid.Row="2" Classes="StyleTextBlock_1"
-						   HorizontalAlignment="Center"
-						   Text="50 bbl" IsVisible="False"/>
+				<Grid Grid.Row="2">
+					<TextBlock x:Name="PsStage" Classes="StyleTextBlock_1"
+							   HorizontalAlignment="Left"
+							   Text="ПС Насос" IsVisible="False"/>
+					<TextBlock x:Name="PsVolume" Classes="StyleTextBlock_1"
+							   HorizontalAlignment="Center"
+							   Text="50 bbl" IsVisible="False"/>
+					<TextBlock Classes="FTextBlock"  VerticalAlignment="Bottom" Text="2"/>
+				</Grid>
 			</Grid>
 		</Button>
 

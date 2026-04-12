@@ -1,12 +1,12 @@
 <Window xmlns="https://github.com/avaloniaui"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		x:Class="Nitrogen.PressureSet"
-		Title="PressureSet">
-
-	<Grid Background="{DynamicResource PrimaryGridColor}">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Nitrogen.PsPumpSet"
+        Title="PsPumpSet">
+ 
+     <Grid Background="{DynamicResource PrimaryGridColor}">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="1*"/>
 			<ColumnDefinition Width="1*"/>
@@ -19,10 +19,10 @@
 
 		<!-- Header -->
 		<Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource PrimaryHeaderBrush}">
-			<TextBlock  Classes="StyleTag" Text="Калибровки Давления"/>
+			<TextBlock  Classes="StyleTag" Text="Настройка Насоса ПС"/>
 		</Grid>
 
-		<!-- Настройка милиАмпер -->
+		<!-- Настройка частоты  -->
 		<Border Grid.Column="0" Grid.Row="1">
 			<Grid>
 				<Grid.RowDefinitions>
@@ -34,24 +34,24 @@
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
 
-				<!-- Милиамперы Мин.. -->
+				<!-- Герц Мин.. -->
 				<TextBlock Grid.Row="0" Classes="StyleTag"
-						   Text="Мин. мА"/>
+						   Text="Мин. Гц"/>
 				<Grid Grid.Row="1">
-					<TextBox Text="4.00"/>
+					<TextBox Text="0"/>
 					<TextBlock Classes="FTextBlock" Text="F3"/>
 				</Grid>
 
-				<!-- Милиамперы Макс.. -->
+				<!-- Герц Макс.. -->
 				<TextBlock Grid.Row="2" Classes="StyleTag"
-						   Text="Макс. мА"/>
+						   Text="Макс. Гц"/>
 				<Grid Grid.Row="3">
-					<TextBox Text="20.00"/>
+					<TextBox Text="1000"/>
 					<TextBlock Classes="FTextBlock" Text="F4"/>
 				</Grid>
 
 				<!-- Текущие Значения -->
-				<TextBlock Grid.Row="4" Classes="StyleTextBlock_2" Background="Red" Text="800 psi"/>
+				<TextBlock Grid.Row="4" Classes="StyleTextBlock_2" Background="Red" Text="300 bpm"/>
 
 			</Grid>
 		</Border>
@@ -68,22 +68,21 @@
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
 
-				<!-- psi Мин.. -->
+				<!-- BPM Мин.. -->
 				<TextBlock Grid.Row="0" Classes="StyleTag"
-						   Text="Мин. psi"/>
+						   Text="Мин. bpm"/>
 				<Grid Grid.Row="1">
 					<TextBox Text="0.00"/>
 					<TextBlock Classes="FTextBlock" Text="F5"/>
 				</Grid>
 
-				<!-- psi Макс.. -->
+				<!-- BPM Макс.. -->
 				<TextBlock Grid.Row="2" Classes="StyleTag"
-						   Text="Макс. psi"/>
+						   Text="Макс. bpm"/>
 				<Grid Grid.Row="3">
-					<TextBox Text="15000"/>
+					<TextBox Text="10"/>
 					<TextBlock Classes="FTextBlock" Text="F6"/>
 				</Grid>
-
 			</Grid>
 		</Border>
 

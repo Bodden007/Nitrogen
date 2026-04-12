@@ -12,7 +12,7 @@ public partial class Menu : Window
     {
         InitializeComponent();
 
-        SystemDecorations = SystemDecorations.None;
+        //SystemDecorations = SystemDecorations.None;
         WindowState = WindowState.FullScreen;
 
         this.KeyDown += Menu_KeyDown;

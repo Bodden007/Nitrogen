@@ -5,20 +5,20 @@ using Avalonia.Input;
 
 namespace Nitrogen;
 
-public partial class PressureSet : Window
+public partial class DsPumpSet : Window
 {
-    public PressureSet()
+    public DsPumpSet()
     {
         InitializeComponent();
 
         //SystemDecorations = SystemDecorations.None;
         WindowState = WindowState.FullScreen;
 
-        this.KeyDown += PressureSet_KeyDown;
+        this.KeyDown += DsPumpSet_KeyDown;
 
-        Closed += PressureSet_Closed;
+        Closed += DsPumpSet_Closed;
     }
-    private void PressureSet_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
+    private void DsPumpSet_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
         switch (e.Key)
         {
@@ -29,9 +29,10 @@ public partial class PressureSet : Window
     {
         Close();
     }
-    private void PressureSet_Closed(object? sender, System.EventArgs e)
+
+    private void DsPumpSet_Closed(object? sender, System.EventArgs e)
     {
-        this.KeyDown -= PressureSet_KeyDown;
-        Closed -= PressureSet_Closed;
+        this.KeyDown -= DsPumpSet_KeyDown;
+        Closed -= DsPumpSet_Closed;
     }
 }

@@ -11,7 +11,7 @@ public partial class Volume : Window
     {
         InitializeComponent();
 
-        SystemDecorations = SystemDecorations.None;
+        //SystemDecorations = SystemDecorations.None;
         WindowState = WindowState.FullScreen;
 
         this.KeyDown += Volume_KeyDown;

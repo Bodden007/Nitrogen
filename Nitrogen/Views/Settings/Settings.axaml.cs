@@ -11,7 +11,7 @@ public partial class Settings : Window
     {
         InitializeComponent();
 
-        SystemDecorations = SystemDecorations.None;
+        //SystemDecorations = SystemDecorations.None;
         WindowState = WindowState.FullScreen;
 
         this.KeyDown += Settings_KeyDown;
@@ -25,12 +25,26 @@ public partial class Settings : Window
             case Key.Escape: Close(); break;
 
             case Key.F1: new Nitrogen.PressureSet().Show(); break;
+
+            case Key.F5: new Nitrogen.DsPumpSet().Show(); break;
+
+            case Key.F6: new Nitrogen.PsPumpSet().Show(); break;
         }
     }
     private void PressureCalli_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         Nitrogen.PressureSet pressureSet = new Nitrogen.PressureSet();
         pressureSet.Show();
+    }
+    private void DsPumpCalli_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Nitrogen.DsPumpSet dsPumpSet = new Nitrogen.DsPumpSet();
+        dsPumpSet.Show();
+    }
+    private void PsPumpCalli_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Nitrogen.PsPumpSet psPumpSet = new Nitrogen.PsPumpSet();
+        psPumpSet.Show();
     }
     private void Exit_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
