@@ -43,7 +43,7 @@
 		</Button>
 
 		<!--Температура выхода-->
-		<Button x:Name="TempOut" Grid.Column="1" Grid.Row="0">
+		<Button x:Name="Temp" Grid.Column="1" Grid.Row="0" Click="Temp_Click" >
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="1*"/>
@@ -51,11 +51,25 @@
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
 				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
-					<TextBlock Classes="StyleTag" Text="Температура Выход"/>
+					<TextBlock x:Name="HeaderTemp" Classes="StyleTag" Text="Температура Выход"/>
 					<TextBlock Classes="FTextBlock" Text="F2"/>
 				</Grid>
-				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
-						   Text="40 °C"/>
+				<Grid Grid.Row="1">
+					<TextBlock x:Name="TempOut" Classes="StyleTextBlock_1"
+							   HorizontalAlignment="Left"
+							   Text="Выход" IsVisible="False" />
+					<TextBlock x:Name="ValueTempOut" Classes="StyleTextBlock_2"
+							   Text="40 °C"/>
+				</Grid>
+				<Grid Grid.Row="2">
+					<TextBlock x:Name="TempExc" Classes="StyleTextBlock_1"
+							   HorizontalAlignment="Left"
+							   Text="Теплообм" IsVisible="False" />
+					<TextBlock x:Name="ValueTempExc" Classes="StyleTextBlock_1"
+							   Text="38 °C" IsVisible="False" />
+					<TextBlock Classes="FTextBlock"  VerticalAlignment="Bottom"
+							   Text="2"/>
+				</Grid>
 			</Grid>
 		</Button>
 
@@ -68,15 +82,30 @@
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
 				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
-					<TextBlock Classes="StyleTag" Text="Расход"/>
+					<TextBlock x:Name="HeaderRate" Classes="StyleTag" Text="Σ Расход"/>
 					<TextBlock Classes="FTextBlock" Text="F3"/>
 				</Grid>
-				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
-						   Text="300 SCF"/>
+				<Grid Grid.Row="1">
+					<TextBlock x:Name="HeaderRate_A" Classes="StyleTextBlock_1"
+							   HorizontalAlignment="Left"
+							   Text="A" IsVisible="False" />
+					<TextBlock x:Name="ValueRate" Classes="StyleTextBlock_2"
+							   Text="300 SCF"/>
+					<TextBlock x:Name="ValueRate_A" Classes="StyleTextBlock_1"
+							   Text="160 SCF" IsVisible="False" />					
+				</Grid>
+				<Grid Grid.Row="2">
+					<TextBlock x:Name="HeaderRate_B" Classes="StyleTextBlock_1"
+							   HorizontalAlignment="Left"
+							   Text="B" IsVisible="False" />
+					<TextBlock x:Name="ValueRate_B" Classes="StyleTextBlock_1"
+							   Text="140 SCF" IsVisible="False" />
+					<TextBlock Classes="FTextBlock"  VerticalAlignment="Bottom" Text="1"/>
+				</Grid>
 			</Grid>
 		</Button>
 
-		<!--Температура теплообменника-->
+		<!-- Температура Вапарайзер -->
 		<Button x:Name="TempHeatExchanger" Grid.Column="1" Grid.Row="1">
 			<Grid>
 				<Grid.RowDefinitions>
@@ -89,7 +118,7 @@
 					<TextBlock Classes="FTextBlock" Text="F4"/>
 				</Grid>
 				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
-						   Text="38 °C"/>
+						   Text="122 °C"/>
 			</Grid>
 		</Button>
 
@@ -107,19 +136,18 @@
 					<TextBlock x:Name="CombiHeader" Classes="StyleTag" Text="Σ Объем Цемента"/>
 					<TextBlock Classes="FTextBlock" Text="F5"/>
 				</Grid>
-				<TextBlock x:Name="CombiVolume" Grid.Row="1" Classes="StyleTextBlock_2"
-						   Text="110 bbl" />
 
 				<!-- Раздельный объем -->
 				<!-- Водительская сторона -->
 				<Grid Grid.Row="1">
+					<TextBlock x:Name="CombiVolume" Classes="StyleTextBlock_2"
+							   Text="110 bbl" />
 					<TextBlock x:Name="DsStage" Classes="StyleTextBlock_1"
 							   HorizontalAlignment="Left"
 							   Text="ВС Насос" IsVisible="False"/>
 					<TextBlock x:Name="DsVolume" Grid.Row="1" Classes="StyleTextBlock_1"
 							   HorizontalAlignment="Center"
 							   Text="60 bbl" IsVisible="False"/>
-
 				</Grid>
 
 				<!-- Пассажирская сторона -->
@@ -130,7 +158,7 @@
 					<TextBlock x:Name="PsVolume" Classes="StyleTextBlock_1"
 							   HorizontalAlignment="Center"
 							   Text="50 bbl" IsVisible="False"/>
-					<TextBlock Classes="FTextBlock"  VerticalAlignment="Bottom" Text="2"/>
+					<TextBlock Classes="FTextBlock"  VerticalAlignment="Bottom" Text="3"/>
 				</Grid>
 			</Grid>
 		</Button>
@@ -197,9 +225,9 @@
 						<TextBlock Classes="FTextBlock" Text="F7"/>
 					</Grid>
 					<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
-							   Text="Собт"/>
+							   Text="Стад"/>
 					<TextBlock Grid.Row="2" Classes="StyleTag" Foreground="#99000000"
-							   Text="Стоп"/>
+							   Text="стад #1"/>
 				</Grid>
 			</Button>
 
