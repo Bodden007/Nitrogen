@@ -25,9 +25,9 @@ public partial class MainWindow : Window
 
             case Key.F2: new Nitrogen.Temperature().Show(); break;
 
-            case Key.F5: new Nitrogen.Volume().Show(); break;
+            case Key.F4: new Nitrogen.Volume().Show(); break;
 
-            case Key.F6: new Nitrogen.Menu().Show(); break;
+            case Key.F8: new Nitrogen.Menu().Show(); break;
 
             case Key.D1: HandlerRateLineDisplay(); break;
 
@@ -90,7 +90,7 @@ public partial class MainWindow : Window
 
             TempOut.IsVisible = true;
             TempExc.IsVisible = true;
-            ValueTempExc.IsVisible = true;
+            ValueVaporizer.IsVisible = true;
 
             ValueTempOut.Classes.Remove("StyleTextBlock_2");
             ValueTempOut.Classes.Add("StyleTextBlock_1");
@@ -101,7 +101,7 @@ public partial class MainWindow : Window
 
             TempOut.IsVisible = false;
             TempExc.IsVisible = false;
-            ValueTempExc.IsVisible = false;
+            ValueVaporizer.IsVisible = false;
 
             ValueTempOut.Classes.Remove("StyleTextBlock_1");
             ValueTempOut.Classes.Add("StyleTextBlock_2");

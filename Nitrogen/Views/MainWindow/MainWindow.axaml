@@ -64,8 +64,8 @@
 				<Grid Grid.Row="2">
 					<TextBlock x:Name="TempExc" Classes="StyleTextBlock_1"
 							   HorizontalAlignment="Left"
-							   Text="Теплообм" IsVisible="False" />
-					<TextBlock x:Name="ValueTempExc" Classes="StyleTextBlock_1"
+							   Text="Вапорайзер" IsVisible="False" />
+					<TextBlock x:Name="ValueVaporizer" Classes="StyleTextBlock_1"
 							   Text="38 °C" IsVisible="False" />
 					<TextBlock Classes="FTextBlock"  VerticalAlignment="Bottom"
 							   Text="2"/>
@@ -92,7 +92,7 @@
 					<TextBlock x:Name="ValueRate" Classes="StyleTextBlock_2"
 							   Text="300 SCF"/>
 					<TextBlock x:Name="ValueRate_A" Classes="StyleTextBlock_1"
-							   Text="160 SCF" IsVisible="False" />					
+							   Text="160 SCF" IsVisible="False" />
 				</Grid>
 				<Grid Grid.Row="2">
 					<TextBlock x:Name="HeaderRate_B" Classes="StyleTextBlock_1"
@@ -106,24 +106,24 @@
 		</Button>
 
 		<!-- Температура Вапарайзер -->
-		<Button x:Name="TempHeatExchanger" Grid.Column="1" Grid.Row="1">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="1*"/>
-					<RowDefinition Height="2*"/>
-					<RowDefinition Height="1*"/>
-				</Grid.RowDefinitions>
-				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
-					<TextBlock Classes="StyleTag" Text="Температура Вапарайзер"/>
-					<TextBlock Classes="FTextBlock" Text="F4"/>
-				</Grid>
-				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
-						   Text="122 °C"/>
-			</Grid>
-		</Button>
+		<!--		<Button x:Name="TempHeatExchanger" Grid.Column="1" Grid.Row="1">
+		<Grid>
+		<Grid.RowDefinitions>
+		<RowDefinition Height="1*"/>
+		<RowDefinition Height="2*"/>
+		<RowDefinition Height="1*"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
+		<TextBlock Classes="StyleTag" Text="Температура Вапарайзер"/>
+		<TextBlock Classes="FTextBlock" Text="F4"/>
+		</Grid>
+		<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+		Text="122 °C"/>
+		</Grid>
+		</Button>-->
 
 		<!-- Объем цемента -->
-		<Button x:Name="Volume" Grid.Column="1" Grid.Row="2" Click="Volume_Click" >
+		<Button x:Name="Volume" Grid.Column="1" Grid.Row="1" Click="Volume_Click" >
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="1*"/>
@@ -134,7 +134,7 @@
 				<!-- Суммарный объем -->
 				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}" >
 					<TextBlock x:Name="CombiHeader" Classes="StyleTag" Text="Σ Объем Цемента"/>
-					<TextBlock Classes="FTextBlock" Text="F5"/>
+					<TextBlock Classes="FTextBlock" Text="F4"/>
 				</Grid>
 
 				<!-- Раздельный объем -->
@@ -162,6 +162,53 @@
 				</Grid>
 			</Grid>
 		</Button>
+
+
+		<Grid Grid.Column="1" Grid.Row="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
+
+			<!-- Задвижка -->
+			<Border  Grid.Column="0">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*"/>
+						<RowDefinition Height="2*"/>
+						<RowDefinition Height="1*"/>
+					</Grid.RowDefinitions>
+
+					<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
+						<TextBlock Classes="StyleTag"
+								   Text="Задвижка"/>
+					</Grid>
+					<Grid Grid.Row="1" Grid.RowSpan="2" Background="Green">
+						<TextBlock Classes="StyleTag"
+								   Text="Открыта"/>
+					</Grid>
+				</Grid>
+			</Border>
+
+			<!-- Запись -->
+			<Button Grid.Column="1">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="1*"/>
+						<RowDefinition Height="2*"/>
+						<RowDefinition Height="1*"/>
+					</Grid.RowDefinitions>
+					<Grid Grid.Row="0" >
+						<TextBlock Classes="FTextBlock" Text="F6"/>
+					</Grid>
+					<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+							   Text="Запись"/>
+					<TextBlock Grid.Row="2" Classes="StyleTag" Foreground="#99000000"
+							   Text="стоп"/>
+				</Grid>
+			</Button>
+		</Grid>
+
 
 		<!--Engine-->
 		<Button x:Name="Engine" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2">
@@ -240,7 +287,7 @@
 						<RowDefinition Height="1*"/>
 					</Grid.RowDefinitions>
 					<Grid Grid.Row="0" >
-						<TextBlock Classes="FTextBlock" Text="F6"/>
+						<TextBlock Classes="FTextBlock" Text="F8"/>
 					</Grid>
 					<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
 							   Text="Меню"/>

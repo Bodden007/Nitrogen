@@ -24,11 +24,20 @@
 
 		<!-- Температура Выход -->
 		<Border Grid.Column="0" Grid.Row="1">
-		
+			<Grid>
+				<TextBlock Classes="StyleTextBlock_2"
+						   VerticalAlignment="Top"
+						   Text="На Выходе" />
+				<TextBlock/>
+				<TextBlock Classes="StyleTextBlock_2"
+						   VerticalAlignment="Center"
+						   Background="BlueViolet"
+						   Text="40 °C"/>
+			</Grid>
 		</Border>
 
 		<!-- Температура Вапарайзер и баня -->
-		<Border Grid.Column="1" Grid.Row="1">
+		<Grid Grid.Column="1" Grid.Row="1">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="1*"/>
@@ -36,23 +45,40 @@
 				</Grid.RowDefinitions>
 
 				<Border Grid.Row="0">
-				
+					<Grid>
+						<TextBlock Classes="StyleTextBlock_2"
+								   VerticalAlignment="Top"
+								   Text="Вапорайзера" />
+						<TextBlock/>
+						<TextBlock Classes="StyleTextBlock_2"
+								   VerticalAlignment="Center"
+								   Background="BlueViolet"
+								   Text="38 °C"/>
+					</Grid>
+
 				</Border>
 
 				<Border Grid.Row="1">
-				
+					<Grid>
+						<TextBlock Classes="StyleTextBlock_2"
+								   VerticalAlignment="Top"
+								   Text="Теплообенника" />
+						<TextBlock/>
+						<TextBlock Classes="StyleTextBlock_2"
+								   VerticalAlignment="Center"
+								   Background="BlueViolet"
+								   Text="70 °C"/>
+					</Grid>
 				</Border>
 
 			</Grid>
 
-			
-			
-		</Border>
+		</Grid>
 
 
 		<!-- Заглушка -->
 		<Border Grid.Column="0" Grid.Row="2">
-			
+
 		</Border>
 
 		<!-- Выход -->
