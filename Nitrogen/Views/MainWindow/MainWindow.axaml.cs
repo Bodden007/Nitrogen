@@ -27,6 +27,8 @@ public partial class MainWindow : Window
 
             case Key.F4: new Nitrogen.Volume().Show(); break;
 
+            case Key.F5: new Nitrogen.Engine().Show(); break;
+
             case Key.F8: new Nitrogen.Menu().Show(); break;
 
             case Key.D1: HandlerRateLineDisplay(); break;
@@ -47,7 +49,11 @@ public partial class MainWindow : Window
         Nitrogen.Volume volume = new Nitrogen.Volume();
         volume.Show();
     }
-
+    private void Engine_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Nitrogen.Engine engine = new Nitrogen.Engine();
+        engine.Show();
+    }
     private void Menu_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         Nitrogen.Menu menu = new Nitrogen.Menu();
@@ -131,6 +137,4 @@ public partial class MainWindow : Window
             HeaderRate.Text = "Σ Расход";
         }
     }
-
-
 }

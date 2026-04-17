@@ -27,7 +27,11 @@ public partial class Menu : Window
 
             case Key.F1: new Nitrogen.Pressure().Show(); break;
 
-            case Key.F5: new Nitrogen.Volume().Show(); break;
+            case Key.F2: new Nitrogen.Temperature().Show(); break;
+
+            case Key.F4: new Nitrogen.Volume().Show(); break;
+
+            case Key.F5: new Nitrogen.Engine().Show(); break;
 
             case Key.F7: Environment.Exit(0); break;
 
@@ -39,13 +43,21 @@ public partial class Menu : Window
         Nitrogen.Pressure pressure = new Nitrogen.Pressure();
         pressure.Show();
     }
-
+    private void Temperature_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Nitrogen.Temperature temperature = new Nitrogen.Temperature();
+        temperature.Show();
+    }
     private void Volume_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         Nitrogen.Volume volume = new Nitrogen.Volume();
         volume.Show();
     }
-
+    private void Engine_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Nitrogen.Engine engine = new Nitrogen.Engine();
+        engine.Show();
+    }
     private void CloseApp_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         //TODO Разобраться с корректным закрытием приложения
@@ -57,12 +69,10 @@ public partial class Menu : Window
         Nitrogen.Settings settings = new Nitrogen.Settings();
         settings.Show();
     }
-
     private void Exit_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         Close();
     }
-
     private void Menu_Closed(object? sender, System.EventArgs e)
     {
         this.KeyDown -= Menu_KeyDown;

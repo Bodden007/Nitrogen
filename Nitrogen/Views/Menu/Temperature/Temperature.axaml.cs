@@ -17,9 +17,6 @@ public partial class Temperature : Window
 
         Closed += Temperature_Closed;
     }
-
-
-
     private void Temperature_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
         switch (e.Key)
@@ -27,12 +24,10 @@ public partial class Temperature : Window
             case Key.Escape: Close(); break;
         }
     }
-
     private void Exit_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         Close();
     }
-
     private void Temperature_Closed(object? sender, System.EventArgs e)
     {
         this.KeyDown -= Temperature_KeyDown;

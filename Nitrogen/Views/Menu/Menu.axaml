@@ -26,14 +26,31 @@
 			</Grid>
 		</Button>
 
+		<!-- Температура -->
+		<Button x:Name="Temperature" Grid.Column="0" Grid.Row="1" Click="Temperature_Click">
+			<Grid>
+				<TextBlock Classes="StyleTextBlock_2" Text="Температура"/>
+				<TextBlock Classes="FTextBlock" Text="F2"/>
+			</Grid>
+		</Button>
+
 		<!-- Объем -->
-		<Button x:Name="Volume" Grid.Column="1" Grid.Row="1" Click="Volume_Click">
+		<Button x:Name="Volume" Grid.Column="1" Grid.Row="0" Click="Volume_Click">
 			<Grid>
 				<TextBlock Classes="StyleTextBlock_2" TextAlignment="Center" >
 					<Run Text="Объем"/>
 					<LineBreak/>
 					<Run Text="Цемента"/>
 				</TextBlock>
+				<TextBlock Classes="FTextBlock" Text="F4"/>
+			</Grid>
+		</Button>
+
+		<!-- Двигатель -->
+		<Button x:Name="Engine" Grid.Column="1" Grid.Row="1" Click="Engine_Click">
+			<Grid>
+				<TextBlock Classes="StyleTextBlock_2" TextAlignment="Center"
+						   Text="Двигатель"/>
 				<TextBlock Classes="FTextBlock" Text="F5"/>
 			</Grid>
 		</Button>
