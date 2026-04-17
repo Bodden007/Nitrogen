@@ -11,25 +11,27 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        //SystemDecorations = SystemDecorations.None;
         WindowState = WindowState.FullScreen;
 
         this.KeyDown += MainWindow_KeyDown;
     }
-
     private void MainWindow_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
         switch (e.Key)
         {
-            case Key.F1: new Nitrogen.Pressure().Show(); break;
+            case Key.F1: new Nitrogen.Views.Menu.Pressure().Show(); break;
 
-            case Key.F2: new Nitrogen.Temperature().Show(); break;
+            case Key.F2: new Nitrogen.Views.Menu.Temperature().Show(); break;
 
-            case Key.F4: new Nitrogen.Volume().Show(); break;
+            case Key.F3: new Nitrogen.Views.Menu.ScfVolume().Show(); break;
 
-            case Key.F5: new Nitrogen.Engine().Show(); break;
+            case Key.F4: new Nitrogen.Views.Menu.Volume().Show(); break;
 
-            case Key.F8: new Nitrogen.Menu().Show(); break;
+            case Key.F5: new Nitrogen.Views.Menu.Engine().Show(); break;
+
+            case Key.F7: new Nitrogen.Views.Menu.Stages().Show(); break;
+
+            case Key.F8: new Nitrogen.Views.Menu.Menu().Show(); break;
 
             case Key.D1: HandlerRateLineDisplay(); break;
 
@@ -38,34 +40,41 @@ public partial class MainWindow : Window
             case Key.D3: HandlerVolumeLineDisplay(); break;
         }
     }
-
     private void Pressure_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Pressure pressure = new Nitrogen.Pressure();
+        Nitrogen.Views.Menu.Pressure pressure = new Nitrogen.Views.Menu.Pressure();
         pressure.Show();
     }
     private void Volume_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Volume volume = new Nitrogen.Volume();
+        Nitrogen.Views.Menu.Volume volume = new Nitrogen.Views.Menu.Volume();
         volume.Show();
     }
     private void Engine_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Engine engine = new Nitrogen.Engine();
+        Nitrogen.Views.Menu.Engine engine = new Nitrogen.Views.Menu.Engine();
         engine.Show();
     }
     private void Menu_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Menu menu = new Nitrogen.Menu();
+        Nitrogen.Views.Menu.Menu menu = new Nitrogen.Views.Menu.Menu();
         menu.Show();
     }
-
     private void Temp_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Temperature temp = new Nitrogen.Temperature();
+        Nitrogen.Views.Menu.Temperature temp = new Nitrogen.Views.Menu.Temperature();
         temp.Show();
     }
-
+    private void Stages_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Nitrogen.Views.Menu.Stages stages = new Nitrogen.Views.Menu.Stages();
+        stages.Show();
+    }
+    private void Scf_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Nitrogen.Views.Menu.ScfVolume scfVolume = new Nitrogen.Views.Menu.ScfVolume();
+        scfVolume.Show();
+    }
     private void HandlerVolumeLineDisplay()
     {
         if (CombiVolume.IsVisible)
@@ -87,7 +96,6 @@ public partial class MainWindow : Window
             CombiHeader.Text = "Σ Объем Цемента";
         }
     }
-
     private void HandlerTempLineDisplay()
     {
         if (!TempOut.IsVisible)
@@ -98,8 +106,8 @@ public partial class MainWindow : Window
             TempExc.IsVisible = true;
             ValueVaporizer.IsVisible = true;
 
-            ValueTempOut.Classes.Remove("StyleTextBlock_2");
-            ValueTempOut.Classes.Add("StyleTextBlock_1");
+            ValueTempOut.Classes.Remove("menu_title");
+            ValueTempOut.Classes.Add("menu_subtext");
         }
         else
         {
@@ -109,11 +117,10 @@ public partial class MainWindow : Window
             TempExc.IsVisible = false;
             ValueVaporizer.IsVisible = false;
 
-            ValueTempOut.Classes.Remove("StyleTextBlock_1");
-            ValueTempOut.Classes.Add("StyleTextBlock_2");
+            ValueTempOut.Classes.Remove("menu_subtext");
+            ValueTempOut.Classes.Add("menu_title");
         }
     }
-
     private void HandlerRateLineDisplay()
     {
         if (!HeaderRate_A.IsVisible)

@@ -3,6 +3,8 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+		xmlns:vm="using:Nitrogen.Views.MainWindow"
+		x:DataType="vm:MainWindowViewModel"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		x:Class="Nitrogen.MainWindow"
 		Title="Nitrogen">
@@ -30,14 +32,14 @@
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
 				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
-					<TextBlock Classes="StyleTag" Text="Давление"/>
-					<TextBlock Classes="FTextBlock" Text="F1"/>
+					<TextBlock Classes="section_label" Text="Давление"/>
+					<TextBlock Classes="hotkey" Text="F1"/>
 				</Grid>
 
-				<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+				<TextBlock Grid.Row="1" Classes="menu_title"
 						   Text="800 psi"/>
 				<Border Grid.Row="2" Background="#FBA9A3">
-					<TextBlock  Classes="StyleTextBlock_1"
+					<TextBlock  Classes="menu_subtext"
 								Text="Отсечка 1000 psi"/>
 				</Border>
 			</Grid>
@@ -52,30 +54,30 @@
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
 				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
-					<TextBlock x:Name="HeaderTemp" Classes="StyleTag" Text="Температура Выход"/>
-					<TextBlock Classes="FTextBlock" Text="F2"/>
+					<TextBlock x:Name="HeaderTemp" Classes="section_label" Text="Температура Выход"/>
+					<TextBlock Classes="hotkey" Text="F2"/>
 				</Grid>
 				<Grid Grid.Row="1">
-					<TextBlock x:Name="TempOut" Classes="StyleTextBlock_1"
+					<TextBlock x:Name="TempOut" Classes="menu_subtext"
 							   HorizontalAlignment="Left"
 							   Text="Выход" IsVisible="False" />
-					<TextBlock x:Name="ValueTempOut" Classes="StyleTextBlock_2"
+					<TextBlock x:Name="ValueTempOut" Classes="menu_title"
 							   Text="40 °C"/>
 				</Grid>
 				<Grid Grid.Row="2">
-					<TextBlock x:Name="TempExc" Classes="StyleTextBlock_1"
+					<TextBlock x:Name="TempExc" Classes="menu_subtext"
 							   HorizontalAlignment="Left"
 							   Text="Вапорайзер" IsVisible="False" />
-					<TextBlock x:Name="ValueVaporizer" Classes="StyleTextBlock_1"
+					<TextBlock x:Name="ValueVaporizer" Classes="menu_subtext"
 							   Text="38 °C" IsVisible="False" />
-					<TextBlock Classes="FTextBlock"  VerticalAlignment="Bottom"
+					<TextBlock Classes="hotkey"  VerticalAlignment="Bottom"
 							   Text="2"/>
 				</Grid>
 			</Grid>
 		</Button>
 
-		<!--Расход-->
-		<Button x:Name="Rate" Grid.Column="0" Grid.Row="1">
+		<!-- Расход SCF -->
+		<Button x:Name="Scf" Grid.Column="0" Grid.Row="1" Click="Scf_Click" >
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="1*"/>
@@ -83,25 +85,25 @@
 					<RowDefinition Height="1*"/>
 				</Grid.RowDefinitions>
 				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
-					<TextBlock x:Name="HeaderRate" Classes="StyleTag" Text="Σ Расход"/>
-					<TextBlock Classes="FTextBlock" Text="F3"/>
+					<TextBlock x:Name="HeaderRate" Classes="section_label" Text="Σ Расход"/>
+					<TextBlock Classes="hotkey" Text="F3"/>
 				</Grid>
 				<Grid Grid.Row="1">
-					<TextBlock x:Name="HeaderRate_A" Classes="StyleTextBlock_1"
+					<TextBlock x:Name="HeaderRate_A" Classes="menu_subtext"
 							   HorizontalAlignment="Left"
 							   Text="A" IsVisible="False" />
-					<TextBlock x:Name="ValueRate" Classes="StyleTextBlock_2"
+					<TextBlock x:Name="ValueRate" Classes="menu_title"
 							   Text="300 SCF"/>
-					<TextBlock x:Name="ValueRate_A" Classes="StyleTextBlock_1"
+					<TextBlock x:Name="ValueRate_A" Classes="menu_subtext"
 							   Text="160 SCF" IsVisible="False" />
 				</Grid>
 				<Grid Grid.Row="2">
-					<TextBlock x:Name="HeaderRate_B" Classes="StyleTextBlock_1"
+					<TextBlock x:Name="HeaderRate_B" Classes="menu_subtext"
 							   HorizontalAlignment="Left"
 							   Text="B" IsVisible="False" />
-					<TextBlock x:Name="ValueRate_B" Classes="StyleTextBlock_1"
+					<TextBlock x:Name="ValueRate_B" Classes="menu_subtext"
 							   Text="140 SCF" IsVisible="False" />
-					<TextBlock Classes="FTextBlock"  VerticalAlignment="Bottom" Text="1"/>
+					<TextBlock Classes="hotkey"  VerticalAlignment="Bottom" Text="1"/>
 				</Grid>
 			</Grid>
 		</Button>
@@ -117,32 +119,32 @@
 
 				<!-- Суммарный объем -->
 				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}" >
-					<TextBlock x:Name="CombiHeader" Classes="StyleTag" Text="Σ Объем Цемента"/>
-					<TextBlock Classes="FTextBlock" Text="F4"/>
+					<TextBlock x:Name="CombiHeader" Classes="section_label" Text="Σ Объем Цемента"/>
+					<TextBlock Classes="hotkey" Text="F4"/>
 				</Grid>
 
 				<!-- Раздельный объем -->
 				<!-- Водительская сторона -->
 				<Grid Grid.Row="1">
-					<TextBlock x:Name="CombiVolume" Classes="StyleTextBlock_2"
+					<TextBlock x:Name="CombiVolume" Classes="menu_title"
 							   Text="110 bbl" />
-					<TextBlock x:Name="DsStage" Classes="StyleTextBlock_1"
+					<TextBlock x:Name="DsStage" Classes="menu_subtext"
 							   HorizontalAlignment="Left"
 							   Text="ВС Насос" IsVisible="False"/>
-					<TextBlock x:Name="DsVolume" Grid.Row="1" Classes="StyleTextBlock_1"
+					<TextBlock x:Name="DsVolume" Grid.Row="1" Classes="menu_subtext"
 							   HorizontalAlignment="Center"
 							   Text="60 bbl" IsVisible="False"/>
 				</Grid>
 
 				<!-- Пассажирская сторона -->
 				<Grid Grid.Row="2">
-					<TextBlock x:Name="PsStage" Classes="StyleTextBlock_1"
+					<TextBlock x:Name="PsStage" Classes="menu_subtext"
 							   HorizontalAlignment="Left"
 							   Text="ПС Насос" IsVisible="False"/>
-					<TextBlock x:Name="PsVolume" Classes="StyleTextBlock_1"
+					<TextBlock x:Name="PsVolume" Classes="menu_subtext"
 							   HorizontalAlignment="Center"
 							   Text="50 bbl" IsVisible="False"/>
-					<TextBlock Classes="FTextBlock"  VerticalAlignment="Bottom" Text="3"/>
+					<TextBlock Classes="hotkey"  VerticalAlignment="Bottom" Text="3"/>
 				</Grid>
 			</Grid>
 		</Button>
@@ -163,11 +165,11 @@
 					</Grid.RowDefinitions>
 
 					<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
-						<TextBlock Classes="StyleTag"
+						<TextBlock Classes="section_label"
 								   Text="Задвижка"/>
 					</Grid>
 					<Grid Grid.Row="1" Grid.RowSpan="2" Background="Green">
-						<TextBlock Classes="StyleTag"
+						<TextBlock Classes="section_label"
 								   Text="Открыта"/>
 					</Grid>
 				</Grid>
@@ -182,11 +184,11 @@
 						<RowDefinition Height="1*"/>
 					</Grid.RowDefinitions>
 					<Grid Grid.Row="0" >
-						<TextBlock Classes="FTextBlock" Text="F6"/>
+						<TextBlock Classes="hotkey" Text="F6"/>
 					</Grid>
-					<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+					<TextBlock Grid.Row="1" Classes="menu_title"
 							   Text="Запись"/>
-					<TextBlock Grid.Row="2" Classes="StyleTag" Foreground="#99000000"
+					<TextBlock Grid.Row="2" Classes="section_label" Foreground="#99000000"
 							   Text="стоп"/>
 				</Grid>
 			</Button>
@@ -200,8 +202,8 @@
 					<RowDefinition Height="7*"/>
 				</Grid.RowDefinitions>
 				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
-					<TextBlock Classes="StyleTag" Text="Двигатель"/>
-					<TextBlock Classes="FTextBlock" Text="F5"/>
+					<TextBlock Classes="section_label" Text="Двигатель"/>
+					<TextBlock Classes="hotkey" Text="F5"/>
 				</Grid>
 
 				<Grid Grid.Row="1">
@@ -223,22 +225,22 @@
 					<!-- Значки двигателя -->
 					<materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="0" Kind="Reload"
 												 Width="36" Height="36" Foreground="Green" />
-					<TextBlock Grid.Column="1" Grid.Row="0" Classes="StyleTag"
+					<TextBlock Grid.Column="1" Grid.Row="0" Classes="section_label"
 							   Text="600 об/м"/>
 
 					<materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="1" Kind="CoolantTemperature"
 												 Width="36" Height="36" Foreground="Green" />
-					<TextBlock Grid.Column="1" Grid.Row="1" Classes="StyleTag"
+					<TextBlock Grid.Column="1" Grid.Row="1" Classes="section_label"
 							   Text="96 °C"/>
 
 					<materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="2" Kind="OilLevel"
 												 Width="36" Height="36" Foreground="Green" />
-					<TextBlock Grid.Column="1" Grid.Row="2" Classes="StyleTag"
+					<TextBlock Grid.Column="1" Grid.Row="2" Classes="section_label"
 							   Text="2 г/см³"/>
 
 					<materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="3" Kind="CarBattery"
 												 Width="36" Height="36" Foreground="Green" />
-					<TextBlock Grid.Column="1" Grid.Row="3" Classes="StyleTag"
+					<TextBlock Grid.Column="1" Grid.Row="3" Classes="section_label"
 							   Text="13.8 В"/>
 
 					<!-- Значки коробки -->
@@ -255,7 +257,7 @@
 								<ColumnDefinition Width="1*"/>
 								<ColumnDefinition Width="1*"/>
 							</Grid.ColumnDefinitions>
-							<TextBlock  Grid.Column="0" Classes="StyleTag"
+							<TextBlock  Grid.Column="0" Classes="section_label"
 										Text="1-5"/>
 							<materialIcons:MaterialIcon Kind="CarCog" Grid.Column="1"
 														Width="36" Height="36" Foreground="Black" />
@@ -269,7 +271,7 @@
 								<ColumnDefinition Width="1*"/>
 								<ColumnDefinition Width="1*"/>
 							</Grid.ColumnDefinitions>
-							<TextBlock  Grid.Column="1" Classes="StyleTag"
+							<TextBlock  Grid.Column="1" Classes="section_label"
 										Text="1-4"/>
 							<materialIcons:MaterialIcon Kind="CarCog" Grid.Column="0"
 														Width="36" Height="36" Foreground="Black" />
@@ -283,7 +285,7 @@
 								<ColumnDefinition Width="1*"/>
 								<ColumnDefinition Width="1*"/>
 							</Grid.ColumnDefinitions>
-							<TextBlock  Grid.Column="0" Classes="StyleTag"
+							<TextBlock  Grid.Column="0" Classes="section_label"
 										Text="1-3"/>
 							<materialIcons:MaterialIcon Kind="CarCog" Grid.Column="1"
 														Width="36" Height="36" Foreground="Black" />
@@ -297,7 +299,7 @@
 								<ColumnDefinition Width="1*"/>
 								<ColumnDefinition Width="1*"/>
 							</Grid.ColumnDefinitions>
-							<TextBlock  Grid.Column="1" Classes="StyleTag"
+							<TextBlock  Grid.Column="1" Classes="section_label"
 										Text="2"/>
 							<materialIcons:MaterialIcon Kind="CarCog" Grid.Column="0"
 														Width="36" Height="36" Foreground="Black" />
@@ -311,7 +313,7 @@
 								<ColumnDefinition Width="1*"/>
 								<ColumnDefinition Width="1*"/>
 							</Grid.ColumnDefinitions>
-							<TextBlock  Grid.Column="0" Classes="StyleTag"
+							<TextBlock  Grid.Column="0" Classes="section_label"
 										Text="1"/>
 							<materialIcons:MaterialIcon Kind="CarCog" Grid.Column="1"
 														Width="36" Height="36" Foreground="Black" />
@@ -329,8 +331,8 @@
 				<ColumnDefinition Width="1*"/>
 			</Grid.ColumnDefinitions>
 
-			<!--События-->
-			<Button Grid.Column="0">
+			<!-- Стадии -->
+			<Button x:Name="Stages" Grid.Column="0" Click="Stages_Click" >
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="1*"/>
@@ -338,11 +340,11 @@
 						<RowDefinition Height="1*"/>
 					</Grid.RowDefinitions>
 					<Grid Grid.Row="0" >
-						<TextBlock Classes="FTextBlock" Text="F7"/>
+						<TextBlock Classes="hotkey" Text="F7"/>
 					</Grid>
-					<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+					<TextBlock Grid.Row="1" Classes="menu_title"
 							   Text="Стад"/>
-					<TextBlock Grid.Row="2" Classes="StyleTag" Foreground="#99000000"
+					<TextBlock Grid.Row="2" Classes="section_label" Foreground="#99000000"
 							   Text="стад #1"/>
 				</Grid>
 			</Button>
@@ -356,12 +358,12 @@
 						<RowDefinition Height="1*"/>
 					</Grid.RowDefinitions>
 					<Grid Grid.Row="0" >
-						<TextBlock Classes="FTextBlock" Text="F8"/>
+						<TextBlock Classes="hotkey" Text="F8"/>
 					</Grid>
-					<TextBlock Grid.Row="1" Classes="StyleTextBlock_2"
+					<TextBlock Grid.Row="1" Classes="menu_title"
 							   Text="Меню"/>
-					<TextBlock Grid.Row="2" Classes="StyleTag" Foreground="#99000000"
-							   Text="Time"/>
+					<TextBlock Grid.Row="2" Classes="section_label" Foreground="#99000000"
+							   Text="{Binding CurrentTime, StringFormat='{}{0:HH:mm:ss}'}"/>
 				</Grid>
 			</Button>
 		</Grid>

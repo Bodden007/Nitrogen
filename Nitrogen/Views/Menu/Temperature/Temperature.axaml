@@ -3,7 +3,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		x:Class="Nitrogen.Temperature"
+		x:Class="Nitrogen.Views.Menu.Temperature"
 		Title="Temperature">
 
 	<Grid Background="{DynamicResource PrimaryGridColor}">
@@ -19,17 +19,17 @@
 
 		<!-- Header -->
 		<Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource PrimaryHeaderBrush}">
-			<TextBlock Classes="StyleTag" Text="Температура"/>
+			<TextBlock Classes="section_label" Text="Температура"/>
 		</Grid>
 
 		<!-- Температура Выход -->
 		<Border Grid.Column="0" Grid.Row="1">
 			<Grid>
-				<TextBlock Classes="StyleTextBlock_2"
+				<TextBlock Classes="menu_title"
 						   VerticalAlignment="Top"
 						   Text="На Выходе" />
 				<TextBlock/>
-				<TextBlock Classes="StyleTextBlock_2"
+				<TextBlock Classes="menu_title"
 						   VerticalAlignment="Center"
 						   Background="BlueViolet"
 						   Text="40 °C"/>
@@ -46,11 +46,11 @@
 
 				<Border Grid.Row="0">
 					<Grid>
-						<TextBlock Classes="StyleTextBlock_2"
+						<TextBlock Classes="menu_title"
 								   VerticalAlignment="Top"
 								   Text="Вапорайзера" />
 						<TextBlock/>
-						<TextBlock Classes="StyleTextBlock_2"
+						<TextBlock Classes="menu_title"
 								   VerticalAlignment="Center"
 								   Background="BlueViolet"
 								   Text="38 °C"/>
@@ -60,11 +60,11 @@
 
 				<Border Grid.Row="1">
 					<Grid>
-						<TextBlock Classes="StyleTextBlock_2"
+						<TextBlock Classes="menu_title"
 								   VerticalAlignment="Top"
 								   Text="Теплообенника" />
 						<TextBlock/>
-						<TextBlock Classes="StyleTextBlock_2"
+						<TextBlock Classes="menu_title"
 								   VerticalAlignment="Center"
 								   Background="BlueViolet"
 								   Text="70 °C"/>
@@ -84,8 +84,8 @@
 		<!-- Выход -->
 		<Button x:Name="Exit" Grid.Column="1" Grid.Row="2" Click="Exit_Click">
 			<Grid>
-				<TextBlock Classes="StyleTextBlock_2" Text="Выход"/>
-				<TextBlock Classes="FTextBlock" Text="ESC"/>
+				<TextBlock Classes="menu_title" Text="Выход"/>
+				<TextBlock Classes="hotkey" Text="ESC"/>
 			</Grid>
 		</Button>
 

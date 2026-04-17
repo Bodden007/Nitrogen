@@ -5,7 +5,7 @@
 		xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
 		xmlns:controls="using:Nitrogen.Controls"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-		x:Class="Nitrogen.Engine"
+		x:Class="Nitrogen.Views.Menu.Engine"
 		Title="Engine">
 
 	<Grid Background="{DynamicResource PrimaryGridColor}">
@@ -23,7 +23,7 @@
 
 		<!-- Header -->
 		<Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Background="{DynamicResource PrimaryHeaderBrush}">
-			<TextBlock Classes="StyleTag" Text="Двигатель"/>
+			<TextBlock Classes="section_label" Text="Двигатель"/>
 		</Grid>
 
 		<!-- Кнопка передач -->
@@ -72,31 +72,31 @@
 
 				<!-- 1-5 -->
 				<Border Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Background="Gray" >
-					<TextBlock Classes="StyleTag" FontSize="32"
+					<TextBlock Classes="section_label" FontSize="32"
 							   Text="1-5"/>
 				</Border>
 
 				<!-- 1-4 -->
 				<Border Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Background="Gray" >
-					<TextBlock Classes="StyleTag" FontSize="32"
+					<TextBlock Classes="section_label" FontSize="32"
 							   Text="1-4"/>
 				</Border>
 
 				<!-- 1-3 -->
 				<Border Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Background="Gray" >
-					<TextBlock Classes="StyleTag" FontSize="32"
+					<TextBlock Classes="section_label" FontSize="32"
 							   Text="1-3"/>
 				</Border>
 
 				<!-- 2 -->
 				<Border Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Background="Gray" >
-					<TextBlock Classes="StyleTag" FontSize="32"
+					<TextBlock Classes="section_label" FontSize="32"
 							   Text="2"/>
 				</Border>
 
 				<!-- 1 -->
 				<Border Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="2" Background="Gray" >
-					<TextBlock Classes="StyleTag" FontSize="32"
+					<TextBlock Classes="section_label" FontSize="32"
 							   Text="1"/>
 				</Border>
 			</Grid>
@@ -109,8 +109,8 @@
 		<!--Выход из Меню-->
 		<Button x:Name="Exit" Grid.Column="3" Grid.Row="2" Click="Exit_Click">
 			<Grid>
-				<TextBlock Classes="StyleTextBlock_2" Text="Выход"/>
-				<TextBlock Classes="FTextBlock" Text="ESC"/>
+				<TextBlock Classes="menu_title" Text="Выход"/>
+				<TextBlock Classes="hotkey" Text="ESC"/>
 			</Grid>
 		</Button>
 	</Grid>

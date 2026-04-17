@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Input;
 
-namespace Nitrogen;
+namespace Nitrogen.Views.Settings;
 
 public partial class PsPumpSet : Window
 {

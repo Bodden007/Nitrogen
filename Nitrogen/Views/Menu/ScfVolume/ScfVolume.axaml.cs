@@ -5,19 +5,18 @@ using Avalonia.Input;
 
 namespace Nitrogen.Views.Menu;
 
-public partial class Temperature : Window
+public partial class ScfVolume : Window
 {
-    public Temperature()
+    public ScfVolume()
     {
         InitializeComponent();
 
         WindowState = WindowState.FullScreen;
 
-        this.KeyDown += Temperature_KeyDown;
-
-        Closed += Temperature_Closed;
+        this.KeyDown += ScfVolume_KeyDown;
+        Closed += ScfVolume_Closed;
     }
-    private void Temperature_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
+    private void ScfVolume_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
         switch (e.Key)
         {
@@ -28,9 +27,9 @@ public partial class Temperature : Window
     {
         Close();
     }
-    private void Temperature_Closed(object? sender, System.EventArgs e)
+    private void ScfVolume_Closed(object? sender, System.EventArgs e)
     {
-        this.KeyDown -= Temperature_KeyDown;
-        Closed -= Temperature_Closed;
+        this.KeyDown -= ScfVolume_KeyDown;
+        Closed -= ScfVolume_Closed;
     }
 }

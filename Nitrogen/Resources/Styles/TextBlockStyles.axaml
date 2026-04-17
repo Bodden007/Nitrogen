@@ -1,12 +1,12 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Design.PreviewWith>
-    <Border Padding="20">
-      <!-- Add Controls for Previewer Here -->
-    </Border>
+<!--    <Border Padding="20">
+      --><!-- Add Controls for Previewer Here --><!--
+    </Border>-->
   </Design.PreviewWith>
 
-  		<Style Selector="TextBlock.StyleTag">
+  		<Style Selector="TextBlock.section_label">
 			<Setter Property="FontSize" Value="25"/>
 			<Setter Property="FontFamily" Value="Times New Roman"/>
 			<Setter Property="FontWeight" Value="Bold"/>
@@ -16,7 +16,7 @@
 			<Setter Property="TextAlignment" Value="Center"/>
 		</Style>
 
-		<Style Selector="TextBlock.FTextBlock">
+		<Style Selector="TextBlock.hotkey">
 			<Setter Property="Foreground" Value="Black"/>
 			<Setter Property="FontSize" Value="16"/>
 			<Setter Property="FontFamily" Value="Times New Roman"/>
@@ -26,7 +26,7 @@
 			<Setter Property="TextAlignment" Value="Center"/>
 		</Style>
 
-		<Style Selector="TextBlock.StyleTextBlock_2">
+		<Style Selector="TextBlock.menu_title"> 
 			<Setter Property="FontSize" Value="45"/>
 			<Setter Property="FontFamily" Value="Times New Roman"/>
 			<Setter Property="FontWeight" Value="Bold"/>
@@ -34,7 +34,7 @@
 			<Setter Property="HorizontalAlignment" Value="Center"/>
 		</Style>
 
-		<Style Selector="TextBlock.StyleTextBlock_1">
+		<Style Selector="TextBlock.menu_subtext">
 			<Setter Property="FontSize" Value="25"/>
 			<Setter Property="FontFamily" Value="Times New Roman"/>
 			<Setter Property="FontWeight" Value="Bold"/>

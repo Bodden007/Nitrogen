@@ -5,6 +5,6 @@
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 x:Class="Nitrogen.Controls.EngineTachometer">
 
-	<TextBlock Text="Привет ТАХО!!!" Classes="StyleTextBlock_2" Background="Red"/>
+	<TextBlock Text="Привет ТАХО!!!" Classes="menu_title" Background="Red"/>
 
 </UserControl>

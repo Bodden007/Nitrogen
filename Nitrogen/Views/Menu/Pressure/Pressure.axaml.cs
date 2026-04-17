@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace Nitrogen;
+namespace Nitrogen.Views.Menu;
 
 public partial class Pressure : Window
 {

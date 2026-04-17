@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Nitrogen.PsPumpSet"
+        x:Class="Nitrogen.Views.Settings.PsPumpSet"
         Title="PsPumpSet">
  
      <Grid Background="{DynamicResource PrimaryGridColor}">
@@ -19,7 +19,7 @@
 
 		<!-- Header -->
 		<Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource PrimaryHeaderBrush}">
-			<TextBlock  Classes="StyleTag" Text="Настройка Насоса ПС"/>
+			<TextBlock  Classes="section_label" Text="Настройка Насоса ПС"/>
 		</Grid>
 
 		<!-- Настройка частоты  -->
@@ -35,23 +35,23 @@
 				</Grid.RowDefinitions>
 
 				<!-- Герц Мин.. -->
-				<TextBlock Grid.Row="0" Classes="StyleTag"
+				<TextBlock Grid.Row="0" Classes="section_label"
 						   Text="Мин. Гц"/>
 				<Grid Grid.Row="1">
 					<TextBox Text="0"/>
-					<TextBlock Classes="FTextBlock" Text="F3"/>
+					<TextBlock Classes="hotkey" Text="F3"/>
 				</Grid>
 
 				<!-- Герц Макс.. -->
-				<TextBlock Grid.Row="2" Classes="StyleTag"
+				<TextBlock Grid.Row="2" Classes="section_label"
 						   Text="Макс. Гц"/>
 				<Grid Grid.Row="3">
 					<TextBox Text="1000"/>
-					<TextBlock Classes="FTextBlock" Text="F4"/>
+					<TextBlock Classes="hotkey" Text="F4"/>
 				</Grid>
 
 				<!-- Текущие Значения -->
-				<TextBlock Grid.Row="4" Classes="StyleTextBlock_2" Background="Red" Text="300 bpm"/>
+				<TextBlock Grid.Row="4" Classes="menu_title" Background="Red" Text="300 bpm"/>
 
 			</Grid>
 		</Border>
@@ -69,19 +69,19 @@
 				</Grid.RowDefinitions>
 
 				<!-- BPM Мин.. -->
-				<TextBlock Grid.Row="0" Classes="StyleTag"
+				<TextBlock Grid.Row="0" Classes="section_label"
 						   Text="Мин. bpm"/>
 				<Grid Grid.Row="1">
 					<TextBox Text="0.00"/>
-					<TextBlock Classes="FTextBlock" Text="F5"/>
+					<TextBlock Classes="hotkey" Text="F5"/>
 				</Grid>
 
 				<!-- BPM Макс.. -->
-				<TextBlock Grid.Row="2" Classes="StyleTag"
+				<TextBlock Grid.Row="2" Classes="section_label"
 						   Text="Макс. bpm"/>
 				<Grid Grid.Row="3">
 					<TextBox Text="10"/>
-					<TextBlock Classes="FTextBlock" Text="F6"/>
+					<TextBlock Classes="hotkey" Text="F6"/>
 				</Grid>
 			</Grid>
 		</Border>
@@ -97,8 +97,8 @@
 			<!-- Сохранить -->
 			<Button x:Name="Save" Grid.Column="0" >
 				<Grid>
-					<TextBlock Classes="StyleTextBlock_2" Text="Сохранить"/>
-					<TextBlock Classes="FTextBlock" Text="F1"/>
+					<TextBlock Classes="menu_title" Text="Сохранить"/>
+					<TextBlock Classes="hotkey" Text="F1"/>
 				</Grid>
 			</Button>
 
@@ -110,8 +110,8 @@
 			<!-- Выход -->
 			<Button x:Name="Exit" Grid.Column="2"  Click="Exit_Click">
 				<Grid>
-					<TextBlock Classes="StyleTextBlock_2" Text="Выход"/>
-					<TextBlock Classes="FTextBlock" Text="ESC"/>
+					<TextBlock Classes="menu_title" Text="Выход"/>
+					<TextBlock Classes="hotkey" Text="ESC"/>
 				</Grid>
 			</Button>
 		</Grid>

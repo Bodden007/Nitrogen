@@ -5,19 +5,19 @@ using Avalonia.Input;
 
 namespace Nitrogen.Views.Menu;
 
-public partial class Temperature : Window
+public partial class Stages : Window
 {
-    public Temperature()
+    public Stages()
     {
         InitializeComponent();
 
         WindowState = WindowState.FullScreen;
 
-        this.KeyDown += Temperature_KeyDown;
+        this.KeyDown += Stages_KeyDown;
 
-        Closed += Temperature_Closed;
+        Closed += Stages_Closed;
     }
-    private void Temperature_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
+    private void Stages_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
         switch (e.Key)
         {
@@ -28,9 +28,9 @@ public partial class Temperature : Window
     {
         Close();
     }
-    private void Temperature_Closed(object? sender, System.EventArgs e)
+    private void Stages_Closed(object? sender, System.EventArgs e)
     {
-        this.KeyDown -= Temperature_KeyDown;
-        Closed -= Temperature_Closed;
+        this.KeyDown -= Stages_KeyDown;
+        Closed -= Stages_Closed;
     }
 }
