@@ -176,7 +176,7 @@
 			</Border>
 
 			<!-- Запись -->
-			<Button Grid.Column="1">
+			<Button x:Name="Record" Grid.Column="1" Click="Record_Click" >
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="1*"/>

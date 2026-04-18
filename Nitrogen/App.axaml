@@ -20,5 +20,6 @@
 		<StyleInclude Source="/Resources/Styles/TextBlockStyles.axaml" />
 		<StyleInclude Source="/Resources/Styles/TextBoxStyles.axaml" />
 		<StyleInclude Source="/Resources/Styles/BorderStyles.axaml" />
+		<StyleInclude Source="/Resources/Styles/TabItemStyles.axaml" />
 	</Application.Styles>
 </Application>

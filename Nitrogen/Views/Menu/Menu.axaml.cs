@@ -35,7 +35,7 @@ public partial class Menu : Window
 
             case Key.F5: new Nitrogen.Views.Menu.Engine().Show(); break;
 
-            case Key.F6: new Nitrogen.Views.Menu.Stage.Profiles.StageProfiles(); break;
+            case Key.F6: new Nitrogen.Views.Menu.Stage.Profiles.StageProfiles().Show(); break;
 
             case Key.F7: Environment.Exit(0); break;
 

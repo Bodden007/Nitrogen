@@ -6,35 +6,48 @@
 		</Border>-->
 	</Design.PreviewWith>
 
-	<Style Selector="TabItem">
-		<Setter Property="Background" Value="{DynamicResource SecondBlueColor}" />
-		<Setter Property="Padding" Value="25,25" />
-		<Setter Property="BorderThickness" Value="0" />
-		<Setter Property="BorderBrush" Value="Transparent" />
-		<Setter Property="Margin" Value="0,0,5,0" />
-		<Setter Property="FontSize" Value="40" />
-		<Setter Property="FontFamily" Value="Times New Roman" />
+	<!--	<Style Selector="TabItem">
+	<Setter Property="Background" Value="{DynamicResource SecondBlueColor}" />
+	<Setter Property="Padding" Value="25,25" />
+	<Setter Property="BorderThickness" Value="0" />
+	<Setter Property="BorderBrush" Value="Transparent" />
+	<Setter Property="Margin" Value="0,0,5,0" />
+	<Setter Property="FontSize" Value="40" />
+	<Setter Property="FontFamily" Value="Times New Roman" />
 
-		<Setter Property="Template">
-			<ControlTemplate TargetType="TabItem">
-				<Border x:Name="Border"
-						Background="{TemplateBinding Background}"
-						BorderThickness="1,1,1,0"
-						BorderBrush="Gainsboro"
-						CornerRadius="4,40,0,0"
-						Margin="10,5">
-					<ContentPresenter Content="{TemplateBinding Header}"
-									  VerticalAlignment="Center"
-									  HorizontalAlignment="Center"
-									  Margin="{TemplateBinding Padding}" />
-				</Border>
-			</ControlTemplate>
-		</Setter>
+	<Setter Property="Template">
+	<ControlTemplate TargetType="TabItem">
+	<Border x:Name="Border"
+	Background="{TemplateBinding Background}"
+	BorderThickness="1,1,1,0"
+	BorderBrush="Gainsboro"
+	CornerRadius="4,40,0,0"
+	Margin="10,5">
+	<ContentPresenter Content="{TemplateBinding Header}"
+	VerticalAlignment="Center"
+	HorizontalAlignment="Center"
+	Margin="{TemplateBinding Padding}" />
+	</Border>
+	</ControlTemplate>
+	</Setter>
+	</Style>-->
+
+	<Style Selector="TabItem">
+		<Setter Property="Background" Value="White"/>
+		<Setter Property="BorderBrush" Value="#CCCCCC"/> <!-- опционально, чтобы не сливалось -->
+	</Style>
+
+	<Style Selector="TabItem:pointerover">
+		<Setter Property="Background" Value="White"/>
 	</Style>
 
 	<!-- Состояние: выбран -->
 	<Style Selector="TabItem:selected">
-		<Setter Property="Background" Value="{DynamicResource PrimaryBlueColor}" />
+		<Setter Property="Background" Value="Red" />
+	</Style>
+
+	<Style Selector="TabItem:selected:pointerover">
+		<Setter Property="Background" Value="Red"/>
 	</Style>
 
 </Styles>

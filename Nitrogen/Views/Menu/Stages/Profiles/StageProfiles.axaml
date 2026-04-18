@@ -23,7 +23,197 @@
 						Text="Профили"/>
 		</Grid>
 
-		<TabItem Grid.Column="0" Grid.Row="1" Content="1" ></TabItem>
+		<Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+			<TabControl >
+				<TabItem>
+					<TabItem.Header>
+						<TextBlock Classes="menu_title" Text="Стадия 1 .. 5"/>
+					</TabItem.Header>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="1*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="1*"/>
+							<RowDefinition Height="1*"/>
+							<RowDefinition Height="1*"/>
+							<RowDefinition Height="1*"/>
+							<RowDefinition Height="1*"/>
+							<RowDefinition Height="1*"/>
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Column="0" Grid.Row="0" Classes="menu_subtext"
+								   Text="Стадия"/>
+						<TextBlock Grid.Column="1" Grid.Row="0" Classes="menu_subtext">
+							<Run Text="Объем"/>
+							<LineBreak/>
+							<Run Text="bbl"/>
+						</TextBlock>
+						<TextBlock Grid.Column="2" Grid.Row="0" Classes="menu_subtext">
+							<Run Text="Начало"/>
+							<LineBreak/>
+							<Run Text="scf/bbl"/>
+						</TextBlock>
+						<TextBlock Grid.Column="3" Grid.Row="0" Classes="menu_subtext">
+							<Run Text="Конец"/>
+							<LineBreak/>
+							<Run Text="scf/bbl"/>
+						</TextBlock>
+
+						<!-- Стадия 1 -->
+						<Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4"/>
+						<TextBlock Grid.Column="0" Grid.Row="1" Classes="menu_subtext" Text="1"/>
+						<TextBlock Grid.Column="0" Grid.Row="1" Classes="hotkey" Text="ctrl 1"/>
+						<TextBox Grid.Column="1" Grid.Row="1" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="2" Grid.Row="1" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="3" Grid.Row="1" Classes="Volume" Text="10"/>
+
+						<!-- Стадия 2 -->
+						<Border Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"/>
+						<TextBlock Grid.Column="0" Grid.Row="2" Classes="menu_subtext" Text="2"/>
+						<TextBlock Grid.Column="0" Grid.Row="2" Classes="hotkey" Text="ctrl 2"/>
+						<TextBox Grid.Column="1" Grid.Row="2" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="2" Grid.Row="2" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="3" Grid.Row="2" Classes="Volume" Text="10"/>
+
+						<!-- Стадия 3 -->
+						<Border Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4"/>
+						<TextBlock Grid.Column="0" Grid.Row="3" Classes="menu_subtext" Text="3"/>
+						<TextBlock Grid.Column="0" Grid.Row="3" Classes="hotkey" Text="ctrl 3"/>
+						<TextBox Grid.Column="1" Grid.Row="3" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="2" Grid.Row="3" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="3" Grid.Row="3" Classes="Volume" Text="10"/>
+
+						<!-- Стадия 4 -->
+						<Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4"/>
+						<TextBlock Grid.Column="0" Grid.Row="4" Classes="menu_subtext" Text="4"/>
+						<TextBlock Grid.Column="0" Grid.Row="4" Classes="hotkey" Text="ctrl 4"/>
+						<TextBox Grid.Column="1" Grid.Row="4" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="2" Grid.Row="4" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="3" Grid.Row="4" Classes="Volume" Text="10"/>
+
+						<!-- Стадия 5 -->
+						<Border Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4"/>
+						<TextBlock Grid.Column="0" Grid.Row="5" Classes="menu_subtext" Text="5"/>
+						<TextBlock Grid.Column="0" Grid.Row="5" Classes="hotkey" Text="ctrl 5"/>
+						<TextBox Grid.Column="1" Grid.Row="5" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="2" Grid.Row="5" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="3" Grid.Row="5" Classes="Volume" Text="10"/>
+
+					</Grid>
+				</TabItem>
+				<TabItem >
+					<TabItem.Header>
+						<TextBlock Classes="menu_title" Text="Стадия 6 .. 10"/>
+					</TabItem.Header>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="1*"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="1*"/>
+							<RowDefinition Height="1*"/>
+							<RowDefinition Height="1*"/>
+							<RowDefinition Height="1*"/>
+							<RowDefinition Height="1*"/>
+							<RowDefinition Height="1*"/>
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Column="0" Grid.Row="0" Classes="menu_subtext"
+								   Text="Стадия"/>
+						<TextBlock Grid.Column="1" Grid.Row="0" Classes="menu_subtext">
+							<Run Text="Объем"/>
+							<LineBreak/>
+							<Run Text="bbl"/>
+						</TextBlock>
+						<TextBlock Grid.Column="2" Grid.Row="0" Classes="menu_subtext">
+							<Run Text="Начало"/>
+							<LineBreak/>
+							<Run Text="scf/bbl"/>
+						</TextBlock>
+						<TextBlock Grid.Column="3" Grid.Row="0" Classes="menu_subtext">
+							<Run Text="Конец"/>
+							<LineBreak/>
+							<Run Text="scf/bbl"/>
+						</TextBlock>
+
+						<!-- Стадия 6 -->
+						<Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4"/>
+						<TextBlock Grid.Column="0" Grid.Row="1" Classes="menu_subtext" Text="6"/>
+						<TextBlock Grid.Column="0" Grid.Row="1" Classes="hotkey" Text="ctrl 6"/>
+						<TextBox Grid.Column="1" Grid.Row="1" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="2" Grid.Row="1" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="3" Grid.Row="1" Classes="Volume" Text="10"/>
+
+						<!-- Стадия 7 -->
+						<Border Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"/>
+						<TextBlock Grid.Column="0" Grid.Row="2" Classes="menu_subtext" Text="7"/>
+						<TextBlock Grid.Column="0" Grid.Row="2" Classes="hotkey" Text="ctrl 7"/>
+						<TextBox Grid.Column="1" Grid.Row="2" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="2" Grid.Row="2" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="3" Grid.Row="2" Classes="Volume" Text="10"/>
+
+						<!-- Стадия 8 -->
+						<Border Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4"/>
+						<TextBlock Grid.Column="0" Grid.Row="3" Classes="menu_subtext" Text="8"/>
+						<TextBlock Grid.Column="0" Grid.Row="3" Classes="hotkey" Text="ctrl 8"/>
+						<TextBox Grid.Column="1" Grid.Row="3" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="2" Grid.Row="3" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="3" Grid.Row="3" Classes="Volume" Text="10"/>
+
+						<!-- Стадия 9 -->
+						<Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4"/>
+						<TextBlock Grid.Column="0" Grid.Row="4" Classes="menu_subtext" Text="9"/>
+						<TextBlock Grid.Column="0" Grid.Row="4" Classes="hotkey" Text="ctrl 9"/>
+						<TextBox Grid.Column="1" Grid.Row="4" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="2" Grid.Row="4" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="3" Grid.Row="4" Classes="Volume" Text="10"/>
+
+						<!-- Стадия 10 -->
+						<Border Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4"/>
+						<TextBlock Grid.Column="0" Grid.Row="5" Classes="menu_subtext" Text="10"/>
+						<TextBlock Grid.Column="0" Grid.Row="5" Classes="hotkey" Text="ctrl 0"/>
+						<TextBox Grid.Column="1" Grid.Row="5" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="2" Grid.Row="5" Classes="Volume" Text="10"/>
+						<TextBox Grid.Column="3" Grid.Row="5" Classes="Volume" Text="10"/>
+
+					</Grid>
+				</TabItem>
+			</TabControl>
+		</Border>
+		<!-- Блок Кнопок -->
+		<Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
+
+			<!-- Сохранение Профиля -->
+			<Button x:Name="Save" Grid.Column="0"  Click="Save_Click">
+				<Grid>
+					<TextBlock Classes="menu_title" TextAlignment="Center" Text="Сохр" />
+					<TextBlock Classes="hotkey" Text="F1"/>
+				</Grid>
+			</Button>
+
+			<!-- Заглушка -->
+			<Border Grid.Column="1" />
+
+			<!-- Выход -->
+			<Button x:Name="Exit" Grid.Column="2"  Click="Exit_Click">
+				<Grid>
+					<TextBlock Classes="menu_title" Text="Выход"/>
+					<TextBlock Classes="hotkey" Text="ESC"/>
+				</Grid>
+			</Button>
+		</Grid>
 
 	</Grid>
 </Window>

@@ -21,15 +21,19 @@ public partial class StageProfiles : Window
     {
         switch (e.Key)
         {
-            case Key.Escape: Close();break;
+            case Key.Escape: Close(); break;
         }
     }
-
+    private void Save_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+    }
+    private void Exit_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Close();
+    }
     private void StageProfiles_Closed(object? sender, System.EventArgs e)
     {
         this.KeyDown -= StageProfiles_KeyDown;
         Closed -= StageProfiles_Closed;
     }
-
-
 }

@@ -29,6 +29,8 @@ public partial class MainWindow : Window
 
             case Key.F5: new Nitrogen.Views.Menu.Engine().Show(); break;
 
+            case Key.F6: new Nitrogen.Views.Menu.Record.Record().Show(); break;
+
             case Key.F7: new Nitrogen.Views.Menu.Stages().Show(); break;
 
             case Key.F8: new Nitrogen.Views.Menu.Menu().Show(); break;
@@ -74,6 +76,11 @@ public partial class MainWindow : Window
     {
         Nitrogen.Views.Menu.ScfVolume scfVolume = new Nitrogen.Views.Menu.ScfVolume();
         scfVolume.Show();
+    }
+    private void Record_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Nitrogen.Views.Menu.Record.Record record = new Nitrogen.Views.Menu.Record.Record();
+        record.Show();
     }
     private void HandlerVolumeLineDisplay()
     {
