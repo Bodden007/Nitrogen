@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace Nitrogen.Controls;
+namespace Nitrogen.Controls.EngineTachometer;
 
 public partial class EngineTachometer : UserControl
 {
