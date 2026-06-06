@@ -1,8 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.Input;
+using Avalonia.Markup.Xaml;
 using System;
+using System.Threading.Tasks;
 
 namespace Nitrogen.Views.Menu;
 
@@ -12,8 +13,11 @@ public partial class Menu : Window
     {
         InitializeComponent();
 
-        //SystemDecorations = SystemDecorations.None;
-        WindowState = WindowState.FullScreen;
+        Opened += async(_, _) =>
+        {
+            await Task.Delay(150);
+            Opacity = 1;
+        };
 
         this.KeyDown += Menu_KeyDown;
 
@@ -39,7 +43,7 @@ public partial class Menu : Window
 
             case Key.F7: Environment.Exit(0); break;
 
-            case Key.F8: new Nitrogen.Views.Settings.Settings().Show(); break;
+            case Key.F8: new Nitrogen.Views.Settings.Settings().Show(this); break;
         }
     }
     private void Pressure_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -81,7 +85,7 @@ public partial class Menu : Window
     private void Settings_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         Nitrogen.Views.Settings.Settings settings = new Nitrogen.Views.Settings.Settings();
-        settings.Show();
+        settings.Show(this);
     }
     private void Exit_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {

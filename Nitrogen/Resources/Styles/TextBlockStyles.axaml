@@ -1,45 +1,54 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Design.PreviewWith>
-<!--    <Border Padding="20">
-      --><!-- Add Controls for Previewer Here --><!--
-    </Border>-->
-  </Design.PreviewWith>
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<!--    <Border Padding="20">
+		--><!-- Add Controls for Previewer Here --><!--
+		</Border>-->
+	</Design.PreviewWith>
 
-  		<Style Selector="TextBlock.section_label">
-			<Setter Property="FontSize" Value="25"/>
-			<Setter Property="FontFamily" Value="Times New Roman"/>
-			<Setter Property="FontWeight" Value="Bold"/>
-			<Setter Property="Opacity" Value="0.7"/>
-			<Setter Property="HorizontalAlignment" Value="Center"/>
-			<Setter Property="VerticalAlignment" Value="Center"/>
-			<Setter Property="TextAlignment" Value="Center"/>
-		</Style>
+	<Style Selector="TextBlock.section_label">
+		<Setter Property="FontSize" Value="20"/>
+		<Setter Property="FontFamily" Value="Times New Roman"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="Opacity" Value="0.7"/>
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="TextAlignment" Value="Center"/>
+	</Style>
 
-		<Style Selector="TextBlock.hotkey">
-			<Setter Property="Foreground" Value="Black"/>
-			<Setter Property="FontSize" Value="16"/>
-			<Setter Property="FontFamily" Value="Times New Roman"/>
-			<Setter Property="FontWeight" Value="Bold"/>
-			<Setter Property="HorizontalAlignment" Value="Right"/>
-			<Setter Property="VerticalAlignment" Value="Top"/>
-			<Setter Property="TextAlignment" Value="Center"/>
-		</Style>
+	<Style Selector="TextBlock.hotkey">
+		<Setter Property="Foreground" Value="Black"/>
+		<Setter Property="FontSize" Value="16"/>
+		<Setter Property="FontFamily" Value="Times New Roman"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="HorizontalAlignment" Value="Right"/>
+		<Setter Property="VerticalAlignment" Value="Top"/>
+		<Setter Property="TextAlignment" Value="Center"/>
+	</Style>
 
-		<Style Selector="TextBlock.menu_title"> 
-			<Setter Property="FontSize" Value="45"/>
-			<Setter Property="FontFamily" Value="Times New Roman"/>
-			<Setter Property="FontWeight" Value="Bold"/>
-			<Setter Property="VerticalAlignment" Value="Center"/>
-			<Setter Property="HorizontalAlignment" Value="Center"/>
-		</Style>
+	<Style Selector="TextBlock.menu_title">
+		<Setter Property="FontSize" Value="25"/>
+		<Setter Property="FontFamily" Value="Times New Roman"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+	</Style>
 
-		<Style Selector="TextBlock.menu_subtext">
-			<Setter Property="FontSize" Value="25"/>
-			<Setter Property="FontFamily" Value="Times New Roman"/>
-			<Setter Property="FontWeight" Value="Bold"/>
-			<Setter Property="HorizontalAlignment" Value="Center"/>
-			<Setter Property="VerticalAlignment" Value="Center"/>
-			<Setter Property="TextAlignment" Value="Center"/>
-		</Style>
+	<Style Selector="TextBlock.menu_subtext">
+		<Setter Property="FontSize" Value="20"/>
+		<Setter Property="FontFamily" Value="Times New Roman"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="TextAlignment" Value="Center"/>
+	</Style>
+
+	<Style Selector="TextBlock.title_engine">
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="FontFamily" Value="Times New Roman"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="TextAlignment" Value="Center"/>
+	</Style>
 </Styles>

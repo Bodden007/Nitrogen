@@ -17,9 +17,22 @@ public partial class MainWindow : Window
     }
     private void MainWindow_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
+        if (e.Key == Key.Escape)
+        {
+            e.Handled = true;
+            WindowState = WindowState.FullScreen;
+            return;
+        }
+
         switch (e.Key)
         {
-            case Key.F1: new Nitrogen.Views.Menu.Pressure().Show(); break;
+            case Key.F1:
+                {
+                    var pressure = new Nitrogen.Views.Menu.Pressure();
+                    pressure.Show();
+                    pressure.Activate();
+                    break;
+                }
 
             case Key.F2: new Nitrogen.Views.Menu.Temperature().Show(); break;
 
@@ -46,6 +59,7 @@ public partial class MainWindow : Window
     {
         Nitrogen.Views.Menu.Pressure pressure = new Nitrogen.Views.Menu.Pressure();
         pressure.Show();
+        pressure.Activate();
     }
     private void Volume_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
