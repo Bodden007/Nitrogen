@@ -2,11 +2,16 @@ using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Media;
+using Nitrogen.Views.MainWindow.Interfaces;
+using Nitrogen.Views.Menu;
+using System.Collections.Generic;
 
 namespace Nitrogen;
 
 public partial class MainWindow : Window
 {
+    private readonly Stack<UserControl> _screenStack = new();
+    private UserControl? _currentScreen;
     public MainWindow()
     {
         InitializeComponent();
@@ -17,6 +22,13 @@ public partial class MainWindow : Window
     }
     private void MainWindow_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
+        if (_currentScreen is IHotKeyScreen hotKeyScreen)
+        {
+            hotKeyScreen.HandleKey(e.Key);
+            e.Handled = true;
+            return;
+        }
+
         if (e.Key == Key.Escape)
         {
             e.Handled = true;
@@ -28,25 +40,59 @@ public partial class MainWindow : Window
         {
             case Key.F1:
                 {
-                    var pressure = new Nitrogen.Views.Menu.Pressure();
-                    pressure.Show();
-                    pressure.Activate();
+                    ShowScreen(new Nitrogen.Views.Menu.PressureControl(this));
+                    e.Handled = true;
                     break;
                 }
 
-            case Key.F2: new Nitrogen.Views.Menu.Temperature().Show(); break;
+            case Key.F2:
+                {
+                    ShowScreen(new Nitrogen.Views.Menu.TemperatureControl(this));
+                    e.Handled = true;
+                    break;
+                }
 
-            case Key.F3: new Nitrogen.Views.Menu.ScfVolume().Show(); break;
+            case Key.F3:
+                {
+                    ShowScreen(new Nitrogen.Views.Menu.ScfVolumeControl(this));
+                    e.Handled = true;
+                    break;
+                }
 
-            case Key.F4: new Nitrogen.Views.Menu.Volume().Show(); break;
+            case Key.F4:
+                {
+                    ShowScreen(new Nitrogen.Views.Menu.VolumeControl(this));
+                    e.Handled = true;
+                    break;
+                }
 
-            case Key.F5: new Nitrogen.Views.Menu.Engine().Show(); break;
+            case Key.F5:
+                {
+                    ShowScreen(new Nitrogen.Views.Menu.EngineControl(this));
+                    e.Handled = true;
+                    break;
+                }
 
-            case Key.F6: new Nitrogen.Views.Menu.Record.Record().Show(); break;
+            case Key.F6:
+                {
+                    ShowScreen(new Nitrogen.Views.Menu.RecordControl(this));
+                    e.Handled= true;
+                    break;
+                }
 
-            case Key.F7: new Nitrogen.Views.Menu.Stages().Show(); break;
+            case Key.F7:
+                {
+                    ShowScreen(new Nitrogen.Views.Menu.StagesControl(this));
+                    e.Handled=true;
+                    break;
+                }
 
-            case Key.F8: new Nitrogen.Views.Menu.Menu().Show(); break;
+            case Key.F8:
+                {
+                    ShowScreen(new Nitrogen.Views.Menu.MenuControl(this));
+                    e.Handled = true;
+                    break;
+                }
 
             case Key.D1: HandlerRateLineDisplay(); break;
 
@@ -57,44 +103,35 @@ public partial class MainWindow : Window
     }
     private void Pressure_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Views.Menu.Pressure pressure = new Nitrogen.Views.Menu.Pressure();
-        pressure.Show();
-        pressure.Activate();
+        ShowScreen(new Nitrogen.Views.Menu.PressureControl(this));
     }
     private void Volume_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Views.Menu.Volume volume = new Nitrogen.Views.Menu.Volume();
-        volume.Show();
+        ShowScreen(new Nitrogen.Views.Menu.VolumeControl(this));
     }
     private void Engine_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Views.Menu.Engine engine = new Nitrogen.Views.Menu.Engine();
-        engine.Show();
+        ShowScreen(new Nitrogen.Views.Menu.EngineControl(this));
     }
     private void Menu_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Views.Menu.Menu menu = new Nitrogen.Views.Menu.Menu();
-        menu.Show();
+        ShowScreen(new Nitrogen.Views.Menu.MenuControl(this));
     }
     private void Temp_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Views.Menu.Temperature temp = new Nitrogen.Views.Menu.Temperature();
-        temp.Show();
+        ShowScreen(new Nitrogen.Views.Menu.TemperatureControl(this));
     }
     private void Stages_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Views.Menu.Stages stages = new Nitrogen.Views.Menu.Stages();
-        stages.Show();
+        ShowScreen(new Nitrogen.Views.Menu.StagesControl(this));
     }
     private void Scf_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Views.Menu.ScfVolume scfVolume = new Nitrogen.Views.Menu.ScfVolume();
-        scfVolume.Show();
+        ShowScreen(new Nitrogen.Views.Menu.ScfVolumeControl(this));
     }
     private void Record_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        Nitrogen.Views.Menu.Record.Record record = new Nitrogen.Views.Menu.Record.Record();
-        record.Show();
+        ShowScreen(new Nitrogen.Views.Menu.RecordControl(this));
     }
     private void HandlerVolumeLineDisplay()
     {
@@ -164,5 +201,43 @@ public partial class MainWindow : Window
 
             HeaderRate.Text = "Σ Расход";
         }
+    }
+    public void ShowScreen(UserControl screen)
+    {
+        if (_currentScreen != null)
+            _screenStack.Push(_currentScreen);
+
+        _currentScreen = screen;
+        ScreenHost.Content = screen;
+        ScreenHost.IsVisible = true;
+
+        Focus();
+    }
+    public void BackScreen()
+    {
+        if (_screenStack.Count > 0)
+        {
+            _currentScreen = _screenStack.Pop();
+            ScreenHost.Content = _currentScreen;
+            ScreenHost.IsVisible = true;
+        }
+        else
+        {
+            CloseScreen();
+        }
+
+        WindowState = WindowState.FullScreen;
+        Focus();
+    }
+    public void CloseScreen()
+    {
+        _screenStack.Clear();
+
+        ScreenHost.Content = null;
+        ScreenHost.IsVisible = false;
+        _currentScreen = null;
+
+        WindowState = WindowState.FullScreen;
+        Focus();
     }
 }

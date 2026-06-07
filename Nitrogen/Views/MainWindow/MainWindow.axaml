@@ -10,7 +10,7 @@
 		Title="Nitrogen">
 
 
-	<Grid Background="{DynamicResource PrimaryGridColor}" >
+	<Grid x:Name="RootGrid" Background="{DynamicResource PrimaryGridColor}" >
 		<Grid.ColumnDefinitions >
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="*"/>
@@ -377,6 +377,12 @@
 				</Grid>
 			</Button>
 		</Grid>
+
+		<!--Новая архитектура!!-->
+		<ContentControl x:Name="ScreenHost"
+						Grid.ColumnSpan="2"
+						Grid.RowSpan="4"
+						IsVisible="False"/>
 
 	</Grid>
 
