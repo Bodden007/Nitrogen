@@ -24,5 +24,9 @@
 
     <ItemGroup>
       <Folder Include="Resources\Assets\" />
+      <Folder Include="Services\Csv\" />
+      <Folder Include="Services\Units\" />
+      <Folder Include="Services\Localization\" />
+      <Folder Include="Services\Navigation\" />
     </ItemGroup>
 </Project>
