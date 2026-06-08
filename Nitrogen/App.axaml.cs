@@ -20,7 +20,6 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            //desktop.MainWindow = new MainWindow();
             var timeService = new SystemTimeService(TimeSpan.FromSeconds(1));
 
             var poller = new ModbusPoller();

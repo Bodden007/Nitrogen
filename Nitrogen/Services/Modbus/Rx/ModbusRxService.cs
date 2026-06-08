@@ -3,6 +3,8 @@ using System;
 
 namespace Nitrogen.Services.Modbus.Rx;
 
+// TODO TEST ONLY: временная имитация Modbus-данных.
+// Позже заменить на IModbusReader.ReadInputRegistersAsync().
 internal sealed class ModbusRxService : IModbusRxService
 {
     private readonly IModbusPoller _poller;

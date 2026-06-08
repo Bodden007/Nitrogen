@@ -25,6 +25,7 @@ namespace Nitrogen.Views.MainWindow
             _registers = registersStream
                 .ToProperty(this, vm => vm.Registers, initialValue: new ushort[50]);
 
+            //FIXME Диагностика Rx
             registersStream
                 .Subscribe(x =>
                 {

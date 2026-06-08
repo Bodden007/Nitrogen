@@ -1,0 +1,27 @@
+﻿[
+  {
+    "name": "StartJob",
+    "address": 246,
+    "type": "Int16"
+  },
+  {
+    "name": "StopJob",
+    "address": 247,
+    "type": "Int16"
+  },
+  {
+    "name": "ResetTotals",
+    "address": 248,
+    "type": "Int16"
+  },
+  {
+    "name": "PressureSetpoint",
+    "address": 250,
+    "type": "Int16"
+  },
+  {
+    "name": "DensitySetpoint",
+    "address": 252,
+    "type": "Float"
+  }
+]
