@@ -1,59 +1,44 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
-namespace Nitrogen.Services.Modbus.Polling
+namespace Nitrogen.Services.Modbus.Polling;
+
+internal sealed class ModbusPoller : IModbusPoller
 {
-    internal class ModbusPoller : IModbusPoller
+    private readonly Subject<ushort[]> _registers = new();
+    private IDisposable? _pollingSubscription;
+
+    public IObservable<ushort[]> Registers => _registers.AsObservable();
+
+    public bool IsRunning => _pollingSubscription != null;
+
+    public void Start()
     {
-        private CancellationTokenSource? _cts;
-        private bool _isRunning;
+        if (IsRunning)
+            return;
 
-        public event Action<ushort[]>? RegistersReceived;
-
-        public bool IsRunning
-        {
-            get { return _isRunning; }
-        }
-
-        public void Start()
-        {
-            if (_isRunning)
-                return;
-
-            _isRunning = true;
-            _cts = new CancellationTokenSource();
-
-            Task.Run(() => PollLoop(_cts.Token));
-        }
-
-        public void Stop()
-        {
-            _isRunning = false;
-
-            if (_cts != null)
-                _cts.Cancel();
-        }
-
-        private async Task PollLoop(CancellationToken token)
-        {
-            while (!token.IsCancellationRequested)
+        _pollingSubscription = Observable
+            .Interval(TimeSpan.FromMilliseconds(500))
+            .StartWith(0)
+            .Subscribe(_ =>
             {
-                // Временно имитируем чтение Modbus
-                ushort[] fakeRegisters = new ushort[50];
+                // TODO: заменить на реальное чтение Modbus
+                ushort[] registers = new ushort[50];
 
-                RegistersReceived?.Invoke(fakeRegisters);
+                _registers.OnNext(registers);
+            });
+    }
 
-                await Task.Delay(500, token);
-            }
-        }
+    public void Stop()
+    {
+        _pollingSubscription?.Dispose();
+        _pollingSubscription = null;
+    }
 
-        public void Dispose()
-        {
-            Stop();
-
-            if (_cts != null)
-                _cts.Dispose();
-        }
+    public void Dispose()
+    {
+        Stop();
+        _registers.Dispose();
     }
 }

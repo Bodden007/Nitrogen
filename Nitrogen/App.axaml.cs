@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Nitrogen.Services.Modbus.Polling;
+using Nitrogen.Services.Modbus.Rx;
 using Nitrogen.Services.SystemTime;
 using Nitrogen.Views.MainWindow;
 using System;
@@ -20,7 +22,14 @@ public partial class App : Application
         {
             //desktop.MainWindow = new MainWindow();
             var timeService = new SystemTimeService(TimeSpan.FromSeconds(1));
-            var viewModel = new MainWindowViewModel(timeService);
+
+            var poller = new ModbusPoller();
+            var modbusRxService = new ModbusRxService(poller);
+
+            var viewModel = new MainWindowViewModel(
+               timeService,
+               modbusRxService);
+
             desktop.MainWindow = new MainWindow { DataContext = viewModel };
         }
 

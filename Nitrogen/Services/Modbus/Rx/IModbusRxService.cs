@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Nitrogen.Services.Modbus.Polling
+namespace Nitrogen.Services.Modbus.Rx
 {
-    internal interface IModbusPoller : IDisposable
+    internal interface IModbusRxService : IDisposable
     {
         IObservable<ushort[]> Registers { get; }
-        bool IsRunning { get; }
         void Start();
         void Stop();
     }
