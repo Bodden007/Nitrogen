@@ -30,13 +30,18 @@ internal sealed class ModbusPoller : IModbusPoller
             return;
 
         _pollingSubscription = Observable
-            .Interval(TimeSpan.FromMilliseconds(500))
+            .Interval(TimeSpan.FromMilliseconds(_config.PollIntervalMs))
             .StartWith(0)
-            .Subscribe(_ =>
+            .SelectMany(async _ =>
             {
-                // TODO: заменить на реальное чтение Modbus
-                ushort[] registers = new ushort[50];
-
+                return await _reader.ReadInputRegistersAsync(
+                    _config.SlaveId,
+                    _config.InputStartAddress,
+                    _config.InputRegisterCount);
+            })
+            .Where(registers => registers.Length > 0)
+            .Subscribe(registers =>
+            {
                 _registers.OnNext(registers);
             });
     }
