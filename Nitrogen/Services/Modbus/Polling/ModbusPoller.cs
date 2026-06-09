@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Nitrogen.Services.Modbus.Configuration.Models.Connection;
+using Nitrogen.Services.Modbus.Connection;
+using System;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
@@ -6,12 +8,21 @@ namespace Nitrogen.Services.Modbus.Polling;
 
 internal sealed class ModbusPoller : IModbusPoller
 {
+    private readonly IModbusReader _reader;
+    private readonly ModbusConnectionConfig _config;
     private readonly Subject<ushort[]> _registers = new();
     private IDisposable? _pollingSubscription;
 
     public IObservable<ushort[]> Registers => _registers.AsObservable();
 
     public bool IsRunning => _pollingSubscription != null;
+    public ModbusPoller(
+        IModbusReader reader,
+        ModbusConnectionConfig config)
+    {
+        _reader = reader;
+        _config = config;
+    }
 
     public void Start()
     {

@@ -34,6 +34,7 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Material.Icons.Avalonia" Version="3.0.2" />
+        <PackageReference Include="NModbus" Version="3.0.83" />
         <PackageReference Include="ReactiveUI.Avalonia" Version="12.0.3" />		
         <PackageReference Include="System.Reactive" Version="6.1.0" />
     </ItemGroup>
