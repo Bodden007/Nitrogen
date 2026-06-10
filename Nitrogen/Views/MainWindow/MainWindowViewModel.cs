@@ -1,4 +1,6 @@
-﻿using Nitrogen.Services.Modbus.Rx;
+﻿using Microsoft.Win32;
+using Nitrogen.Services.Modbus.Mapping;
+using Nitrogen.Services.Modbus.Rx;
 using Nitrogen.Services.SystemTime;
 using ReactiveUI;
 using System;
@@ -14,8 +16,13 @@ namespace Nitrogen.Views.MainWindow
 
         private readonly ObservableAsPropertyHelper<ushort[]> _registers;
 
-        public MainWindowViewModel(ISystemTimeService systemTimeService, IModbusRxService modbusRxService)
+        private readonly ModbusProcessValueBuilder _builder;
+
+        public MainWindowViewModel(ISystemTimeService systemTimeService,
+                                    IModbusRxService modbusRxService,
+                                    ModbusProcessValueBuilder builder)
         {
+            _builder = builder;
             _currentTime = systemTimeService.Ticks
                 .ToProperty(this, vm => vm.CurrentTime, initialValue: DateTime.MinValue);
 
@@ -27,9 +34,21 @@ namespace Nitrogen.Views.MainWindow
 
             //FIXME Диагностика Rx
             registersStream
-                .Subscribe(x =>
+                .Subscribe(registers =>
                 {
-                    Console.WriteLine($"RX: {x.Length}");
+                    var values = _builder.Build(registers);
+
+                    if (values.TryGetValue("Pressure_1", out var pressure))
+                    {
+                        if (pressure.HasError)
+                        {
+                            Console.WriteLine($"{pressure.Name} = {pressure.ErrorText}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{pressure.Name} = {pressure.Value:F0}");
+                        }
+                    }
                 });
 
             modbusRxService.Start();

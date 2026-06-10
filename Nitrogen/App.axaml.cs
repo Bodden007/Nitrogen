@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Nitrogen.Services.Modbus.Configuration.Loading;
 using Nitrogen.Services.Modbus.Configuration.Models.Connection;
+using Nitrogen.Services.Modbus.Mapping;
 using Nitrogen.Services.Modbus.Connection;
 using Nitrogen.Services.Modbus.Polling;
 using Nitrogen.Services.Modbus.Rx;
@@ -30,18 +31,26 @@ public partial class App : Application
             ModbusConnectionConfig connectionConfig =
                 configLoader.LoadConnectionConfig();
 
+            var inputRegistersConfig =
+                configLoader.LoadInputRegisters();
+
+            var processValueBuilder = new ModbusProcessValueBuilder(
+                inputRegistersConfig,
+                connectionConfig.InputStartAddress);
+
             var connectionManager =
                 new ModbusConnectionManager(connectionConfig);
 
             var poller = new ModbusPoller(
-                                            connectionManager,
-                                            connectionConfig);
+                connectionManager,
+                connectionConfig);
 
             var modbusRxService = new ModbusRxService(poller);
 
             var viewModel = new MainWindowViewModel(
                timeService,
-               modbusRxService);
+               modbusRxService,
+               processValueBuilder);
 
             desktop.MainWindow = new MainWindow { DataContext = viewModel };
         }

@@ -1,12 +1,12 @@
 ﻿{
   "host": "192.168.0.10",
   "port": 502,
-  "slaveId": 1,
+  "slaveId": 255,
 
   "pollIntervalMs": 500,
 
-  "inputStartAddress": 246,
-  "inputRegisterCount": 50,
+  "inputStartAddress": 0,
+  "inputRegisterCount": 4,
 
   "connectTimeoutMs": 3000,
   "requestTimeoutMs": 1000,

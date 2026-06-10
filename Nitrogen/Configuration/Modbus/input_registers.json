@@ -1,52 +1,12 @@
 ﻿[
   {
-    "name": "PsPass",
-    "address": 246,
+    "name": "Pressure_1Lo",
+    "address": 2,
     "type": "Int16"
   },
   {
-    "name": "DsPass",
-    "address": 247,
-    "type": "Int16"
-  },
-  {
-    "name": "RateCombined",
-    "address": 248,
-    "type": "Float"
-  },
-  {
-    "name": "PsRate",
-    "address": 250,
-    "type": "Float"
-  },
-  {
-    "name": "DsRate",
-    "address": 252,
-    "type": "Float"
-  },
-  {
-    "name": "RateStageTotal",
-    "address": 254,
-    "type": "Float"
-  },
-  {
-    "name": "MixWaterRate",
-    "address": 256,
-    "type": "Float"
-  },
-  {
-    "name": "StageTotalWTR",
-    "address": 258,
-    "type": "Float"
-  },
-  {
-    "name": "JobTotalWTR",
-    "address": 260,
-    "type": "Float"
-  },
-  {
-    "name": "ModeLevel",
-    "address": 262,
+    "name": "Pressure_1Hi",
+    "address": 3,
     "type": "Int16"
   }
 ]
