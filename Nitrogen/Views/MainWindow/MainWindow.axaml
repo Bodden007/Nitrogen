@@ -37,7 +37,7 @@
 				</Grid>
 
 				<TextBlock Grid.Row="1" Classes="menu_title"
-						   Text="800 psi"/>
+						   Text="{Binding Pressure_1}"/>
 				<Border Grid.Row="2" Background="#FBA9A3" Classes="label_set" >
 					<TextBlock  Classes="menu_subtext"
 								Text="Отсечка 1000 psi"/>

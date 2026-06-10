@@ -45,12 +45,14 @@ public partial class App : Application
                 connectionManager,
                 connectionConfig);
 
-            var modbusRxService = new ModbusRxService(poller);
+            var modbusRxService = new ModbusRxService(
+                poller,
+                processValueBuilder
+                );
 
             var viewModel = new MainWindowViewModel(
                timeService,
-               modbusRxService,
-               processValueBuilder);
+               modbusRxService);
 
             desktop.MainWindow = new MainWindow { DataContext = viewModel };
         }
