@@ -1,32 +1,35 @@
 ﻿using Nitrogen.Services.Modbus.Configuration.Models.Registers;
 using NModbus.Utility;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Nitrogen.Services.Modbus.Mapping;
 
 internal sealed class ModbusProcessValueBuilder
 {
-    private readonly IReadOnlyList<ModbusRegisterConfig> _registersConfig;
-    private readonly int _inputStartAddress;
+    private readonly int _pressureLoIndex;
+    private readonly int _pressureHiIndex;
+
     public ModbusProcessValueBuilder(
-    IReadOnlyList<ModbusRegisterConfig> registersConfig,
-    int inputStartAddress)
+        IReadOnlyList<ModbusRegisterConfig> registersConfig,
+        int inputStartAddress)
     {
-        _registersConfig = registersConfig;
-        _inputStartAddress = inputStartAddress;
+        _pressureLoIndex = ToIndex(
+            GetRegister(registersConfig, "Pressure_1Lo").Address,
+            inputStartAddress);
+
+        _pressureHiIndex = ToIndex(
+            GetRegister(registersConfig, "Pressure_1Hi").Address,
+            inputStartAddress);
     }
+
     public IReadOnlyDictionary<string, ProcessValue> Build(ushort[] registers)
     {
         var result = new Dictionary<string, ProcessValue>();
 
-        if (registers.Length < 4)
-            return result;
-
-        float pressure = ModbusUtility.GetSingle
-            (
-                registers[3], // High
-                registers[2]  // Low
-            );
+        float pressure = ModbusUtility.GetSingle(
+            registers[_pressureHiIndex],
+            registers[_pressureLoIndex]);
 
         result["Pressure_1"] = new ProcessValue
         {
@@ -37,5 +40,17 @@ internal sealed class ModbusProcessValueBuilder
         };
 
         return result;
+    }
+
+    private static ModbusRegisterConfig GetRegister(
+        IReadOnlyList<ModbusRegisterConfig> registersConfig,
+        string name)
+    {
+        return registersConfig.First(x => x.Name == name);
+    }
+
+    private static int ToIndex(int address, int inputStartAddress)
+    {
+        return address - inputStartAddress;
     }
 }
