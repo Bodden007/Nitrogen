@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
-using Nitrogen.Views.MainWindow.Interfaces;
+using Nitrogen.Views.Interfaces;
 
 namespace Nitrogen.Views.Settings;
 

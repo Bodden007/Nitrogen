@@ -9,6 +9,8 @@ internal sealed class ModbusProcessValueBuilder
 {
     private readonly int _pressureLoIndex;
     private readonly int _pressureHiIndex;
+    private readonly int _opkoLoIndex;
+    private readonly int _opkoHiIndex;
 
     public ModbusProcessValueBuilder(
         IReadOnlyList<ModbusRegisterConfig> registersConfig,
@@ -21,6 +23,14 @@ internal sealed class ModbusProcessValueBuilder
         _pressureHiIndex = ToIndex(
             GetRegister(registersConfig, "Pressure_1Hi").Address,
             inputStartAddress);
+
+        _opkoLoIndex = ToIndex(
+            GetRegister(registersConfig, "Opko_1Lo").Address,
+            inputStartAddress);
+
+        _opkoHiIndex = ToIndex(
+            GetRegister(registersConfig, "Opko_1Hi").Address,
+            inputStartAddress);
     }
 
     public IReadOnlyDictionary<string, ProcessValue> Build(ushort[] registers)
@@ -31,12 +41,22 @@ internal sealed class ModbusProcessValueBuilder
             registers[_pressureHiIndex],
             registers[_pressureLoIndex]);
 
+        float opko = ModbusUtility.GetSingle(
+            registers[_opkoHiIndex],
+            registers[_opkoLoIndex]);
+
         result["Pressure_1"] = new ProcessValue
         {
             Name = "Pressure_1",
             Value = pressure,
             HasError = pressure == 22222,
             ErrorText = pressure == 22222 ? "Ошибка" : null
+        };
+
+        result["Opko_1"] = new ProcessValue
+        {
+            Name = "Opko_1",
+            Value = opko
         };
 
         return result;

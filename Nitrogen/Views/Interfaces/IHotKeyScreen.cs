@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Avalonia.Input;
 
-namespace Nitrogen.Views.MainWindow.Interfaces
+namespace Nitrogen.Views.Interfaces
 {
     internal interface IHotKeyScreen
     {

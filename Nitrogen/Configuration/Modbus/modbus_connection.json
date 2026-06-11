@@ -6,7 +6,7 @@
   "pollIntervalMs": 500,
 
   "inputStartAddress": 0,
-  "inputRegisterCount": 4,
+  "inputRegisterCount": 10,
 
   "connectTimeoutMs": 3000,
   "requestTimeoutMs": 1000,

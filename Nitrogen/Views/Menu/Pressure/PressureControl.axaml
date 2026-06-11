@@ -2,8 +2,10 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:Nitrogen.Views.MainWindow"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 x:Class="Nitrogen.Views.Menu.PressureControl">
+			 x:Class="Nitrogen.Views.Menu.PressureControl"
+			 x:DataType="vm:MainWindowViewModel">
 
 <Grid Background="{DynamicResource PrimaryGridColor}">
 		<Grid.ColumnDefinitions>
@@ -23,7 +25,7 @@
 
 		<!-- Уставка нуля датчика давления -->
 		<Border Grid.Column="0" Grid.Row="1">
-			<TextBlock Classes="menu_title" Background="Red" Text="800 psi"/>
+			<TextBlock Classes="menu_title" Background="Red" Text="{Binding Pressure_1}"/>
 		</Border>
 
 		<!-- Уставки отсечки -->
@@ -38,7 +40,8 @@
 				</Grid.RowDefinitions>
 				<TextBlock  Grid.Row="1" Classes="menu_title" Text="Отсечка"/>
 				<Grid Grid.Row="3">
-					<TextBox  Text="1000 psi"/>
+					<TextBox x:Name="OpkoTextBox"
+							Text="{Binding OpkoEdit}"/>
 					<TextBlock Classes="hotkey" Text="F4"/>
 				</Grid>
 

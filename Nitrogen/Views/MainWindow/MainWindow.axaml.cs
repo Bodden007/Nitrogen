@@ -2,7 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Media;
-using Nitrogen.Views.MainWindow.Interfaces;
+using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.Menu;
 using System.Collections.Generic;
 
@@ -22,6 +22,9 @@ public partial class MainWindow : Window
     }
     private void MainWindow_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
+        if (e.Source is TextBox && !IsCommandKey(e.Key))
+            return;
+
         if (_currentScreen is IHotKeyScreen hotKeyScreen)
         {
             hotKeyScreen.HandleKey(e.Key);
@@ -202,17 +205,29 @@ public partial class MainWindow : Window
             HeaderRate.Text = "Σ Расход";
         }
     }
-    public void ShowScreen(UserControl screen)
+    private static bool IsCommandKey(Key key)
+    {
+        return key == Key.Escape
+            || key == Key.Enter
+            || key is >= Key.F1 and <= Key.F12;
+    }
+    public async void ShowScreen(UserControl screen)
     {
         if (_currentScreen != null)
             _screenStack.Push(_currentScreen);
+
+        screen.DataContext = DataContext;
 
         _currentScreen = screen;
         ScreenHost.Content = screen;
         ScreenHost.IsVisible = true;
 
+        if (screen is IScreenLoadable loadable)
+            await loadable.LoadAsync();
+
         Focus();
     }
+    
     public void BackScreen()
     {
         if (_screenStack.Count > 0)

@@ -8,5 +8,15 @@
     "name": "Pressure_1Hi",
     "address": 3,
     "type": "Int16"
+  },
+  {
+    "name": "Opko_1Lo",
+    "address": 8,
+    "type": "Int16"
+  },
+  {
+    "name": "Opko_1Hi",
+    "address": 9,
+    "type": "Int16"
   }
 ]

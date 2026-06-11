@@ -36,6 +36,11 @@ namespace Nitrogen.Views.MainWindow
                             ? pressure.ErrorText ?? "Ошибка"
                             : pressure.Value.ToString("F0");
                     }
+
+                    if (values.TryGetValue("Opko_1", out var opko))
+                    {
+                        Opko_1 = opko.Value.ToString("F0");
+                    }
                 });
 
             modbusRxService.Start();
@@ -46,11 +51,28 @@ namespace Nitrogen.Views.MainWindow
         public ushort[] Registers => _registers.Value;
 
         private string _pressure1 = "---";
-
         public string Pressure_1
         {
             get => _pressure1;
             private set => this.RaiseAndSetIfChanged(ref _pressure1, value);
+        }
+
+        private string _opko1 = "---";
+        public string Opko_1
+        {
+            get => _opko1;
+            private set => this.RaiseAndSetIfChanged(ref _opko1, value);
+        }
+
+        private string _opkoEdit = "---";
+        public string OpkoEdit
+        {
+            get => _opkoEdit;
+            set => this.RaiseAndSetIfChanged(ref _opkoEdit, value);
+        }
+        public void LoadOpkoEditOnce()
+        {
+            OpkoEdit = Opko_1;
         }
     }
 }
