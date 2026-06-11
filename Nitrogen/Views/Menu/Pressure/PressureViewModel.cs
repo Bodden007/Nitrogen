@@ -1,5 +1,5 @@
-﻿using Nitrogen.Views.MainWindow;
-using Nitrogen.Views.Menu.Pressure;
+﻿using Nitrogen.Services.Modbus.Connection;
+using Nitrogen.Views.MainWindow;
 using ReactiveUI;
 using System.Globalization;
 using System.Reactive;
@@ -10,6 +10,7 @@ namespace Nitrogen.Views.Menu.Pressure;
 internal sealed class PressureViewModel : ReactiveObject
 {
     private readonly MainWindowViewModel _mainVm;
+    private readonly IModbusWriter _writer;
 
     public string Pressure_1 => _mainVm.Pressure_1;
 
@@ -25,9 +26,18 @@ internal sealed class PressureViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> ResetZeroCommand { get; }
     public ReactiveCommand<Unit, Unit> SetShutdownCommand { get; }
 
-    internal PressureViewModel(MainWindowViewModel mainVm)
+    internal PressureViewModel(
+        MainWindowViewModel mainVm,
+        IModbusWriter writer)
     {
         _mainVm = mainVm;
+        _writer = writer;
+
+        _mainVm.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(MainWindowViewModel.Pressure_1))
+                this.RaisePropertyChanged(nameof(Pressure_1));
+        };
 
         SetZeroCommand = ReactiveCommand.CreateFromTask(SetZeroAsync);
         ResetZeroCommand = ReactiveCommand.CreateFromTask(ResetZeroAsync);

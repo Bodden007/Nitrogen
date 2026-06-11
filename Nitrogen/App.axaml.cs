@@ -54,7 +54,7 @@ public partial class App : Application
                timeService,
                modbusRxService);
 
-            var mainWindow = new MainWindow();
+            var mainWindow = new MainWindow(connectionManager);
             mainWindow.DataContext = viewModel;
 
             desktop.MainWindow = mainWindow;

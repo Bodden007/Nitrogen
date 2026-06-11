@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Media;
+using Nitrogen.Services.Modbus.Connection;
 using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.MainWindow;
 using Nitrogen.Views.Menu.Pressure;
@@ -12,6 +13,7 @@ namespace Nitrogen;
 public partial class MainWindow : Window
 {
     private readonly Stack<UserControl> _screenStack = new();
+    private readonly IModbusWriter? _writer;
     private UserControl? _currentScreen;
     private MainWindowViewModel? MainVm => DataContext as MainWindowViewModel;
     public MainWindow()
@@ -21,6 +23,10 @@ public partial class MainWindow : Window
         WindowState = WindowState.FullScreen;
 
         this.KeyDown += MainWindow_KeyDown;
+    }
+    internal MainWindow(IModbusWriter writer) : this()
+    {
+        _writer = writer;
     }
     private void MainWindow_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
@@ -232,12 +238,12 @@ public partial class MainWindow : Window
     }
     private PressureControl CreatePressureScreen()
     {
-        if (MainVm is null)
+        if (MainVm is null || _writer is null)
             return new PressureControl(this);
 
         var screen = new PressureControl(this)
         {
-            DataContext = new PressureViewModel(MainVm)
+            DataContext = new PressureViewModel(MainVm, _writer)
         };
 
         return screen;
