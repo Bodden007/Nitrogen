@@ -5,6 +5,7 @@ using Avalonia.Markup.Xaml;
 using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.Settings;
 using System;
+using Nitrogen.Views.Menu.Pressure;
 
 namespace Nitrogen.Views.Menu;
 

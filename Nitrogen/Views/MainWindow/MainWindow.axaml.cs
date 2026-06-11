@@ -3,7 +3,8 @@ using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Media;
 using Nitrogen.Views.Interfaces;
-using Nitrogen.Views.Menu;
+using Nitrogen.Views.MainWindow;
+using Nitrogen.Views.Menu.Pressure;
 using System.Collections.Generic;
 
 namespace Nitrogen;
@@ -12,6 +13,7 @@ public partial class MainWindow : Window
 {
     private readonly Stack<UserControl> _screenStack = new();
     private UserControl? _currentScreen;
+    private MainWindowViewModel? MainVm => DataContext as MainWindowViewModel;
     public MainWindow()
     {
         InitializeComponent();
@@ -43,7 +45,7 @@ public partial class MainWindow : Window
         {
             case Key.F1:
                 {
-                    ShowScreen(new Nitrogen.Views.Menu.PressureControl(this));
+                    ShowScreen(CreatePressureScreen());
                     e.Handled = true;
                     break;
                 }
@@ -106,7 +108,7 @@ public partial class MainWindow : Window
     }
     private void Pressure_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ShowScreen(new Nitrogen.Views.Menu.PressureControl(this));
+        ShowScreen(CreatePressureScreen());
     }
     private void Volume_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
@@ -216,7 +218,8 @@ public partial class MainWindow : Window
         if (_currentScreen != null)
             _screenStack.Push(_currentScreen);
 
-        screen.DataContext = DataContext;
+        if (screen.DataContext is null)
+            screen.DataContext = DataContext;
 
         _currentScreen = screen;
         ScreenHost.Content = screen;
@@ -227,7 +230,19 @@ public partial class MainWindow : Window
 
         Focus();
     }
-    
+    private PressureControl CreatePressureScreen()
+    {
+        if (MainVm is null)
+            return new PressureControl(this);
+
+        var screen = new PressureControl(this)
+        {
+            DataContext = new PressureViewModel(MainVm)
+        };
+
+        return screen;
+    }
+
     public void BackScreen()
     {
         if (_screenStack.Count > 0)
