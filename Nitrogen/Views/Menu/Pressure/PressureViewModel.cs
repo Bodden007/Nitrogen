@@ -1,7 +1,13 @@
-﻿using Nitrogen.Services.Modbus.Connection;
+﻿using Nitrogen.Services.Modbus.Configuration.Models.Connection;
+using Nitrogen.Services.Modbus.Configuration.Models.Registers;
+using Nitrogen.Services.Modbus.Connection;
 using Nitrogen.Views.MainWindow;
+using NModbus.Utility;
 using ReactiveUI;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 
@@ -11,6 +17,8 @@ internal sealed class PressureViewModel : ReactiveObject
 {
     private readonly MainWindowViewModel _mainVm;
     private readonly IModbusWriter _writer;
+    private readonly ModbusConnectionConfig _connectionConfig;
+    private readonly IReadOnlyList<ModbusRegisterConfig> _holdingRegisters;
 
     public string Pressure_1 => _mainVm.Pressure_1;
 
@@ -28,10 +36,14 @@ internal sealed class PressureViewModel : ReactiveObject
 
     internal PressureViewModel(
         MainWindowViewModel mainVm,
-        IModbusWriter writer)
+        IModbusWriter writer,
+        ModbusConnectionConfig connectionConfig,
+        IReadOnlyList<ModbusRegisterConfig> holdingRegisters)
     {
         _mainVm = mainVm;
         _writer = writer;
+        _connectionConfig = connectionConfig;
+        _holdingRegisters = holdingRegisters;
 
         _mainVm.PropertyChanged += (_, e) =>
         {
@@ -52,37 +64,63 @@ internal sealed class PressureViewModel : ReactiveObject
 
     private Task SetZeroAsync()
     {
-        var request = PressureWriteRequest.SetZero();
+        ushort address = GetHoldingAddress("SetZero");
 
-        // TODO: отправить в PLC holding = 0
-
-        return Task.CompletedTask;
+        return _writer.WriteSingleRegisterAsync(
+            _connectionConfig.SlaveId,
+            address,
+            1);
     }
 
     private Task ResetZeroAsync()
     {
-        var request = PressureWriteRequest.ResetZero();
+        ushort address = GetHoldingAddress("SetZero");
 
-        // TODO: отправить в PLC holding = 1
-
-        return Task.CompletedTask;
+        return _writer.WriteSingleRegisterAsync(
+            _connectionConfig.SlaveId,
+            address,
+            0);
     }
 
-    private Task SetShutdownAsync()
+    private async Task SetShutdownAsync()
     {
         if (!float.TryParse(
                 OpkoEdit.Replace(',', '.'),
                 NumberStyles.Float,
                 CultureInfo.InvariantCulture,
                 out var value))
-            return Task.CompletedTask;
+            return;
 
-        var request = PressureWriteRequest.SetShutdown(value);
+        // 1. Сначала записываем новое значение OPKO
+        ushort opkoAddress = GetHoldingAddress("SetOpko_1Lo");
 
-        // TODO: отправить в PLC holding = value
-        // После записи не обновляем TextBox вручную.
-        // Подтвержденное значение должно прийти обратно через Input Register.
+        await _writer.WriteMultipleRegistersAsync(
+            _connectionConfig.SlaveId,
+            opkoAddress,
+            FloatToRegisters(value));
 
-        return Task.CompletedTask;
+        // 2. Потом даем команду сброса/перечитать OPKO
+        ushort resetAddress = GetHoldingAddress("ResetOPKO");
+
+        await _writer.WriteSingleRegisterAsync(
+            _connectionConfig.SlaveId,
+            resetAddress,
+            1);
+    }
+    private static ushort[] FloatToRegisters(float value)
+    {
+        byte[] bytes = BitConverter.GetBytes(value);
+
+        ushort lo = BitConverter.ToUInt16(bytes, 0);
+        ushort hi = BitConverter.ToUInt16(bytes, 2);
+
+        return [lo, hi];
+    }
+
+    private ushort GetHoldingAddress(string name)
+    {
+        return (ushort)_holdingRegisters
+            .First(x => x.Name == name)
+            .Address;
     }
 }

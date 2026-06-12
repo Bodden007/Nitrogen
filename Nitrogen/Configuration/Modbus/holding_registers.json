@@ -1,27 +1,22 @@
 ﻿[
   {
-    "name": "StartJob",
-    "address": 246,
+    "name": "SetOpko_1Lo",
+    "address": 2,
     "type": "Int16"
   },
   {
-    "name": "StopJob",
-    "address": 247,
+    "name": "SetOpko_1Hi",
+    "address": 3,
     "type": "Int16"
   },
   {
-    "name": "ResetTotals",
-    "address": 248,
+    "name": "SetZero",
+    "address": 4,
     "type": "Int16"
   },
   {
-    "name": "PressureSetpoint",
-    "address": 250,
+    "name": "ResetOPKO",
+    "address": 5,
     "type": "Int16"
-  },
-  {
-    "name": "DensitySetpoint",
-    "address": 252,
-    "type": "Float"
   }
 ]

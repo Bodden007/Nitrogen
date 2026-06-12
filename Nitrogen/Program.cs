@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using ReactiveUI.Avalonia;
 using System;
 
 namespace Nitrogen;
@@ -32,5 +33,6 @@ class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
+            .UseReactiveUI(_ => { })
             .LogToTrace();
 }

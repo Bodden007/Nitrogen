@@ -34,6 +34,9 @@ public partial class App : Application
             var inputRegistersConfig =
                 configLoader.LoadInputRegisters();
 
+            var holdingRegistersConfig =
+                configLoader.LoadHoldingRegisters();
+
             var processValueBuilder = new ModbusProcessValueBuilder(
                 inputRegistersConfig,
                 connectionConfig.InputStartAddress);
@@ -54,7 +57,11 @@ public partial class App : Application
                timeService,
                modbusRxService);
 
-            var mainWindow = new MainWindow(connectionManager);
+            var mainWindow = new MainWindow(
+                connectionManager,
+                connectionConfig,
+                holdingRegistersConfig);
+
             mainWindow.DataContext = viewModel;
 
             desktop.MainWindow = mainWindow;

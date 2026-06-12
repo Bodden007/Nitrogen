@@ -7,6 +7,8 @@ using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.MainWindow;
 using Nitrogen.Views.Menu.Pressure;
 using System.Collections.Generic;
+using Nitrogen.Services.Modbus.Configuration.Models.Connection;
+using Nitrogen.Services.Modbus.Configuration.Models.Registers;
 
 namespace Nitrogen;
 
@@ -14,7 +16,12 @@ public partial class MainWindow : Window
 {
     private readonly Stack<UserControl> _screenStack = new();
     private readonly IModbusWriter? _writer;
+
+    private readonly ModbusConnectionConfig? _connectionConfig;
+    private readonly IReadOnlyList<ModbusRegisterConfig>? _holdingRegisters;
+
     private UserControl? _currentScreen;
+
     private MainWindowViewModel? MainVm => DataContext as MainWindowViewModel;
     public MainWindow()
     {
@@ -24,9 +31,14 @@ public partial class MainWindow : Window
 
         this.KeyDown += MainWindow_KeyDown;
     }
-    internal MainWindow(IModbusWriter writer) : this()
+    internal MainWindow(
+      IModbusWriter writer,
+      ModbusConnectionConfig connectionConfig,
+      IReadOnlyList<ModbusRegisterConfig> holdingRegisters) : this()
     {
         _writer = writer;
+        _connectionConfig = connectionConfig;
+        _holdingRegisters = holdingRegisters;
     }
     private void MainWindow_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
@@ -87,14 +99,14 @@ public partial class MainWindow : Window
             case Key.F6:
                 {
                     ShowScreen(new Nitrogen.Views.Menu.RecordControl(this));
-                    e.Handled= true;
+                    e.Handled = true;
                     break;
                 }
 
             case Key.F7:
                 {
                     ShowScreen(new Nitrogen.Views.Menu.StagesControl(this));
-                    e.Handled=true;
+                    e.Handled = true;
                     break;
                 }
 
@@ -238,12 +250,19 @@ public partial class MainWindow : Window
     }
     private PressureControl CreatePressureScreen()
     {
-        if (MainVm is null || _writer is null)
+        if (MainVm is null
+     || _writer is null
+     || _connectionConfig is null
+     || _holdingRegisters is null)
             return new PressureControl(this);
 
         var screen = new PressureControl(this)
         {
-            DataContext = new PressureViewModel(MainVm, _writer)
+            DataContext = new PressureViewModel(
+                MainVm,
+                _writer,
+                _connectionConfig,
+                _holdingRegisters)
         };
 
         return screen;

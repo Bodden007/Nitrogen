@@ -1,22 +1,27 @@
 ﻿[
   {
     "name": "Pressure_1Lo",
-    "address": 2,
-    "type": "Int16"
-  },
-  {
-    "name": "Pressure_1Hi",
-    "address": 3,
-    "type": "Int16"
-  },
-  {
-    "name": "Opko_1Lo",
     "address": 8,
     "type": "Int16"
   },
   {
-    "name": "Opko_1Hi",
+    "name": "Pressure_1Hi",
     "address": 9,
+    "type": "Int16"
+  },
+  {
+    "name": "Opko_1Lo",
+    "address": 12,
+    "type": "Int16"
+  },
+  {
+    "name": "Opko_1Hi",
+    "address": 13,
+    "type": "Int16"
+  },
+  {
+    "name": "CmdOpko_1",
+    "address": 12,
     "type": "Int16"
   }
 ]
