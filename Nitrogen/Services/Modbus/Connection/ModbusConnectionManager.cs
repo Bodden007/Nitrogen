@@ -28,23 +28,14 @@ internal sealed class ModbusConnectionManager : IModbusReader, IModbusWriter, ID
        ushort count,
        CancellationToken cancellationToken = default)
     {
-        try
-        {
-            ushort[]? registers = await ExecuteRequestAsync(
-                master => master.ReadInputRegistersAsync(
-                    slaveId,
-                    startAddress,
-                    count),
-                cancellationToken);
+        ushort[]? registers = await ExecuteRequestAsync(
+            master => master.ReadInputRegistersAsync(
+                slaveId,
+                startAddress,
+                count),
+            cancellationToken);
 
-            return registers ?? Array.Empty<ushort>();
-        }
-        catch
-        {
-            CloseConnection();
-
-            return Array.Empty<ushort>();
-        }
+        return registers ?? Array.Empty<ushort>();
     }
 
     public async Task WriteSingleRegisterAsync(
@@ -53,19 +44,12 @@ internal sealed class ModbusConnectionManager : IModbusReader, IModbusWriter, ID
         ushort value,
         CancellationToken cancellationToken = default)
     {
-        try
-        {
-            await ExecuteRequestAsync(
-                master => master.WriteSingleRegisterAsync(
-                    slaveId,
-                    address,
-                    value),
-                cancellationToken);
-        }
-        catch
-        {
-            CloseConnection();
-        }
+        await ExecuteRequestAsync(
+            master => master.WriteSingleRegisterAsync(
+                slaveId,
+                address,
+                value),
+            cancellationToken);
     }
 
     public async Task WriteMultipleRegistersAsync(
@@ -74,19 +58,12 @@ internal sealed class ModbusConnectionManager : IModbusReader, IModbusWriter, ID
         ushort[] values,
         CancellationToken cancellationToken = default)
     {
-        try
-        {
-            await ExecuteRequestAsync(
-                master => master.WriteMultipleRegistersAsync(
-                    slaveId,
-                    startAddress,
-                    values),
-                cancellationToken);
-        }
-        catch
-        {
-            CloseConnection();
-        }
+        await ExecuteRequestAsync(
+            master => master.WriteMultipleRegistersAsync(
+                slaveId,
+                startAddress,
+                values),
+            cancellationToken);
     }
 
     private async Task<bool> EnsureConnectedAsync(CancellationToken cancellationToken)
@@ -142,8 +119,8 @@ internal sealed class ModbusConnectionManager : IModbusReader, IModbusWriter, ID
     }
 
     private async Task ExecuteRequestAsync(
-    Func<IModbusMaster, Task> request,
-    CancellationToken cancellationToken)
+        Func<IModbusMaster, Task> request,
+        CancellationToken cancellationToken)
     {
         bool connected = await EnsureConnectedAsync(cancellationToken);
 
@@ -156,6 +133,10 @@ internal sealed class ModbusConnectionManager : IModbusReader, IModbusWriter, ID
         {
             await request(_master);
         }
+        catch
+        {
+            CloseConnection();
+        }
         finally
         {
             _requestLock.Release();
@@ -163,8 +144,8 @@ internal sealed class ModbusConnectionManager : IModbusReader, IModbusWriter, ID
     }
 
     private async Task<TResult?> ExecuteRequestAsync<TResult>(
-    Func<IModbusMaster, Task<TResult>> request,
-    CancellationToken cancellationToken)
+       Func<IModbusMaster, Task<TResult>> request,
+       CancellationToken cancellationToken)
     {
         bool connected = await EnsureConnectedAsync(cancellationToken);
 
@@ -176,6 +157,11 @@ internal sealed class ModbusConnectionManager : IModbusReader, IModbusWriter, ID
         try
         {
             return await request(_master);
+        }
+        catch
+        {
+            CloseConnection();
+            return default;
         }
         finally
         {

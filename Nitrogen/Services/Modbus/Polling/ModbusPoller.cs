@@ -1,4 +1,5 @@
-﻿using Nitrogen.Services.Modbus.Configuration.Models.Connection;
+﻿using Microsoft.Win32;
+using Nitrogen.Services.Modbus.Configuration.Models.Connection;
 using Nitrogen.Services.Modbus.Connection;
 using System;
 using System.Reactive.Linq;
@@ -34,16 +35,27 @@ internal sealed class ModbusPoller : IModbusPoller
             .StartWith(0)
             .SelectMany(async _ =>
             {
-                return await _reader.ReadInputRegistersAsync(
+                //FIXME Диагностика
+                Console.WriteLine($"POLL TICK {DateTime.Now:HH:mm:ss}");
+
+                ushort[] registers = await _reader.ReadInputRegistersAsync(
                     _config.SlaveId,
                     _config.InputStartAddress,
                     _config.InputRegisterCount);
+
+                return registers;
             })
             .Where(registers => registers.Length > 0)
-            .Subscribe(registers =>
-            {
-                _registers.OnNext(registers);
-            });
+            .Subscribe(
+                registers =>
+                {
+
+                    _registers.OnNext(registers);
+                },
+                ex =>
+                {
+                    Console.WriteLine($"POLL ERROR {DateTime.Now:HH:mm:ss}: {ex}");
+                });
     }
 
     public void Stop()

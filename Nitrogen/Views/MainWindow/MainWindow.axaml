@@ -31,19 +31,38 @@
 					<RowDefinition Height="2*"/>
 					<RowDefinition Height="1.5*"/>
 				</Grid.RowDefinitions>
+
+				<!-- Шапка -->
 				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
+					<Border Classes="press_main" Background="{Binding PressureTileBackground}"
+							IsHitTestVisible="False"/>
+
 					<TextBlock Classes="section_label" Text="Давление"/>
 					<TextBlock Classes="hotkey" Text="F1"/>
 				</Grid>
 
-				<TextBlock Grid.Row="1" Classes="menu_title"
-						   Text="{Binding Pressure_1}"/>
-				<Border Grid.Row="2" Background="#FBA9A3" Classes="label_set" >
-					<TextBlock  Classes="menu_subtext">
-						<Run Text="Отсечка"/>
-						<Run Text="{Binding Opko_1}"/>
-					</TextBlock>
-								<!--Text="Отсечка 1000 psi"-->
+				<!-- Центр -->
+				<Grid Grid.Row="1">
+					<Border Classes="press_main" Background="{Binding PressureTileBackground}"
+							IsHitTestVisible="False"/>
+
+					<TextBlock Classes="menu_title"
+							   Text="{Binding Pressure_1}"/>
+				</Grid>
+
+				<!-- Низ -->
+				<Border Grid.Row="2"
+						Background="#FBA9A3"
+						Classes="label_set">
+					<Grid>
+						<Border Classes="press_main" Background="{Binding PressureTileBackground}"
+								IsHitTestVisible="False"/>
+
+						<TextBlock Classes="menu_subtext">
+							<Run Text="Отсечка"/>
+							<Run Text="{Binding Opko_1}"/>
+						</TextBlock>
+					</Grid>
 				</Border>
 			</Grid>
 		</Button>
@@ -386,7 +405,5 @@
 						Grid.ColumnSpan="2"
 						Grid.RowSpan="4"
 						IsVisible="False"/>
-
 	</Grid>
-
 </Window>

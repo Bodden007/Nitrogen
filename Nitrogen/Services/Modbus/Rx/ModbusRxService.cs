@@ -22,7 +22,24 @@ internal sealed class ModbusRxService : IModbusRxService
     public IObservable<ushort[]> Registers => _poller.Registers;
 
     public IObservable<IReadOnlyDictionary<string, ProcessValue>> ProcessValues =>
-    _poller.Registers.Select(_processValueBuilder.Build);
+        _poller.Registers
+            .Select(registers =>
+            {
+                var values = _processValueBuilder.Build(registers);
+
+                //FIXME Диагностика Pressure_1 RX
+                if (values.TryGetValue("Pressure_1", out var pressure))
+                {
+                    Console.WriteLine(
+                        $"RX Pressure_1 Value={pressure.Value} HasError={pressure.HasError} ErrorText={pressure.ErrorText}");
+                }
+                else
+                {
+                    Console.WriteLine("RX Pressure_1 NOT FOUND");
+                }
+
+                return values;
+            });
 
     public void Start()
     {

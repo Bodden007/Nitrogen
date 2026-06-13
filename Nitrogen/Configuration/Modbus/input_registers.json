@@ -20,8 +20,8 @@
     "type": "Int16"
   },
   {
-    "name": "CmdOpko_1",
-    "address": 12,
+    "name": "StatOpko_1",
+    "address": 14,
     "type": "Int16"
   }
 ]
