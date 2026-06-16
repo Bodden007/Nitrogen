@@ -84,14 +84,15 @@
 							   HorizontalAlignment="Left"
 							   Text="Выход" IsVisible="False" />
 					<TextBlock x:Name="ValueTempOut" Classes="menu_title"
-							   Text="40 °C"/>
+							   Text="{Binding TemperatureOutlet, StringFormat='{}{0} °C'}"/>
 				</Grid>
 				<Grid Grid.Row="2">
 					<TextBlock x:Name="TempExc" Classes="menu_subtext"
 							   HorizontalAlignment="Left"
 							   Text="Вапор." IsVisible="False" />
 					<TextBlock x:Name="ValueVaporizer" Classes="menu_subtext"
-							   Text="38 °C" IsVisible="False" />
+							   Text="{Binding TemperatureVaporizer, StringFormat='{}{0} °C'}"
+							   IsVisible="False" />
 					<TextBlock Classes="hotkey"  VerticalAlignment="Bottom"
 							   Text="2"/>
 				</Grid>

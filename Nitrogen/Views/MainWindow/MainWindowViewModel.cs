@@ -24,7 +24,7 @@ namespace Nitrogen.Views.MainWindow
                 .ToProperty(this, vm => vm.CurrentTime, initialValue: DateTime.MinValue);
 
             var registersStream = modbusRxService.Registers
-                 .ObserveOn(RxSchedulers.MainThreadScheduler);
+                .ObserveOn(RxSchedulers.MainThreadScheduler);
 
             _registers = registersStream
                 .ToProperty(this, vm => vm.Registers, initialValue: new ushort[50]);
@@ -35,26 +35,35 @@ namespace Nitrogen.Views.MainWindow
                 {
                     if (values.TryGetValue("Pressure_1", out var pressure))
                     {
-                        //FIXME Диагностика Pressure_1 VM
-                        Console.WriteLine(
-                            $"VM Pressure_1 BEFORE={Pressure_1} RX_VALUE={pressure.Value} HasError={pressure.HasError}");
-
                         Pressure_1 = pressure.HasError
                             ? pressure.ErrorText ?? "Ошибка"
                             : pressure.Value.ToString("F0");
-
-                        //FIXME Диагностика Pressure_1 VM
-                        Console.WriteLine($"VM Pressure_1 AFTER={Pressure_1}");
-                    }
-                    else
-                    {
-                        //FIXME Диагностика Pressure_1 VM
-                        Console.WriteLine("VM Pressure_1 NOT FOUND");
                     }
 
                     if (values.TryGetValue("Opko_1", out var opko))
                     {
                         Opko_1 = opko.Value.ToString("F0");
+                    }
+
+                    if (values.TryGetValue("TemperatureOutlet", out var temperatureOutlet))
+                    {
+                        TemperatureOutlet = temperatureOutlet.HasError
+                            ? temperatureOutlet.ErrorText ?? "Ошибка"
+                            : temperatureOutlet.Value.ToString("F0");
+                    }
+
+                    if (values.TryGetValue("TemperatureVaporizer", out var temperatureVaporizer))
+                    {
+                        TemperatureVaporizer = temperatureVaporizer.HasError
+                            ? temperatureVaporizer.ErrorText ?? "Ошибка"
+                            : temperatureVaporizer.Value.ToString("F0");
+                    }
+
+                    if (values.TryGetValue("TemperatureBath", out var temperatureBath))
+                    {
+                        TemperatureBath = temperatureBath.HasError
+                            ? temperatureBath.ErrorText ?? "Ошибка"
+                            : temperatureBath.Value.ToString("F0");
                     }
 
                     UpdateOpkoAlarm(values);
@@ -87,6 +96,28 @@ namespace Nitrogen.Views.MainWindow
             get => _opkoEdit;
             set => this.RaiseAndSetIfChanged(ref _opkoEdit, value);
         }
+
+        private string _temperatureOutlet = "---";
+        public string TemperatureOutlet
+        {
+            get => _temperatureOutlet;
+            private set => this.RaiseAndSetIfChanged(ref _temperatureOutlet, value);
+        }
+
+        private string _temperatureVaporizer = "---";
+        public string TemperatureVaporizer
+        {
+            get => _temperatureVaporizer;
+            private set => this.RaiseAndSetIfChanged(ref _temperatureVaporizer, value);
+        }
+
+        private string _temperatureBath = "---";
+        public string TemperatureBath
+        {
+            get => _temperatureBath;
+            private set => this.RaiseAndSetIfChanged(ref _temperatureBath, value);
+        }
+
         public void LoadOpkoEditOnce()
         {
             OpkoEdit = Opko_1;

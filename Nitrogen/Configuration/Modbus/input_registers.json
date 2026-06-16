@@ -23,5 +23,35 @@
     "name": "StatOpko_1",
     "address": 14,
     "type": "Int16"
+  },
+  {
+    "name": "TemperatureOutletLo",
+    "address": 20,
+    "type": "Int16"
+  },
+  {
+    "name": "TemperatureOutletHi",
+    "address": 21,
+    "type": "Int16"
+  },
+  {
+    "name": "TemperatureVaporizerLo",
+    "address": 22,
+    "type": "Int16"
+  },
+  {
+    "name": "TemperatureVaporizerHi",
+    "address": 23,
+    "type": "Int16"
+  },
+  {
+    "name": "TemperatureBathLo",
+    "address": 24,
+    "type": "Int16"
+  },
+  {
+    "name": "TemperatureBathHi",
+    "address": 25,
+    "type": "Int16"
   }
 ]

@@ -2,6 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:Nitrogen.Views.MainWindow"
+			 x:DataType="vm:MainWindowViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Nitrogen.Views.Menu.TemperatureControl">
   
@@ -30,8 +32,7 @@
 				<TextBlock/>
 				<TextBlock Classes="menu_title"
 						   VerticalAlignment="Center"
-						   Background="BlueViolet"
-						   Text="40 °C"/>
+						   Text="{Binding TemperatureOutlet, StringFormat='{}{0} °C'}"/>
 			</Grid>
 		</Border>
 
@@ -51,8 +52,7 @@
 						<TextBlock/>
 						<TextBlock Classes="menu_title"
 								   VerticalAlignment="Center"
-								   Background="BlueViolet"
-								   Text="38 °C"/>
+								   Text="{Binding TemperatureVaporizer, StringFormat='{}{0} °C'}"/>
 					</Grid>
 
 				</Border>
@@ -65,8 +65,7 @@
 						<TextBlock/>
 						<TextBlock Classes="menu_title"
 								   VerticalAlignment="Center"
-								   Background="BlueViolet"
-								   Text="70 °C"/>
+								   Text="{Binding TemperatureBath, StringFormat='{}{0} °C'}"/>
 					</Grid>
 				</Border>
 

@@ -4,6 +4,7 @@ using System;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Nitrogen.Services.Modbus.Connection;
 
@@ -16,6 +17,27 @@ internal sealed class ModbusConnectionManager : IModbusReader, IModbusWriter, ID
 
     private TcpClient? _tcpClient;
     private IModbusMaster? _master;
+
+    /// <summary>
+    /// DIAGNOSTICS
+    /// </summary>
+    public long RequestLockWaitCount { get; private set; }
+    public long RequestLockEnterCount { get; private set; }
+    public long RequestStartedCount { get; private set; }
+    public long RequestCompletedCount { get; private set; }
+    public long HungRequestCount { get; private set; }
+    public long RecoveredRequestCount { get; private set; }
+
+    public bool RequestInProgress { get; private set; }
+    public bool RequestIsHung { get; private set; }
+    public DateTime? CurrentRequestStartedAt { get; private set; }
+    public long CurrentRequestMs { get; private set; }
+    public long LastRequestMs { get; private set; }
+    public long MaxRequestMs { get; private set; }
+    public DateTime? LastSuccessTime { get; private set; }
+    /// <summary>
+    /// END DIAGNOSTICS
+    /// </summary>
 
     public ModbusConnectionManager(ModbusConnectionConfig config)
     {
@@ -127,11 +149,21 @@ internal sealed class ModbusConnectionManager : IModbusReader, IModbusWriter, ID
         if (!connected || _master is null)
             return;
 
+        //FIXMI Diagnostics
+        RequestLockWaitCount++;
+
         await _requestLock.WaitAsync(cancellationToken);
+
+        //FIXMI Diagnostics
+        RequestLockEnterCount++;
 
         try
         {
-            await request(_master);
+            //FIXMI Diagnostics
+            /* await request(_master)*/
+            ;
+            await ExecuteRequestWithDiagnosticsAsync(
+                    () => request(_master));
         }
         catch
         {
@@ -152,11 +184,20 @@ internal sealed class ModbusConnectionManager : IModbusReader, IModbusWriter, ID
         if (!connected || _master is null)
             return default;
 
+        //FIXMI Diagnostics
+        RequestLockWaitCount++;
+
         await _requestLock.WaitAsync(cancellationToken);
+
+        //FIXMI Diagnostics
+        RequestLockEnterCount++;
 
         try
         {
-            return await request(_master);
+            //FIXMI Diagnostics
+            //return await request(_master);
+            return await ExecuteRequestWithDiagnosticsAsync(
+                        () => request(_master));
         }
         catch
         {
@@ -184,5 +225,69 @@ internal sealed class ModbusConnectionManager : IModbusReader, IModbusWriter, ID
 
         _connectionLock.Dispose();
         _requestLock.Dispose();
+    }
+
+    private async Task ExecuteRequestWithDiagnosticsAsync(Func<Task> request)
+    {
+        await ExecuteRequestWithDiagnosticsAsync(
+            async () =>
+            {
+                await request();
+                return true;
+            });
+    }
+
+    //FIXMI DIANOSTICS
+    private async Task<TResult> ExecuteRequestWithDiagnosticsAsync<TResult>(
+        Func<Task<TResult>> request)
+    {
+        RequestStartedCount++;
+        RequestInProgress = true;
+        RequestIsHung = false;
+        CurrentRequestStartedAt = DateTime.Now;
+        CurrentRequestMs = 0;
+
+        Stopwatch stopwatch = Stopwatch.StartNew();
+
+        try
+        {
+            Task<TResult> requestTask = request();
+
+            Task timeoutTask = Task.Delay(_config.RequestTimeoutMs);
+
+            Task completedTask = await Task.WhenAny(requestTask, timeoutTask);
+
+            if (completedTask != requestTask)
+            {
+                CurrentRequestMs = stopwatch.ElapsedMilliseconds;
+                LastRequestMs = stopwatch.ElapsedMilliseconds;
+                MaxRequestMs = Math.Max(MaxRequestMs, LastRequestMs);
+
+                HungRequestCount++;
+                RequestIsHung = true;
+
+                throw new TimeoutException(
+                    $"Modbus request hung longer than {_config.RequestTimeoutMs} ms");
+            }
+
+            TResult result = await requestTask;
+
+            stopwatch.Stop();
+
+            CurrentRequestMs = stopwatch.ElapsedMilliseconds;
+            LastRequestMs = stopwatch.ElapsedMilliseconds;
+            MaxRequestMs = Math.Max(MaxRequestMs, LastRequestMs);
+            LastSuccessTime = DateTime.Now;
+
+            RequestCompletedCount++;
+
+            return result;
+        }
+        finally
+        {
+            RequestInProgress = false;
+            RequestIsHung = false;
+            CurrentRequestStartedAt = null;
+        }
     }
 }
