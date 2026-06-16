@@ -60,6 +60,7 @@ public partial class App : Application
             var mainWindow = new MainWindow(
                 connectionManager,
                 connectionConfig,
+                inputRegistersConfig,
                 holdingRegistersConfig);
 
             mainWindow.DataContext = viewModel;

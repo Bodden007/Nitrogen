@@ -2,13 +2,15 @@ using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Media;
+using Nitrogen.Services.Modbus.Configuration.Models.Connection;
+using Nitrogen.Services.Modbus.Configuration.Models.Registers;
 using Nitrogen.Services.Modbus.Connection;
 using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.MainWindow;
 using Nitrogen.Views.Menu.Pressure;
+using Nitrogen.Views.Settings;
+using Nitrogen.Views.Settings.PressureSet;
 using System.Collections.Generic;
-using Nitrogen.Services.Modbus.Configuration.Models.Connection;
-using Nitrogen.Services.Modbus.Configuration.Models.Registers;
 
 namespace Nitrogen;
 
@@ -16,9 +18,11 @@ public partial class MainWindow : Window
 {
     private readonly Stack<UserControl> _screenStack = new();
     private readonly IModbusWriter? _writer;
+    private readonly IModbusReader? _reader;
 
     private readonly ModbusConnectionConfig? _connectionConfig;
     private readonly IReadOnlyList<ModbusRegisterConfig>? _holdingRegisters;
+    private readonly IReadOnlyList<ModbusRegisterConfig>? _inputRegisters;
 
     private UserControl? _currentScreen;
 
@@ -32,14 +36,18 @@ public partial class MainWindow : Window
         this.KeyDown += MainWindow_KeyDown;
     }
     internal MainWindow(
-      IModbusWriter writer,
-      ModbusConnectionConfig connectionConfig,
-      IReadOnlyList<ModbusRegisterConfig> holdingRegisters) : this()
+        IModbusWriter writer,
+        ModbusConnectionConfig connectionConfig,
+        IReadOnlyList<ModbusRegisterConfig> inputRegisters,
+        IReadOnlyList<ModbusRegisterConfig> holdingRegisters) : this()
     {
         _writer = writer;
+        _reader = writer as IModbusReader;
         _connectionConfig = connectionConfig;
+        _inputRegisters = inputRegisters;
         _holdingRegisters = holdingRegisters;
     }
+
     private void MainWindow_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
     {
         if (e.Source is TextBox && !IsCommandKey(e.Key))
@@ -251,9 +259,9 @@ public partial class MainWindow : Window
     private PressureControl CreatePressureScreen()
     {
         if (MainVm is null
-     || _writer is null
-     || _connectionConfig is null
-     || _holdingRegisters is null)
+            || _writer is null
+            || _connectionConfig is null
+            || _holdingRegisters is null)
             return new PressureControl(this);
 
         var screen = new PressureControl(this)
@@ -266,6 +274,28 @@ public partial class MainWindow : Window
         };
 
         return screen;
+    }
+
+    internal PressureSetControl CreatePressureSetScreen()
+    {
+        if (MainVm is null
+            || _reader is null
+            || _writer is null
+            || _connectionConfig is null
+            || _inputRegisters is null
+            || _holdingRegisters is null)
+            return new PressureSetControl(this);
+
+        return new PressureSetControl(this)
+        {
+            DataContext = new PressureSetControlViewModel(
+                MainVm,
+                _reader,
+                _writer,
+                _connectionConfig,
+                _inputRegisters,
+                _holdingRegisters)
+        };
     }
 
     public void BackScreen()

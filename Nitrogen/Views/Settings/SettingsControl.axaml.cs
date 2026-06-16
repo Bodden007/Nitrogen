@@ -32,7 +32,7 @@ public partial class SettingsControl : UserControl, IHotKeyScreen
                 break;
 
             case Key.F1:
-                _mainWindow.ShowScreen(new Nitrogen.Views.Settings.PressureSetControl(_mainWindow));
+                _mainWindow.ShowScreen(_mainWindow.CreatePressureSetScreen());
                 break;
 
             case Key.F5:
@@ -47,7 +47,7 @@ public partial class SettingsControl : UserControl, IHotKeyScreen
 
     private void PressureCalli_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        _mainWindow?.ShowScreen(new Nitrogen.Views.Settings.PressureSetControl(_mainWindow));
+        _mainWindow?.ShowScreen(_mainWindow.CreatePressureSetScreen());
     }
 
     private void DsPumpCalli_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)

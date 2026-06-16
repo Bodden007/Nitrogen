@@ -18,5 +18,46 @@
     "name": "ResetOPKO",
     "address": 5,
     "type": "Int16"
+  },
+
+  {
+    "name": "Pressure_1SrcMinLo",
+    "address": 100,
+    "type": "Int16"
+  },
+  {
+    "name": "Pressure_1SrcMinHi",
+    "address": 101,
+    "type": "Int16"
+  },
+  {
+    "name": "Pressure_1SrcMaxLo",
+    "address": 102,
+    "type": "Int16"
+  },
+  {
+    "name": "Pressure_1SrcMaxHi",
+    "address": 103,
+    "type": "Int16"
+  },
+  {
+    "name": "Pressure_1TargMinLo",
+    "address": 104,
+    "type": "Int16"
+  },
+  {
+    "name": "Pressure_1TargMinHi",
+    "address": 105,
+    "type": "Int16"
+  },
+  {
+    "name": "Pressure_1TargMaxLo",
+    "address": 106,
+    "type": "Int16"
+  },
+  {
+    "name": "Pressure_1TargMaxHi",
+    "address": 107,
+    "type": "Int16"
   }
 ]
