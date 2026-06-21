@@ -35,6 +35,10 @@ public partial class SettingsControl : UserControl, IHotKeyScreen
                 _mainWindow.ShowScreen(_mainWindow.CreatePressureSetScreen());
                 break;
 
+            case Key.F2:
+                _mainWindow.ShowScreen(new Nitrogen.Views.Settings.SCFSetControl(_mainWindow));
+                break;
+
             case Key.F5:
                 _mainWindow.ShowScreen(new Nitrogen.Views.Settings.DsPumpSetControl(_mainWindow));
                 break;
@@ -60,8 +64,15 @@ public partial class SettingsControl : UserControl, IHotKeyScreen
         _mainWindow?.ShowScreen(new Nitrogen.Views.Settings.PsPumpSetControl(_mainWindow));
     }
 
+    private void SCFCalli_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        _mainWindow?.ShowScreen(new Nitrogen.Views.Settings.SCFSetControl(_mainWindow));
+    }
+
     private void Exit_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         _mainWindow?.CloseScreen();
     }
+
+
 }

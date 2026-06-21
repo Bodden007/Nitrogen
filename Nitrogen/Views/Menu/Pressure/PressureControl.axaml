@@ -25,7 +25,8 @@
 
 		<!-- Уставка нуля датчика давления -->
 		<Border Grid.Column="0" Grid.Row="1">
-			<TextBlock Classes="menu_title" Background="Red" Text="{Binding Pressure_1}"/>
+			<TextBlock Classes="menu_title" Background="{Binding PressureTileBackground}"
+			  Text="{Binding Pressure_1}"/>
 		</Border>
 
 		<!-- Уставки отсечки -->

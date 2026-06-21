@@ -47,4 +47,10 @@
       <Folder Include="Services\Localization\" />
       <Folder Include="Services\Navigation\" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\Settings\SCFSet\SCFSetControl.axaml.cs">
+        <DependentUpon>SCFSetControl.axaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
 </Project>

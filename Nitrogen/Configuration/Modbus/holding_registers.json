@@ -1,22 +1,23 @@
 ﻿[
   {
+    "name": "OPKO_1Lo",
+    "address": 8,
+    "type": "Int16"
+  },
+  {
+    "name": "OPKO_1Hi",
+    "address": 9,
+    "type": "Int16"
+  },
+  {
     "name": "SetOpko_1Lo",
-    "address": 2,
+    "address": 10,
     "type": "Int16"
   },
+
   {
-    "name": "SetOpko_1Hi",
-    "address": 3,
-    "type": "Int16"
-  },
-  {
-    "name": "SetZero",
-    "address": 4,
-    "type": "Int16"
-  },
-  {
-    "name": "ResetOPKO",
-    "address": 5,
+    "name": "Pressure_1SetZero",
+    "address": 16,
     "type": "Int16"
   },
 
@@ -58,6 +59,11 @@
   {
     "name": "Pressure_1TargMaxHi",
     "address": 107,
+    "type": "Int16"
+  },
+  {
+    "name": "Pressure_1SetPrmLo",
+    "address": 108,
     "type": "Int16"
   }
 ]

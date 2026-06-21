@@ -1,11 +1,11 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Nitrogen.Views.Settings.SettingsControl">
-  
-    <Grid Background="{DynamicResource PrimaryGridColor}" >
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="Nitrogen.Views.Settings.SettingsControl">
+
+	<Grid Background="{DynamicResource PrimaryGridColor}" >
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="1*"/>
 			<ColumnDefinition Width="1*"/>
@@ -26,6 +26,18 @@
 					<Run Text="Давления"/>
 				</TextBlock>
 				<TextBlock Classes="hotkey" Text="F1"/>
+			</Grid>
+		</Button>
+
+		<!-- SCF -->
+		<Button x:Name="SCFCalli" Grid.Column="0" Grid.Row="1" Click="SCFCalli_Click">
+			<Grid>
+				<TextBlock Classes="menu_title" TextAlignment="Center">
+					<Run Text="Настройка"/>
+					<LineBreak/>
+					<Run Text="SCF"/>
+				</TextBlock>
+				<TextBlock Classes="hotkey" Text="F2"/>
 			</Grid>
 		</Button>
 

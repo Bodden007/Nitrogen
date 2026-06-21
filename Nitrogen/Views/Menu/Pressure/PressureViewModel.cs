@@ -1,4 +1,5 @@
-﻿using Nitrogen.Services.Modbus.Configuration.Models.Connection;
+﻿using Avalonia.Media;
+using Nitrogen.Services.Modbus.Configuration.Models.Connection;
 using Nitrogen.Services.Modbus.Configuration.Models.Registers;
 using Nitrogen.Services.Modbus.Connection;
 using Nitrogen.Views.MainWindow;
@@ -21,6 +22,7 @@ internal sealed class PressureViewModel : ReactiveObject
     private readonly IReadOnlyList<ModbusRegisterConfig> _holdingRegisters;
 
     public string Pressure_1 => _mainVm.Pressure_1;
+    public IBrush PressureTileBackground => _mainVm.PressureTileBackground;
 
     private string _opkoEdit = "";
 
@@ -49,6 +51,9 @@ internal sealed class PressureViewModel : ReactiveObject
         {
             if (e.PropertyName == nameof(MainWindowViewModel.Pressure_1))
                 this.RaisePropertyChanged(nameof(Pressure_1));
+
+            if (e.PropertyName == nameof(MainWindowViewModel.PressureTileBackground))
+                this.RaisePropertyChanged(nameof(PressureTileBackground));
         };
 
         SetZeroCommand = ReactiveCommand.CreateFromTask(SetZeroAsync);
@@ -64,7 +69,7 @@ internal sealed class PressureViewModel : ReactiveObject
 
     private Task SetZeroAsync()
     {
-        ushort address = GetHoldingAddress("SetZero");
+        ushort address = GetHoldingAddress("Pressure_1SetZero");
 
         return _writer.WriteSingleRegisterAsync(
             _connectionConfig.SlaveId,
@@ -74,7 +79,7 @@ internal sealed class PressureViewModel : ReactiveObject
 
     private Task ResetZeroAsync()
     {
-        ushort address = GetHoldingAddress("SetZero");
+        ushort address = GetHoldingAddress("Pressure_1SetZero");
 
         return _writer.WriteSingleRegisterAsync(
             _connectionConfig.SlaveId,
@@ -92,7 +97,7 @@ internal sealed class PressureViewModel : ReactiveObject
             return;
 
         // 1. Сначала записываем новое значение OPKO
-        ushort opkoAddress = GetHoldingAddress("SetOpko_1Lo");
+        ushort opkoAddress = GetHoldingAddress("OPKO_1Lo");
 
         await _writer.WriteMultipleRegistersAsync(
             _connectionConfig.SlaveId,
@@ -100,7 +105,7 @@ internal sealed class PressureViewModel : ReactiveObject
             FloatToRegisters(value));
 
         // 2. Потом даем команду сброса/перечитать OPKO
-        ushort resetAddress = GetHoldingAddress("ResetOPKO");
+        ushort resetAddress = GetHoldingAddress("SetOpko_1Lo");
 
         await _writer.WriteSingleRegisterAsync(
             _connectionConfig.SlaveId,

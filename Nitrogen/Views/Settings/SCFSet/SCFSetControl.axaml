@@ -1,0 +1,122 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="Nitrogen.Views.Settings.SCFSetControl">
+	<Grid Background="{DynamicResource PrimaryGridColor}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="5*"/>
+			<RowDefinition Height="2*"/>
+		</Grid.RowDefinitions>
+
+		<!-- Header -->
+		<Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="{DynamicResource PrimaryHeaderBrush}">
+			<TextBlock  Classes="section_label" Text="Калибровки SCF"/>
+		</Grid>
+
+		<!-- Настройка левый экран -->
+		<Border Grid.Column="0" Grid.Row="1">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+
+				<!-- Количество зубьев -->
+				<TextBlock Grid.Row="0" Grid.RowSpan="2" Classes="section_label">
+				<Run Text="Кол. зубьев"/>
+					<LineBreak/>
+					<Run Text="1..255"/>
+				</TextBlock>
+				<Grid Grid.Row="2">
+					<TextBox x:Name="TargTeetnCountTextBox" Text="Text"/>
+					<TextBlock Classes="hotkey" Text="F3"/>
+				</Grid>
+
+				<!-- Текущие Значения -->
+				<TextBlock Grid.Row="4" Classes="menu_title"
+						   Text="Text"/>
+				<TextBlock Grid.Row="5" Classes="menu_title"
+						   Text="Text"/>
+			</Grid>
+		</Border>
+
+				<!-- Настройка правый экран -->
+		<Border Grid.Column="1" Grid.Row="1">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+
+				<!-- Коэффициент насоса -->
+				<TextBlock Grid.Row="0" Grid.RowSpan="2" Classes="section_label">
+					<Run Text="Коэф. насоса"/>
+					<LineBreak/>
+					<Run Text="0.5 .. 2.5"/>
+				</TextBlock>
+				<Grid Grid.Row="2">
+					<TextBox x:Name="TargPumpFactorTextBox" Text="Text"/>
+					<TextBlock Classes="hotkey" Text="F4"/>
+				</Grid>
+
+				<!-- Коэффициент эффективности насоса -->
+				<TextBlock Grid.Row="3" Grid.RowSpan="2" Classes="section_label">
+					<Run Text="Коэф. эффект. насоса"/>
+					<LineBreak/>
+					<Run Text="0.5 .. 1.1"/>
+				</TextBlock>
+				<Grid Grid.Row="5">
+					<TextBox x:Name="TargEfficiencyFactorTextBox" Text="Text"/> 
+					<TextBlock Classes="hotkey" Text="F5"/>
+				</Grid>
+			</Grid>
+		</Border>
+
+		<!-- Блок Кнопок -->
+		<Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+			</Grid.ColumnDefinitions>
+
+			<!-- Сохранить -->
+			<Button x:Name="Save" Grid.Column="0" Click="Save_Click" >
+				<Grid>
+					<TextBlock Classes="menu_title" Text="Сохранить"/>
+					<TextBlock Classes="hotkey" Text="F1"/>
+				</Grid>
+			</Button>
+
+			<!-- Заглушка -->
+			<Border Grid.Column="1">
+
+			</Border>
+
+			<!-- Выход -->
+			<Button x:Name="Exit" Grid.Column="2"  Click="Exit_Click">
+				<Grid>
+					<TextBlock Classes="menu_title" Text="Выход"/>
+					<TextBlock Classes="hotkey" Text="ESC"/>
+				</Grid>
+			</Button>
+		</Grid>
+	</Grid>
+</UserControl>

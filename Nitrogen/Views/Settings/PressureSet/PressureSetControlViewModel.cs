@@ -167,7 +167,13 @@ internal sealed class PressureSetControlViewModel : ReactiveObject
             (ushort)startAddress,
             registers);
 
-        Console.WriteLine(
-            $"PRESSURE SET SAVE: Start={startAddress}, Count={registers.Length}");
+        ushort setPrmAddress = ModbusRegisterHelper.GetStartAddress(
+            _holdingRegisters,
+            "Pressure_1SetPrmLo");
+
+        await _writer.WriteSingleRegisterAsync(
+            _connectionConfig.SlaveId,
+            setPrmAddress,
+            1);
     }
 }
