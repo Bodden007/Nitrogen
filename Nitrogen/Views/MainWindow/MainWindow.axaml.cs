@@ -19,19 +19,10 @@ namespace Nitrogen;
 
 public partial class MainWindow : Window
 {
-    private readonly Stack<UserControl> _screenStack = new();
-    private readonly IModbusWriter? _writer;
-    private readonly IModbusReader? _reader;
-
-    private readonly ModbusConnectionConfig? _connectionConfig;
-    private readonly IReadOnlyList<ModbusRegisterConfig>? _holdingRegisters;
-    private readonly IReadOnlyList<ModbusRegisterConfig>? _inputRegisters;
-
     private readonly ScreenNavigator _screenNavigator;
-
+    private readonly IScreenFactory? _screenFactory;
     private UserControl? _currentScreen;
 
-    private MainWindowViewModel? MainVm => DataContext as MainWindowViewModel;
     public MainWindow()
     {
         InitializeComponent();
@@ -48,11 +39,13 @@ public partial class MainWindow : Window
         IReadOnlyList<ModbusRegisterConfig> inputRegisters,
         IReadOnlyList<ModbusRegisterConfig> holdingRegisters) : this()
     {
-        _writer = writer;
-        _reader = writer as IModbusReader;
-        _connectionConfig = connectionConfig;
-        _inputRegisters = inputRegisters;
-        _holdingRegisters = holdingRegisters;
+        _screenFactory = new ScreenFactory(
+            this,
+            writer,
+            writer as IModbusReader,
+            connectionConfig,
+            inputRegisters,
+            holdingRegisters);
     }
 
     private void MainWindow_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
@@ -78,7 +71,7 @@ public partial class MainWindow : Window
         {
             case Key.F1:
                 {
-                    ShowScreen(CreatePressureScreen());
+                    ShowScreen(_screenFactory!.CreatePressureScreen());
                     e.Handled = true;
                     break;
                 }
@@ -106,7 +99,7 @@ public partial class MainWindow : Window
 
             case Key.F5:
                 {
-                    ShowScreen(CreateEngineScreen());
+                    ShowScreen(_screenFactory!.CreateEngineScreen());
                     e.Handled = true;
                     break;
                 }
@@ -118,7 +111,7 @@ public partial class MainWindow : Window
                     break;
                 }
 
-                //TODO доделать и раскоментировать
+            //TODO доделать и раскоментировать
             //case Key.F7:
             //    {
             //        ShowScreen(new Nitrogen.Views.Menu.StagesControl(this));
@@ -142,7 +135,7 @@ public partial class MainWindow : Window
     }
     private void Pressure_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ShowScreen(CreatePressureScreen());
+        ShowScreen(_screenFactory!.CreatePressureScreen());
     }
     private void Volume_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
@@ -150,7 +143,7 @@ public partial class MainWindow : Window
     }
     private void Engine_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ShowScreen(CreateEngineScreen());
+        ShowScreen(_screenFactory!.CreateEngineScreen());
     }
     private void Menu_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
@@ -242,6 +235,7 @@ public partial class MainWindow : Window
             HeaderRate.Text = "Σ Расход";
         }
     }
+
     private static bool IsCommandKey(Key key)
     {
         return key == Key.Escape
@@ -249,66 +243,18 @@ public partial class MainWindow : Window
             || key is >= Key.F1 and <= Key.F12;
     }
 
-    private PressureControl CreatePressureScreen()
-    {
-        if (MainVm is null
-            || _writer is null
-            || _connectionConfig is null
-            || _holdingRegisters is null)
-            return new PressureControl(this);
-
-        var screen = new PressureControl(this)
-        {
-            DataContext = new PressureViewModel(
-                MainVm,
-                _writer,
-                _connectionConfig,
-                _holdingRegisters)
-        };
-
-        return screen;
-    }
-
     public void ShowPressureScreen()
     {
-        ShowScreen(CreatePressureScreen());
-    }
-
-    private EngineControl CreateEngineScreen()
-    {
-        if (MainVm is null)
-            return new Nitrogen.Views.Menu.EngineControl(this);
-
-        return new Nitrogen.Views.Menu.EngineControl(this)
-        {
-            DataContext = new EngineViewModel(MainVm)
-        };
+        ShowScreen(_screenFactory!.CreatePressureScreen());
     }
     public void ShowEngineScreen()
     {
-        ShowScreen(CreateEngineScreen());
+        ShowScreen(_screenFactory!.CreateEngineScreen());
     }
 
     internal PressureSetControl CreatePressureSetScreen()
     {
-        if (MainVm is null
-            || _reader is null
-            || _writer is null
-            || _connectionConfig is null
-            || _inputRegisters is null
-            || _holdingRegisters is null)
-            return new PressureSetControl(this);
-
-        return new PressureSetControl(this)
-        {
-            DataContext = new PressureSetControlViewModel(
-                MainVm,
-                _reader,
-                _writer,
-                _connectionConfig,
-                _inputRegisters,
-                _holdingRegisters)
-        };
+        return _screenFactory!.CreatePressureSetScreen();
     }
 
     public async void ShowScreen(UserControl screen)
