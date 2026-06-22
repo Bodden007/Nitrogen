@@ -56,12 +56,22 @@
   },
   {
     "name": "PUMP_1RPMLo",
-    "address": 46,
+    "address": 30,
     "type": "Int16"
   },
   {
     "name": "PUMP_1RPMHi",
-    "address": 47,
+    "address": 31,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1SCFMLo",
+    "address": 32,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1SCFMHi",
+    "address": 33,
     "type": "Int16"
   },
 
@@ -103,6 +113,31 @@
   {
     "name": "Pressure_1TargMaxHi",
     "address": 107,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1TeethCountLo",
+    "address": 120,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1PumpFactorLo",
+    "address": 122,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1PumpFactorHi",
+    "address": 123,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1PumpEfficiencyFactorLo",
+    "address": 124,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1PumpEfficiencyFactorHi",
+    "address": 125,
     "type": "Int16"
   }
 ]

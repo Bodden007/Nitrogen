@@ -6,6 +6,7 @@ using Nitrogen.Views.Menu.Engine;
 using Nitrogen.Views.Menu.Pressure;
 using Nitrogen.Views.Settings;
 using Nitrogen.Views.Settings.PressureSet;
+using Nitrogen.Views.Settings.SCFSet;
 using System.Collections.Generic;
 
 namespace Nitrogen.Views.MainWindow.ScreenHost;
@@ -80,6 +81,28 @@ internal sealed class ScreenFactory : IScreenFactory
         return new PressureSetControl(_mainWindow)
         {
             DataContext = new PressureSetControlViewModel(
+                MainVm,
+                _reader,
+                _writer,
+                _connectionConfig,
+                _inputRegisters,
+                _holdingRegisters)
+        };
+    }
+
+    public SCFSetControl CreateSCFSetScreen()
+    {
+        if (MainVm is null
+            || _reader is null
+            || _writer is null
+            || _connectionConfig is null
+            || _inputRegisters is null
+            || _holdingRegisters is null)
+            return new SCFSetControl(_mainWindow);
+
+        return new SCFSetControl(_mainWindow)
+        {
+            DataContext = new SCFSetControlViewModel(
                 MainVm,
                 _reader,
                 _writer,

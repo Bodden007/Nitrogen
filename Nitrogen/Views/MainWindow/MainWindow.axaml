@@ -99,7 +99,7 @@
 			</Grid>
 		</Button>
 
-		<!-- Расход SCF -->
+		<!-- Расход SCFM -->
 		<Button x:Name="Scf" Grid.Column="0" Grid.Row="1" Click="Scf_Click" >
 			<Grid>
 				<Grid.RowDefinitions>
@@ -108,7 +108,7 @@
 					<RowDefinition Height="1.5*"/>
 				</Grid.RowDefinitions>
 				<Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
-					<TextBlock x:Name="HeaderRate" Classes="section_label" Text="Σ Расход"/>
+					<TextBlock x:Name="HeaderRate" Classes="section_label" Text="Σ SCFM"/>
 					<TextBlock Classes="hotkey" Text="F3"/>
 				</Grid>
 				<Grid Grid.Row="1">
@@ -116,7 +116,7 @@
 							   HorizontalAlignment="Left"
 							   Text="A" IsVisible="False" />
 					<TextBlock x:Name="ValueRate" Classes="menu_title"
-							   Text="300 SCF"/>
+							   Text="{Binding Pump1Scfm, StringFormat='{}{0:0.###}'}"/>
 					<TextBlock x:Name="ValueRate_A" Classes="menu_subtext"
 							   Text="160 SCF" IsVisible="False" />
 				</Grid>

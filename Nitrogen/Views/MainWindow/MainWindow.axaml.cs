@@ -126,7 +126,7 @@ public partial class MainWindow : Window
                     break;
                 }
 
-            case Key.D1: HandlerRateLineDisplay(); break;
+            case Key.D1: HandlerSCFMLineDisplay(); break;
 
             case Key.D2: HandlerTempLineDisplay(); break;
 
@@ -212,7 +212,7 @@ public partial class MainWindow : Window
             ValueTempOut.Classes.Add("menu_title");
         }
     }
-    private void HandlerRateLineDisplay()
+    private void HandlerSCFMLineDisplay()
     {
         if (!HeaderRate_A.IsVisible)
         {
@@ -222,7 +222,7 @@ public partial class MainWindow : Window
             HeaderRate_B.IsVisible = true;
             ValueRate_B.IsVisible = true;
 
-            HeaderRate.Text = "Расход";
+            HeaderRate.Text = "SCF";
         }
         else
         {
@@ -232,7 +232,7 @@ public partial class MainWindow : Window
             HeaderRate_B.IsVisible = false;
             ValueRate_B.IsVisible = false;
 
-            HeaderRate.Text = "Σ Расход";
+            HeaderRate.Text = "Σ SCFM";
         }
     }
 
@@ -246,15 +246,18 @@ public partial class MainWindow : Window
     public void ShowPressureScreen()
     {
         ShowScreen(_screenFactory!.CreatePressureScreen());
+    }   
+    internal PressureSetControl CreatePressureSetScreen()
+    {
+        return _screenFactory!.CreatePressureSetScreen();
     }
     public void ShowEngineScreen()
     {
         ShowScreen(_screenFactory!.CreateEngineScreen());
     }
-
-    internal PressureSetControl CreatePressureSetScreen()
+    internal SCFSetControl CreateSCFSetScreen()
     {
-        return _screenFactory!.CreatePressureSetScreen();
+        return _screenFactory!.CreateSCFSetScreen();
     }
 
     public async void ShowScreen(UserControl screen)

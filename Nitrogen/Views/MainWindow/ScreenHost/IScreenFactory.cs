@@ -13,4 +13,6 @@ internal interface IScreenFactory
     EngineControl CreateEngineScreen();
 
     PressureSetControl CreatePressureSetScreen();
+
+    SCFSetControl CreateSCFSetScreen();
 }

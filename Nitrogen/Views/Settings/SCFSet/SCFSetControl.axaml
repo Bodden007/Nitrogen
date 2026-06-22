@@ -2,8 +2,12 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:Nitrogen.Views.Settings.SCFSet"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 x:Class="Nitrogen.Views.Settings.SCFSetControl">
+			 x:Class="Nitrogen.Views.Settings.SCFSetControl"
+			 x:DataType="vm:SCFSetControlViewModel">
+
+
 	<Grid Background="{DynamicResource PrimaryGridColor}">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="1*"/>
@@ -35,24 +39,25 @@
 
 				<!-- Количество зубьев -->
 				<TextBlock Grid.Row="0" Grid.RowSpan="2" Classes="section_label">
-				<Run Text="Кол. зубьев"/>
+					<Run Text="Кол. зубьев"/>
 					<LineBreak/>
 					<Run Text="1..255"/>
 				</TextBlock>
 				<Grid Grid.Row="2">
-					<TextBox x:Name="TargTeetnCountTextBox" Text="Text"/>
+					<TextBox x:Name="TargTeetnCountTextBox"
+							 Text="{Binding Pump_1TeethCountEdit}"/>
 					<TextBlock Classes="hotkey" Text="F3"/>
 				</Grid>
 
 				<!-- Текущие Значения -->
 				<TextBlock Grid.Row="4" Classes="menu_title"
-						   Text="Text"/>
+						   Text="{Binding Pump1Scfm, StringFormat='{}{0:0.###}'}" />
 				<TextBlock Grid.Row="5" Classes="menu_title"
-						   Text="Text"/>
+						   Text="{Binding Pump1Rpm, StringFormat='{}{0:0.###}'}"/>
 			</Grid>
 		</Border>
 
-				<!-- Настройка правый экран -->
+		<!-- Настройка правый экран -->
 		<Border Grid.Column="1" Grid.Row="1">
 			<Grid>
 				<Grid.RowDefinitions>
@@ -72,7 +77,8 @@
 					<Run Text="0.5 .. 2.5"/>
 				</TextBlock>
 				<Grid Grid.Row="2">
-					<TextBox x:Name="TargPumpFactorTextBox" Text="Text"/>
+					<TextBox x:Name="TargPumpFactorTextBox"
+							 Text="{Binding Pump_1PumpFactorEdit}"/>
 					<TextBlock Classes="hotkey" Text="F4"/>
 				</Grid>
 
@@ -83,7 +89,8 @@
 					<Run Text="0.5 .. 1.1"/>
 				</TextBlock>
 				<Grid Grid.Row="5">
-					<TextBox x:Name="TargEfficiencyFactorTextBox" Text="Text"/> 
+					<TextBox x:Name="TargEfficiencyFactorTextBox"
+							 Text="{Binding Pump_1PumpEfficiencyFactorEdit}"/>
 					<TextBlock Classes="hotkey" Text="F5"/>
 				</Grid>
 			</Grid>

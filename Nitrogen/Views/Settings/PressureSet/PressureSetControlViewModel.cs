@@ -42,12 +42,6 @@ internal sealed class PressureSetControlViewModel : ReactiveObject
 
     public string Pressure_1 => _mainVm.Pressure_1;
 
-    private void MainVmOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == nameof(MainWindowViewModel.Pressure_1))
-            this.RaisePropertyChanged(nameof(Pressure_1));
-    }
-
     private string _pressure_1SrcMinEdit = "";
     public string Pressure_1SrcMinEdit
     {
@@ -118,14 +112,6 @@ internal sealed class PressureSetControlViewModel : ReactiveObject
         Pressure_1TargMaxEdit = targMax.ToString("0.###", CultureInfo.InvariantCulture);
     }
 
-    private static void WriteFloat(ushort[] registers, int index, float value)
-    {
-        byte[] bytes = BitConverter.GetBytes(value);
-
-        registers[index] = BitConverter.ToUInt16(bytes, 0);      // Lo
-        registers[index + 1] = BitConverter.ToUInt16(bytes, 2);  // Hi
-    }
-
     public async Task SaveAsync()
     {
         var startAddress = ModbusRegisterHelper.GetStartAddress(
@@ -175,5 +161,19 @@ internal sealed class PressureSetControlViewModel : ReactiveObject
             _connectionConfig.SlaveId,
             setPrmAddress,
             1);
+    }
+
+    private static void WriteFloat(ushort[] registers, int index, float value)
+    {
+        byte[] bytes = BitConverter.GetBytes(value);
+
+        registers[index] = BitConverter.ToUInt16(bytes, 0);      // Lo
+        registers[index + 1] = BitConverter.ToUInt16(bytes, 2);  // Hi
+    }
+
+    private void MainVmOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(MainWindowViewModel.Pressure_1))
+            this.RaisePropertyChanged(nameof(Pressure_1));
     }
 }

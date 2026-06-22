@@ -36,7 +36,7 @@ public partial class SettingsControl : UserControl, IHotKeyScreen
                 break;
 
             case Key.F2:
-                _mainWindow.ShowScreen(new Nitrogen.Views.Settings.SCFSetControl(_mainWindow));
+                _mainWindow.ShowScreen(_mainWindow.CreateSCFSetScreen());
                 break;
 
             case Key.F5:
@@ -66,7 +66,7 @@ public partial class SettingsControl : UserControl, IHotKeyScreen
 
     private void SCFCalli_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        _mainWindow?.ShowScreen(new Nitrogen.Views.Settings.SCFSetControl(_mainWindow));
+        _mainWindow?.ShowScreen(_mainWindow.CreateSCFSetScreen());
     }
 
     private void Exit_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)

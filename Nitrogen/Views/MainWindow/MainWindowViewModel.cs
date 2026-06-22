@@ -71,6 +71,11 @@ namespace Nitrogen.Views.MainWindow
                         Pump1Rpm = pump1Rpm.Value;
                     }
 
+                    if (values.TryGetValue("PUMP_1SCFM", out var pump1Scfm))
+                    {
+                        Pump1Scfm = pump1Scfm.Value;
+                    }
+
                     UpdateOpkoAlarm(values);
                 });
 
@@ -128,6 +133,13 @@ namespace Nitrogen.Views.MainWindow
         {
             get => _pump1Rpm;
             private set => this.RaiseAndSetIfChanged(ref _pump1Rpm, value);
+        }
+
+        private double _pump1Scfm;
+        public double Pump1Scfm
+        {
+            get => _pump1Scfm;
+            private set => this.RaiseAndSetIfChanged(ref _pump1Scfm, value);
         }
 
         public void LoadOpkoEditOnce()

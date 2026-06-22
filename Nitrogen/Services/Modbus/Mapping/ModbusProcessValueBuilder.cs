@@ -21,6 +21,8 @@ internal sealed class ModbusProcessValueBuilder
     private readonly int _temperatureBathHiIndex;
     private readonly int _pump1RpmLoIndex;
     private readonly int _pump1RpmHiIndex;
+    private readonly int _pump1ScfmLoIndex;
+    private readonly int _pump1ScfmHiIndex;
 
     public ModbusProcessValueBuilder(
         IReadOnlyList<ModbusRegisterConfig> registersConfig,
@@ -77,6 +79,14 @@ internal sealed class ModbusProcessValueBuilder
         _pump1RpmHiIndex = ToIndex(
             GetRegister(registersConfig, "PUMP_1RPMHi").Address,
             inputStartAddress);
+
+        _pump1ScfmLoIndex = ToIndex(
+            GetRegister(registersConfig, "PUMP_1SCFMLo").Address,
+            inputStartAddress);
+
+        _pump1ScfmHiIndex = ToIndex(
+            GetRegister(registersConfig, "PUMP_1SCFMHi").Address,
+            inputStartAddress);
     }
 
     public IReadOnlyDictionary<string, ProcessValue> Build(ushort[] registers)
@@ -95,7 +105,9 @@ internal sealed class ModbusProcessValueBuilder
             registers.Length <= _temperatureBathLoIndex ||
             registers.Length <= _temperatureBathHiIndex ||
             registers.Length <= _pump1RpmLoIndex ||
-            registers.Length <= _pump1RpmHiIndex
+            registers.Length <= _pump1RpmHiIndex ||
+            registers.Length <= _pump1ScfmLoIndex ||
+            registers.Length <= _pump1ScfmHiIndex
             )
         {
             return result;
@@ -124,6 +136,10 @@ internal sealed class ModbusProcessValueBuilder
         float pump1Rpm = ModbusUtility.GetSingle(
             registers[_pump1RpmHiIndex],
             registers[_pump1RpmLoIndex]);
+
+        float pump1Scfm = ModbusUtility.GetSingle(
+            registers[_pump1ScfmHiIndex],
+            registers[_pump1ScfmLoIndex]);
 
         result["Pressure_1"] = new ProcessValue
         {
@@ -172,6 +188,12 @@ internal sealed class ModbusProcessValueBuilder
         {
             Name = "PUMP_1RPM",
             Value = pump1Rpm
+        };
+
+        result["PUMP_1SCFM"] = new ProcessValue
+        {
+            Name = "PUMP_1SCFM",
+            Value = pump1Scfm
         };
 
         return result;

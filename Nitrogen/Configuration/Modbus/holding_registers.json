@@ -65,5 +65,35 @@
     "name": "Pressure_1SetPrmLo",
     "address": 108,
     "type": "Int16"
+  },
+  {
+    "name": "PUMP_1TeethCountLo",
+    "address": 120,
+    "type": "Int16"
+  }, 
+  {
+    "name": "PUMP_1PumpFactorLo",
+    "address": 122,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1PumpFactorHi",
+    "address": 123,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1PumpEfficiencyFactorLo",
+    "address": 124,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1PumpEfficiencyFactorHi",
+    "address": 125,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1PumpSetPrmLo",
+    "address": 126,
+    "type": "Int16"
   }
 ]
