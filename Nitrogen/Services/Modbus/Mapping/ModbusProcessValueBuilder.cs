@@ -2,6 +2,7 @@
 using NModbus.Utility;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace Nitrogen.Services.Modbus.Mapping;
 
@@ -18,6 +19,8 @@ internal sealed class ModbusProcessValueBuilder
     private readonly int _temperatureVaporizerHiIndex;
     private readonly int _temperatureBathLoIndex;
     private readonly int _temperatureBathHiIndex;
+    private readonly int _pump1RpmLoIndex;
+    private readonly int _pump1RpmHiIndex;
 
     public ModbusProcessValueBuilder(
         IReadOnlyList<ModbusRegisterConfig> registersConfig,
@@ -44,8 +47,8 @@ internal sealed class ModbusProcessValueBuilder
             inputStartAddress);
 
         _temperatureOutletLoIndex = ToIndex(
-    GetRegister(registersConfig, "TemperatureOutletLo").Address,
-    inputStartAddress);
+            GetRegister(registersConfig, "TemperatureOutletLo").Address,
+            inputStartAddress);
 
         _temperatureOutletHiIndex = ToIndex(
             GetRegister(registersConfig, "TemperatureOutletHi").Address,
@@ -66,6 +69,14 @@ internal sealed class ModbusProcessValueBuilder
         _temperatureBathHiIndex = ToIndex(
             GetRegister(registersConfig, "TemperatureBathHi").Address,
             inputStartAddress);
+
+        _pump1RpmLoIndex = ToIndex(
+            GetRegister(registersConfig, "PUMP_1RPMLo").Address,
+            inputStartAddress);
+
+        _pump1RpmHiIndex = ToIndex(
+            GetRegister(registersConfig, "PUMP_1RPMHi").Address,
+            inputStartAddress);
     }
 
     public IReadOnlyDictionary<string, ProcessValue> Build(ushort[] registers)
@@ -82,7 +93,10 @@ internal sealed class ModbusProcessValueBuilder
             registers.Length <= _temperatureVaporizerLoIndex ||
             registers.Length <= _temperatureVaporizerHiIndex ||
             registers.Length <= _temperatureBathLoIndex ||
-            registers.Length <= _temperatureBathHiIndex)
+            registers.Length <= _temperatureBathHiIndex ||
+            registers.Length <= _pump1RpmLoIndex ||
+            registers.Length <= _pump1RpmHiIndex
+            )
         {
             return result;
         }
@@ -106,6 +120,10 @@ internal sealed class ModbusProcessValueBuilder
         float temperatureBath = ModbusUtility.GetSingle(
             registers[_temperatureBathHiIndex],
             registers[_temperatureBathLoIndex]);
+
+        float pump1Rpm = ModbusUtility.GetSingle(
+            registers[_pump1RpmHiIndex],
+            registers[_pump1RpmLoIndex]);
 
         result["Pressure_1"] = new ProcessValue
         {
@@ -149,6 +167,11 @@ internal sealed class ModbusProcessValueBuilder
             Value = temperatureBath,
             HasError = temperatureBath == 22222,
             ErrorText = temperatureBath == 22222 ? "Ошибка" : null
+        };
+        result["PUMP_1RPM"] = new ProcessValue
+        {
+            Name = "PUMP_1RPM",
+            Value = pump1Rpm
         };
 
         return result;

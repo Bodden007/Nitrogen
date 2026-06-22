@@ -32,7 +32,7 @@ public partial class MenuControl : UserControl, IHotKeyScreen
                 break;
 
             case Key.F1:
-                _mainWindow.ShowScreen(new PressureControl(_mainWindow));
+                _mainWindow.ShowPressureScreen();
                 break;
 
             case Key.F2:
@@ -48,12 +48,13 @@ public partial class MenuControl : UserControl, IHotKeyScreen
                 break;
 
             case Key.F5:
-                _mainWindow.ShowScreen(new EngineControl(_mainWindow));
+                _mainWindow.ShowEngineScreen();
                 break;
 
-            case Key.F6:
-                _mainWindow.ShowScreen(new StagecProfilesControl(_mainWindow));
-                break;
+            //TODO доделать и раскоментировать
+            //case Key.F6:
+            //    _mainWindow.ShowScreen(new StagecProfilesControl(_mainWindow));
+            //    break;
 
             case Key.F7:
                 Environment.Exit(0);
@@ -68,7 +69,7 @@ public partial class MenuControl : UserControl, IHotKeyScreen
 
     private void Pressure_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        _mainWindow?.ShowScreen(new PressureControl(_mainWindow));
+        _mainWindow?.ShowPressureScreen();
     }
 
     private void Temperature_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -88,12 +89,13 @@ public partial class MenuControl : UserControl, IHotKeyScreen
 
     private void Engine_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        _mainWindow?.ShowScreen(new EngineControl(_mainWindow));
+        _mainWindow?.ShowEngineScreen();
     }
 
     private void Profiles_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        _mainWindow?.ShowScreen(new StagecProfilesControl(_mainWindow));
+        //TODO доделать и раскоментировать
+        //_mainWindow?.ShowScreen(new StagecProfilesControl(_mainWindow));
     }
 
     private void CloseApp_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)

@@ -28,24 +28,38 @@ namespace Nitrogen.Controls.EngineTachometer
 
         private readonly Brush _redZoneBrush = new SolidColorBrush(Colors.Red, 0.8);
 
+        public static readonly StyledProperty<double> CurrentRPMProperty =
+            AvaloniaProperty.Register<TachometerControl, double>(
+            nameof(CurrentRPM),
+            0);
+
         // Поле для хранения текущих оборотов
-        private double _currentRPM;
+        //private double _currentRPM;
 
         // Свойство, которое мы будем менять извне
         public double CurrentRPM
         {
-            get => _currentRPM;
-            set
-            {
-                // Если значение не изменилось — не перерисовываем (экономия ресурсов)
-                if (_currentRPM == value) return;
+            //get => _currentRPM;
+            //set
+            //{
+            //    // Если значение не изменилось — не перерисовываем (экономия ресурсов)
+            //    if (_currentRPM == value) return;
 
-                _currentRPM = value;
+            //    _currentRPM = value;
 
-                // Самое важное: говорим Авалонии "Эй, данные изменились, перерисуй меня!"
-                InvalidateVisual();
-            }
+            //    // Самое важное: говорим Авалонии "Эй, данные изменились, перерисуй меня!"
+            //    InvalidateVisual();
+            //}
+            get => GetValue(CurrentRPMProperty);
+            set => SetValue(CurrentRPMProperty, value);
         }
+
+        static TachometerControl()
+        {
+            CurrentRPMProperty.Changed.AddClassHandler<TachometerControl>(
+                (control, _) => control.InvalidateVisual());
+        }
+
         public TachometerControl()
         {
             // Красная стрелка, потолще, с круглым кончиком

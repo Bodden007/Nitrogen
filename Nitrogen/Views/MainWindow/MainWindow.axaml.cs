@@ -7,6 +7,9 @@ using Nitrogen.Services.Modbus.Configuration.Models.Registers;
 using Nitrogen.Services.Modbus.Connection;
 using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.MainWindow;
+using Nitrogen.Views.MainWindow.ScreenHost;
+using Nitrogen.Views.Menu;
+using Nitrogen.Views.Menu.Engine;
 using Nitrogen.Views.Menu.Pressure;
 using Nitrogen.Views.Settings;
 using Nitrogen.Views.Settings.PressureSet;
@@ -24,6 +27,8 @@ public partial class MainWindow : Window
     private readonly IReadOnlyList<ModbusRegisterConfig>? _holdingRegisters;
     private readonly IReadOnlyList<ModbusRegisterConfig>? _inputRegisters;
 
+    private readonly ScreenNavigator _screenNavigator;
+
     private UserControl? _currentScreen;
 
     private MainWindowViewModel? MainVm => DataContext as MainWindowViewModel;
@@ -32,6 +37,8 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         WindowState = WindowState.FullScreen;
+
+        _screenNavigator = new ScreenNavigator(ScreenHost);
 
         this.KeyDown += MainWindow_KeyDown;
     }
@@ -99,7 +106,7 @@ public partial class MainWindow : Window
 
             case Key.F5:
                 {
-                    ShowScreen(new Nitrogen.Views.Menu.EngineControl(this));
+                    ShowScreen(CreateEngineScreen());
                     e.Handled = true;
                     break;
                 }
@@ -111,12 +118,13 @@ public partial class MainWindow : Window
                     break;
                 }
 
-            case Key.F7:
-                {
-                    ShowScreen(new Nitrogen.Views.Menu.StagesControl(this));
-                    e.Handled = true;
-                    break;
-                }
+                //TODO доделать и раскоментировать
+            //case Key.F7:
+            //    {
+            //        ShowScreen(new Nitrogen.Views.Menu.StagesControl(this));
+            //        e.Handled = true;
+            //        break;
+            //    }
 
             case Key.F8:
                 {
@@ -142,7 +150,7 @@ public partial class MainWindow : Window
     }
     private void Engine_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ShowScreen(new Nitrogen.Views.Menu.EngineControl(this));
+        ShowScreen(CreateEngineScreen());
     }
     private void Menu_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
@@ -154,7 +162,8 @@ public partial class MainWindow : Window
     }
     private void Stages_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ShowScreen(new Nitrogen.Views.Menu.StagesControl(this));
+        //TODO доделать и раскоментировать
+        //ShowScreen(new Nitrogen.Views.Menu.StagesControl(this));
     }
     private void Scf_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
@@ -239,23 +248,7 @@ public partial class MainWindow : Window
             || key == Key.Enter
             || key is >= Key.F1 and <= Key.F12;
     }
-    public async void ShowScreen(UserControl screen)
-    {
-        if (_currentScreen != null)
-            _screenStack.Push(_currentScreen);
 
-        if (screen.DataContext is null)
-            screen.DataContext = DataContext;
-
-        _currentScreen = screen;
-        ScreenHost.Content = screen;
-        ScreenHost.IsVisible = true;
-
-        if (screen is IScreenLoadable loadable)
-            await loadable.LoadAsync();
-
-        Focus();
-    }
     private PressureControl CreatePressureScreen()
     {
         if (MainVm is null
@@ -274,6 +267,26 @@ public partial class MainWindow : Window
         };
 
         return screen;
+    }
+
+    public void ShowPressureScreen()
+    {
+        ShowScreen(CreatePressureScreen());
+    }
+
+    private EngineControl CreateEngineScreen()
+    {
+        if (MainVm is null)
+            return new Nitrogen.Views.Menu.EngineControl(this);
+
+        return new Nitrogen.Views.Menu.EngineControl(this)
+        {
+            DataContext = new EngineViewModel(MainVm)
+        };
+    }
+    public void ShowEngineScreen()
+    {
+        ShowScreen(CreateEngineScreen());
     }
 
     internal PressureSetControl CreatePressureSetScreen()
@@ -298,30 +311,26 @@ public partial class MainWindow : Window
         };
     }
 
+    public async void ShowScreen(UserControl screen)
+    {
+        _screenNavigator.ShowScreen(screen);
+        _currentScreen = screen;
+        ScreenHost.IsVisible = true;
+        Focus();
+    }
     public void BackScreen()
     {
-        if (_screenStack.Count > 0)
-        {
-            _currentScreen = _screenStack.Pop();
-            ScreenHost.Content = _currentScreen;
-            ScreenHost.IsVisible = true;
-        }
-        else
-        {
-            CloseScreen();
-        }
-
+        _screenNavigator.BackScreen();
+        _currentScreen = ScreenHost.Content as UserControl;
+        ScreenHost.IsVisible = ScreenHost.Content is not null;
         WindowState = WindowState.FullScreen;
         Focus();
     }
     public void CloseScreen()
     {
-        _screenStack.Clear();
-
-        ScreenHost.Content = null;
-        ScreenHost.IsVisible = false;
+        _screenNavigator.CloseScreen();
         _currentScreen = null;
-
+        ScreenHost.IsVisible = false;
         WindowState = WindowState.FullScreen;
         Focus();
     }

@@ -52,10 +52,20 @@
 		<Setter Property="TextAlignment" Value="Center"/>
 	</Style>
 
-		<Style Selector="TextBlock.title_transmission">
+	<Style Selector="TextBlock.title_transmission">
 		<Setter Property="FontSize" Value="32"/>
 		<Setter Property="FontFamily" Value="Times New Roman"/>
 		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="TextAlignment" Value="Center"/>
+	</Style>
+
+	<Style Selector="TextBlock.title_RPM">
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="FontFamily" Value="Segoe UI"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="Foreground" Value="White"/>
 		<Setter Property="HorizontalAlignment" Value="Center"/>
 		<Setter Property="VerticalAlignment" Value="Center"/>
 		<Setter Property="TextAlignment" Value="Center"/>

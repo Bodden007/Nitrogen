@@ -55,6 +55,17 @@
     "type": "Int16"
   },
   {
+    "name": "PUMP_1RPMLo",
+    "address": 46,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1RPMHi",
+    "address": 47,
+    "type": "Int16"
+  },
+
+  {
     "name": "Pressure_1SrcMinLo",
     "address": 100,
     "type": "Int16"

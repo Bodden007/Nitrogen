@@ -66,6 +66,11 @@ namespace Nitrogen.Views.MainWindow
                             : temperatureBath.Value.ToString("F0");
                     }
 
+                    if (values.TryGetValue("PUMP_1RPM", out var pump1Rpm))
+                    {
+                        Pump1Rpm = pump1Rpm.Value;
+                    }
+
                     UpdateOpkoAlarm(values);
                 });
 
@@ -116,6 +121,13 @@ namespace Nitrogen.Views.MainWindow
         {
             get => _temperatureBath;
             private set => this.RaiseAndSetIfChanged(ref _temperatureBath, value);
+        }
+
+        private double _pump1Rpm;
+        public double Pump1Rpm
+        {
+            get => _pump1Rpm;
+            private set => this.RaiseAndSetIfChanged(ref _pump1Rpm, value);
         }
 
         public void LoadOpkoEditOnce()
