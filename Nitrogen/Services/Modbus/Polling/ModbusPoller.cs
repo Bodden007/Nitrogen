@@ -91,22 +91,24 @@ internal sealed class ModbusPoller : IModbusPoller
                     Console.WriteLine($"POLL ERROR {DateTime.Now:HH:mm:ss}: {ex}");
                 });
 
+        // FIXME диагностика
+
         #region DIAGNOSTICS
 
-        _diagnosticsSubscription = Observable
-            .Interval(TimeSpan.FromSeconds(5))
-            .Subscribe(_ =>
-            {
-                Console.WriteLine(
-                    $"DIAG POLL " +
-                    $"T={TickCount} " +
-                    $"RS={ReadCallStartedCount} " +
-                    $"RC={ReadCallCompletedCount} " +
-                    $"PUB={RegistersPublishedCount} " +
-                    $"LT={FormatTime(LastTickTime)} " +
-                    $"LRC={FormatTime(LastReadCompletedTime)} " +
-                    $"LP={FormatTime(LastPublishedTime)}");
-            });
+        //_diagnosticsSubscription = Observable
+        //    .Interval(TimeSpan.FromSeconds(5))
+        //    .Subscribe(_ =>
+        //    {
+        //        Console.WriteLine(
+        //            $"DIAG POLL " +
+        //            $"T={TickCount} " +
+        //            $"RS={ReadCallStartedCount} " +
+        //            $"RC={ReadCallCompletedCount} " +
+        //            $"PUB={RegistersPublishedCount} " +
+        //            $"LT={FormatTime(LastTickTime)} " +
+        //            $"LRC={FormatTime(LastReadCompletedTime)} " +
+        //            $"LP={FormatTime(LastPublishedTime)}");
+        //    });
 
         #endregion
     }

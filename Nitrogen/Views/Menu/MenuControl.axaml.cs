@@ -6,6 +6,7 @@ using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.Settings;
 using System;
 using Nitrogen.Views.Menu.Pressure;
+using Nitrogen.Views.Menu.SCFVolume;
 
 namespace Nitrogen.Views.Menu;
 
@@ -40,7 +41,7 @@ public partial class MenuControl : UserControl, IHotKeyScreen
                 break;
 
             case Key.F3:
-                _mainWindow.ShowScreen(new ScfVolumeControl(_mainWindow));
+                _mainWindow.ShowScfVolumeScreen();
                 break;
 
             case Key.F4:
@@ -79,7 +80,7 @@ public partial class MenuControl : UserControl, IHotKeyScreen
 
     private void ScfValue_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        _mainWindow?.ShowScreen(new ScfVolumeControl(_mainWindow));
+        _mainWindow?.ShowScfVolumeScreen();
     }
 
     private void Volume_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)

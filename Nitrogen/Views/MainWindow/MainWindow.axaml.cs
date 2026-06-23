@@ -85,7 +85,7 @@ public partial class MainWindow : Window
 
             case Key.F3:
                 {
-                    ShowScreen(new Nitrogen.Views.Menu.ScfVolumeControl(this));
+                    ShowScreen(_screenFactory!.CreateScfVolumeScreen());
                     e.Handled = true;
                     break;
                 }
@@ -160,7 +160,7 @@ public partial class MainWindow : Window
     }
     private void Scf_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        ShowScreen(new Nitrogen.Views.Menu.ScfVolumeControl(this));
+        ShowScreen(_screenFactory!.CreateScfVolumeScreen());
     }
     private void Record_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
@@ -258,6 +258,10 @@ public partial class MainWindow : Window
     internal SCFSetControl CreateSCFSetScreen()
     {
         return _screenFactory!.CreateSCFSetScreen();
+    }
+    public void ShowScfVolumeScreen()
+    {
+        ShowScreen(_screenFactory!.CreateScfVolumeScreen());
     }
 
     public async void ShowScreen(UserControl screen)

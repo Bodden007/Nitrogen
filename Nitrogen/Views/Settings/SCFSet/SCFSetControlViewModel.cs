@@ -23,7 +23,7 @@ namespace Nitrogen.Views.Settings.SCFSet
         private readonly IReadOnlyList<ModbusRegisterConfig> _inputRegisters;
 
         public double Pump1Rpm => _mainVm.Pump1Rpm;
-        public double Pump1Scfm => _mainVm.Pump1Scfm;
+        public double Pump1TotalScfm => _mainVm.Pump1TotalScfm;
 
         public SCFSetControlViewModel(
             MainWindowViewModel mainVm,
@@ -156,8 +156,8 @@ namespace Nitrogen.Views.Settings.SCFSet
             if (e.PropertyName == nameof(MainWindowViewModel.Pump1Rpm))
                 this.RaisePropertyChanged(nameof(Pump1Rpm));
 
-            if (e.PropertyName == nameof(MainWindowViewModel.Pump1Scfm))
-                this.RaisePropertyChanged(nameof(Pump1Scfm));
+            if (e.PropertyName == nameof(MainWindowViewModel.Pump1TotalScfm))
+                this.RaisePropertyChanged(nameof(Pump1TotalScfm));
         }
     }
 }

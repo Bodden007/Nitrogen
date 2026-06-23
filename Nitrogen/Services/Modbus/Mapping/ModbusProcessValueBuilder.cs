@@ -21,8 +21,10 @@ internal sealed class ModbusProcessValueBuilder
     private readonly int _temperatureBathHiIndex;
     private readonly int _pump1RpmLoIndex;
     private readonly int _pump1RpmHiIndex;
-    private readonly int _pump1ScfmLoIndex;
-    private readonly int _pump1ScfmHiIndex;
+    private readonly int _pump1ScfStageLoIndex;
+    private readonly int _pump1ScfStageHiIndex;
+    private readonly int _pump1TotalScfmLoIndex;
+    private readonly int _pump1TotalScfmHiIndex;
 
     public ModbusProcessValueBuilder(
         IReadOnlyList<ModbusRegisterConfig> registersConfig,
@@ -80,12 +82,20 @@ internal sealed class ModbusProcessValueBuilder
             GetRegister(registersConfig, "PUMP_1RPMHi").Address,
             inputStartAddress);
 
-        _pump1ScfmLoIndex = ToIndex(
-            GetRegister(registersConfig, "PUMP_1SCFMLo").Address,
+        _pump1ScfStageLoIndex = ToIndex(
+            GetRegister(registersConfig, "PUMP_1SCFStageLo").Address,
             inputStartAddress);
 
-        _pump1ScfmHiIndex = ToIndex(
-            GetRegister(registersConfig, "PUMP_1SCFMHi").Address,
+        _pump1ScfStageHiIndex = ToIndex(
+            GetRegister(registersConfig, "PUMP_1SCFStageHi").Address,
+            inputStartAddress);
+
+        _pump1TotalScfmLoIndex = ToIndex(
+            GetRegister(registersConfig, "PUMP_1TotalSCFMLo").Address,
+            inputStartAddress);
+
+        _pump1TotalScfmHiIndex = ToIndex(
+            GetRegister(registersConfig, "PUMP_1TotalSCFMHi").Address,
             inputStartAddress);
     }
 
@@ -106,8 +116,10 @@ internal sealed class ModbusProcessValueBuilder
             registers.Length <= _temperatureBathHiIndex ||
             registers.Length <= _pump1RpmLoIndex ||
             registers.Length <= _pump1RpmHiIndex ||
-            registers.Length <= _pump1ScfmLoIndex ||
-            registers.Length <= _pump1ScfmHiIndex
+            registers.Length <= _pump1ScfStageLoIndex ||
+            registers.Length <= _pump1ScfStageHiIndex ||
+            registers.Length <= _pump1TotalScfmHiIndex ||
+            registers.Length <= _pump1TotalScfmLoIndex
             )
         {
             return result;
@@ -137,9 +149,13 @@ internal sealed class ModbusProcessValueBuilder
             registers[_pump1RpmHiIndex],
             registers[_pump1RpmLoIndex]);
 
-        float pump1Scfm = ModbusUtility.GetSingle(
-            registers[_pump1ScfmHiIndex],
-            registers[_pump1ScfmLoIndex]);
+        float pump1ScfStage = ModbusUtility.GetSingle(
+            registers[_pump1ScfStageHiIndex],
+            registers[_pump1ScfStageLoIndex]);
+
+        float pump1TotalScfm = ModbusUtility.GetSingle(
+            registers[_pump1TotalScfmHiIndex],
+            registers[_pump1TotalScfmLoIndex]);
 
         result["Pressure_1"] = new ProcessValue
         {
@@ -184,16 +200,23 @@ internal sealed class ModbusProcessValueBuilder
             HasError = temperatureBath == 22222,
             ErrorText = temperatureBath == 22222 ? "Ошибка" : null
         };
+
         result["PUMP_1RPM"] = new ProcessValue
         {
             Name = "PUMP_1RPM",
             Value = pump1Rpm
         };
 
-        result["PUMP_1SCFM"] = new ProcessValue
+        result["PUMP_1SCFStage"] = new ProcessValue
         {
-            Name = "PUMP_1SCFM",
-            Value = pump1Scfm
+            Name = "PUMP_1SCFStage",
+            Value = pump1ScfStage
+        };
+
+        result["PUMP_1TotalSCFM"] = new ProcessValue
+        {
+            Name = "PUMP_1TotalSCFM",
+            Value = pump1TotalScfm
         };
 
         return result;

@@ -4,6 +4,7 @@ using Nitrogen.Services.Modbus.Connection;
 using Nitrogen.Views.Menu;
 using Nitrogen.Views.Menu.Engine;
 using Nitrogen.Views.Menu.Pressure;
+using Nitrogen.Views.Menu.SCFVolume;
 using Nitrogen.Views.Settings;
 using Nitrogen.Views.Settings.PressureSet;
 using Nitrogen.Views.Settings.SCFSet;
@@ -109,6 +110,21 @@ internal sealed class ScreenFactory : IScreenFactory
                 _connectionConfig,
                 _inputRegisters,
                 _holdingRegisters)
+        };
+    }
+    public ScfVolumeControl CreateScfVolumeScreen()
+    {
+        if (_reader is null
+            || _connectionConfig is null
+            || _inputRegisters is null)
+            return new ScfVolumeControl(_mainWindow);
+
+        return new ScfVolumeControl(_mainWindow)
+        {
+            DataContext = new ScfVolumeControlViewModel(
+                _reader,
+                _connectionConfig,
+                _inputRegisters)
         };
     }
 }

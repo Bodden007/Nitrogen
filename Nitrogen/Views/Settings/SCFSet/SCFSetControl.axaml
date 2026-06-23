@@ -51,7 +51,7 @@
 
 				<!-- Текущие Значения -->
 				<TextBlock Grid.Row="4" Classes="menu_title"
-						   Text="{Binding Pump1Scfm, StringFormat='{}{0:0.###}'}" />
+						   Text="{Binding Pump1TotalScfm, StringFormat='{}{0:0.###}'}" />
 				<TextBlock Grid.Row="5" Classes="menu_title"
 						   Text="{Binding Pump1Rpm, StringFormat='{}{0:0.###}'}"/>
 			</Grid>

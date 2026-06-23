@@ -1,6 +1,7 @@
 ﻿using Nitrogen.Views.Menu;
 using Nitrogen.Views.Menu.Engine;
 using Nitrogen.Views.Menu.Pressure;
+using Nitrogen.Views.Menu.SCFVolume;
 using Nitrogen.Views.Settings;
 using Nitrogen.Views.Settings.PressureSet;
 
@@ -15,4 +16,6 @@ internal interface IScreenFactory
     PressureSetControl CreatePressureSetScreen();
 
     SCFSetControl CreateSCFSetScreen();
+
+    ScfVolumeControl CreateScfVolumeScreen();
 }

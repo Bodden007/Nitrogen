@@ -116,16 +116,17 @@
 							   HorizontalAlignment="Left"
 							   Text="A" IsVisible="False" />
 					<TextBlock x:Name="ValueRate" Classes="menu_title"
-							   Text="{Binding Pump1Scfm, StringFormat='{}{0:0.###}'}"/>
+							   Text="{Binding Pump1TotalScfm, StringFormat='{}{0:0.###}'}"/>
 					<TextBlock x:Name="ValueRate_A" Classes="menu_subtext"
-							   Text="160 SCF" IsVisible="False" />
+							    Text="{Binding Pump1ScfStage, StringFormat='{}{0:0.###}'}" 
+							   IsVisible="False" />
 				</Grid>
 				<Grid Grid.Row="2">
 					<TextBlock x:Name="HeaderRate_B" Classes="menu_subtext"
 							   HorizontalAlignment="Left"
 							   Text="B" IsVisible="False" />
 					<TextBlock x:Name="ValueRate_B" Classes="menu_subtext"
-							   Text="140 SCF" IsVisible="False" />
+							   Text="0" IsVisible="False" />
 					<TextBlock Classes="hotkey"  VerticalAlignment="Bottom" Text="1"/>
 				</Grid>
 			</Grid>

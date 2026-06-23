@@ -65,13 +65,23 @@
     "type": "Int16"
   },
   {
-    "name": "PUMP_1SCFMLo",
-    "address": 32,
+    "name": "PUMP_1SCFStageLo",
+    "address": 34,
     "type": "Int16"
   },
   {
-    "name": "PUMP_1SCFMHi",
-    "address": 33,
+    "name": "PUMP_1SCFStageHi",
+    "address": 35,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1TotalSCFMLo",
+    "address": 42,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1TotalSCFMHi",
+    "address": 43,
     "type": "Int16"
   },
 
@@ -138,6 +148,36 @@
   {
     "name": "PUMP_1PumpEfficiencyFactorHi",
     "address": 125,
+    "type": "Int16"
+  },
+  {
+    "name": "TotalSCFStageLo",
+    "address": 200,
+    "type": "Int16"
+  },
+  {
+    "name": "TotalSCFStageHi",
+    "address": 201,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1SCFJobLo",
+    "address": 204,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1SCFJobHi",
+    "address": 205,
+    "type": "Int16"
+  },
+  {
+    "name": "TotalSCFJobLo",
+    "address": 208,
+    "type": "Int16"
+  },
+  {
+    "name": "TotalSCFJobHi",
+    "address": 209,
     "type": "Int16"
   }
 ]
