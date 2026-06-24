@@ -4,6 +4,8 @@
     <option name="projectPerEditor">
       <map>
         <entry key="Nitrogen/MainWindow.axaml" value="Nitrogen/Nitrogen.csproj" />
+        <entry key="Nitrogen/Views/MainWindow/MainWindow.axaml" value="Nitrogen/Nitrogen.csproj" />
+        <entry key="Nitrogen/Views/Menu/Engine/EngineControl.axaml" value="Nitrogen/Nitrogen.csproj" />
       </map>
     </option>
   </component>

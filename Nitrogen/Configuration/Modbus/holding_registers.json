@@ -70,7 +70,7 @@
     "name": "PUMP_1TeethCountLo",
     "address": 120,
     "type": "Int16"
-  }, 
+  },
   {
     "name": "PUMP_1PumpFactorLo",
     "address": 122,
@@ -94,6 +94,61 @@
   {
     "name": "PUMP_1PumpSetPrmLo",
     "address": 126,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1SCFStageLo",
+    "address": 200,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1SCFStageHi",
+    "address": 201,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1SCFJobLo",
+    "address": 202,
+    "type": "Int16"
+  },
+  {
+    "name": "PUMP_1SCFJobHi",
+    "address": 203,
+    "type": "Int16"
+  },
+  {
+    "name": "TotalSCFStageLo",
+    "address": 208,
+    "type": "Int16"
+  },
+  {
+    "name": "TotalSCFStageHi",
+    "address": 209,
+    "type": "Int16"
+  },
+  {
+    "name": "TotalSCFJobLo",
+    "address": 210,
+    "type": "Int16"
+  },
+  {
+    "name": "TotalSCFJobHi",
+    "address": 211,
+    "type": "Int16"
+  },
+  {
+    "name": "TotalSCFCommandJobSetLo",
+    "address": 212,
+    "type": "Int16"
+  },
+  {
+    "name": "TotalSCFCommandStageResetLo",
+    "address": 214,
+    "type": "Int16"
+  },
+  {
+    "name": "TotalSCFCommandJobResetLo",
+    "address": 216,
     "type": "Int16"
   }
 ]

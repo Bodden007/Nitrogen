@@ -151,7 +151,7 @@
 				<!-- Водительская сторона -->
 				<Grid Grid.Row="1">
 					<TextBlock x:Name="CombiVolume" Classes="menu_title"
-							   Text="110 bbl" />
+							   Text="0" />
 					<TextBlock x:Name="DsStage" Classes="menu_subtext"
 							   HorizontalAlignment="Left"
 							   Text="ВС Насос" IsVisible="False"/>

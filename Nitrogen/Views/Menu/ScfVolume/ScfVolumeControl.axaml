@@ -38,7 +38,8 @@
 				<TextBlock Grid.Column="0" Classes="menu_subtext"
 						   Text="SCF Стадия"/>
 				<TextBox x:Name="TotalScfStageEditTextBox" Grid.Column="1" Classes="Volume"
-						 Text="{Binding TotalScfStageEdit}"/>
+						 Text="{Binding TotalScfStageEdit}"
+						 IsReadOnly="True"/>
 				<TextBlock Grid.Column="1" Classes="hotkey"
 						   Text="F4"/>
 			</Grid>
@@ -86,7 +87,8 @@
 				<TextBlock Grid.Column="0" Classes="menu_subtext"
 						   Text="SCF Работа"/>
 				<TextBox x:Name="TotalScfJobTextBox" Grid.Column="1" Classes="Volume"
-						 Text="{Binding TotalScfJobEdit}"/>
+						 Text="{Binding TotalScfJobEdit}"
+						 IsReadOnly="True"/>
 				<TextBlock Grid.Column="1" Classes="hotkey"
 						   Text="F7"/>
 			</Grid>
@@ -134,7 +136,7 @@
 			</Grid.ColumnDefinitions>
 
 			<!-- Установка значений Объема -->
-			<Button Grid.Column="0"  >
+			<Button Grid.Column="0"  Command="{Binding SetCommand}" >
 				<Grid>
 					<TextBlock Classes="menu_title" TextAlignment="Center" >
 						<Run Text="Уст"/>
@@ -146,7 +148,7 @@
 			</Button>
 
 			<!-- Сброс значений Стадий -->
-			<Button x:Name="ZeroStage" Grid.Column="1"  >
+			<Button x:Name="ZeroStage" Grid.Column="1"  Command="{Binding ResetStageCommand}">
 				<Grid>
 					<TextBlock Classes="menu_title" TextAlignment="Center" >
 						<Run Text="Сброс"/>
@@ -158,7 +160,7 @@
 			</Button>
 
 			<!-- Сброс значений Работ -->
-			<Button x:Name="ZeroJob" Grid.Column="2"  >
+			<Button x:Name="ZeroJob" Grid.Column="2"  Command="{Binding ResetJobCommand}">
 				<Grid>
 					<TextBlock Classes="menu_title" TextAlignment="Center" >
 						<Run Text="Сброс"/>

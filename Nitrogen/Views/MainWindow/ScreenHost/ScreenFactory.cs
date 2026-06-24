@@ -115,16 +115,20 @@ internal sealed class ScreenFactory : IScreenFactory
     public ScfVolumeControl CreateScfVolumeScreen()
     {
         if (_reader is null
+            || _writer is null
             || _connectionConfig is null
-            || _inputRegisters is null)
+            || _inputRegisters is null
+            || _holdingRegisters is null)
             return new ScfVolumeControl(_mainWindow);
 
         return new ScfVolumeControl(_mainWindow)
         {
             DataContext = new ScfVolumeControlViewModel(
                 _reader,
+                _writer,
                 _connectionConfig,
-                _inputRegisters)
+                _inputRegisters,
+                _holdingRegisters)
         };
     }
 }

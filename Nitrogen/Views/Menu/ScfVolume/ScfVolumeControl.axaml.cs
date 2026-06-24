@@ -4,6 +4,7 @@ using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Nitrogen.Views.Common;
 using Nitrogen.Views.Interfaces;
+using Nitrogen.Views.Menu.Pressure;
 using System;
 using System.Threading.Tasks;
 
@@ -31,12 +32,29 @@ public partial class ScfVolumeControl : UserControl, IHotKeyScreen, IScreenLoada
     {
         if (_focusMap.Focus(key))
             return;
+     
 
-        if (_mainWindow is null)
+        if (DataContext is not ScfVolumeControlViewModel vm)
             return;
 
-        if (key == Key.Escape)
-            _mainWindow.CloseScreen();
+        switch (key)
+        {
+            case Key.Escape:
+                _mainWindow?.CloseScreen();
+                break;
+
+            case Key.F1:
+                vm.SetCommand.Execute().Subscribe();
+                break;
+
+            case Key.F2:
+                vm.ResetStageCommand.Execute().Subscribe();
+                break;
+
+            case Key.F3:
+                vm.ResetJobCommand.Execute().Subscribe();
+                break;
+        }
     }
 
     public async Task LoadAsync()
