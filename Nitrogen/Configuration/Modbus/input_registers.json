@@ -151,6 +151,16 @@
     "type": "Int16"
   },
   {
+    "name": "Pump1HoursLo",
+    "address": 136,
+    "type": "Int16"
+  },
+  {
+    "name": "Pump1HoursHi",
+    "address": 137,
+    "type": "Int16"
+  },
+  {
     "name": "TotalSCFStageLo",
     "address": 200,
     "type": "Int16"

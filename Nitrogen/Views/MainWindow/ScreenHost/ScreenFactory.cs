@@ -60,12 +60,23 @@ internal sealed class ScreenFactory : IScreenFactory
 
     public EngineControl CreateEngineScreen()
     {
-        if (MainVm is null)
+        if (MainVm is null
+            || _reader is null
+            || _writer is null
+            || _connectionConfig is null
+            || _inputRegisters is null
+            || _holdingRegisters is null)
             return new EngineControl(_mainWindow);
 
         return new EngineControl(_mainWindow)
         {
-            DataContext = new EngineViewModel(MainVm)
+            DataContext = new EngineViewModel(
+                MainVm,
+                _reader,
+                _writer,
+                _connectionConfig,
+                _inputRegisters,
+                _holdingRegisters)
         };
     }
 

@@ -6,7 +6,7 @@
 			 xmlns:tacho="using:Nitrogen.Controls.EngineTachometer"
 			 xmlns:vm="using:Nitrogen.Views.Menu.Engine"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 x:Class="Nitrogen.Views.Menu.EngineControl"
+			 x:Class="Nitrogen.Views.Menu.Engine.EngineControl"
 			 x:DataType="vm:EngineViewModel">
 
 	<Grid Background="{DynamicResource PrimaryGridColor}">
@@ -47,28 +47,57 @@
 				</Grid.RowDefinitions>
 
 				<!-- Передача вверх -->
-				<Button Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="Black" >
-					<materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="1" Kind="TransferUp"
-												 Width="80" Height="80" Foreground="Green" />
+				<Button Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
+						Background="Black"
+						Command="{Binding UpCommand}">
+
+					<Grid>
+						<materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="1" Kind="TransferUp"
+													 Width="80" Height="80" Foreground="Green" />
+						<TextBlock Classes="hotkey" Foreground="White"
+								   Text="F2"/>
+					</Grid>
+
 				</Button>
 
 				<!-- Передача Нейтраль -->
-				<Button Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="Black" >
-					<materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="1" Kind="AlphaN"
-												 Width="120" Height="120" Foreground="Green" />
+				<Button Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2"
+						Background="Black"
+						Command="{Binding NeutralCommand}">
+
+					<Grid>
+
+						<materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="1" Kind="AlphaN"
+													 Width="120" Height="120" Foreground="Green" />
+						<TextBlock Classes="hotkey" Foreground="White"
+								   Text="F1"/>
+					</Grid>
 				</Button>
 
 				<!-- Передача низ  -->
-				<Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="Black" >
-					<materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="1" Kind="TransferDown"
-												 Width="80" Height="80" Foreground="Green" />
+				<Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Grid.RowSpan="2"
+						Background="Black"
+						Command="{Binding DownCommand}">
+
+					<Grid>
+
+						<materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="1" Kind="TransferDown"
+													 Width="80" Height="80" Foreground="Green" />
+						<TextBlock Classes="hotkey" Foreground="White"
+								   Text="F3"/>
+					</Grid>
+
 				</Button>
 
 				<!-- Индикация передач АКПП -->
 				<!-- Нейтраль -->
 				<Border Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Background="YellowGreen" >
-					<materialIcons:MaterialIcon Kind="AlphaN"
-												Width="60" Height="60" Foreground="White" />
+					<Grid>
+						<materialIcons:MaterialIcon Kind="AlphaN"
+													Width="60" Height="60" Foreground="White" />
+						<TextBlock Classes="hotkey" Foreground="White"
+								   Text="F4"/>
+					</Grid>
 				</Border>
 
 				<!-- 1-5 -->
@@ -114,9 +143,9 @@
 				</TextBlock>
 
 				<TextBlock Grid.Column="4" Grid.Row="7" Grid.ColumnSpan="2" Classes="title_RPM">
-					<Run Text="HORS"/>
+					<Run Text="МЧ"/>
 					<LineBreak/>
-					<Run Text="55555"/>
+					<Run Text="{Binding Pump1Hours, StringFormat='{}{0:0}'}"/>
 				</TextBlock>
 
 				<tacho:TachometerControl Grid.Column="0"

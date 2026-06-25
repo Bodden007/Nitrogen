@@ -5,11 +5,20 @@
         <Nullable>enable</Nullable>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+		<ApplicationIcon>Assets\Icons\Nitrogen.ico</ApplicationIcon>
+		<Platforms>AnyCPU;x64</Platforms>
     </PropertyGroup>
     <ItemGroup>
+      <None Remove="Assets\Icons\Nitrogen.ico" />
+      <None Remove="Assets\Icons\Nitrogen.png" />
       <None Remove="Configuration\holding_registers.json" />
       <None Remove="Configuration\input_registers.json" />
       <None Remove="Configuration\modbus_connection.json" />
+    </ItemGroup>
+    <ItemGroup>
+      <AvaloniaResource Include="Assets\Icons\Nitrogen.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </AvaloniaResource>
     </ItemGroup>
     <ItemGroup>
       <Content Include="Configuration\Modbus\holding_registers.json">
@@ -40,7 +49,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Resources\Assets\" />
       <Folder Include="Services\Csv\" />
       <Folder Include="Services\Modbus\Configuration\Validation\" />
       <Folder Include="Services\Units\" />

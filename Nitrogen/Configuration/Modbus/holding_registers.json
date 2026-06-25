@@ -1,5 +1,10 @@
 ﻿[
   {
+    "name": "TransmissionCommand",
+    "address": 2,
+    "type": "Int16"
+  },
+  {
     "name": "OPKO_1Lo",
     "address": 8,
     "type": "Int16"
