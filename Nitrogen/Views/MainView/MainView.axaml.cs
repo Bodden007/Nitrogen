@@ -2,7 +2,7 @@
 using Avalonia;
 using Avalonia.Controls;
 
-namespace Nitrogen.Views;
+namespace Nitrogen.Views.MainView;
 
 public partial class MainView : UserControl
 {

@@ -2,7 +2,8 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Nitrogen.ViewModels;
-using Nitrogen.Views;
+using Nitrogen.Views.MainWindow;
+using Nitrogen.Views.MainView;
 
 namespace Nitrogen;
 
