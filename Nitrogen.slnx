@@ -1,0 +1,11 @@
+﻿<Solution>
+  <Project Path="Nitrogen.Android/Nitrogen.Android.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="Nitrogen.Browser/Nitrogen.Browser.csproj" />
+  <Project Path="Nitrogen.Desktop/Nitrogen.Desktop.csproj" />
+  <Project Path="Nitrogen.iOS/Nitrogen.iOS.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="Nitrogen/Nitrogen.csproj" />
+</Solution>
