@@ -19,5 +19,6 @@
     </PackageReference>
     <!-- FIXME: Replace CommunityToolkit.Mvvm with ReactiveUI. -->
     <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="ReactiveUI" />
   </ItemGroup>
 </Project>

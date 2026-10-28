@@ -1,7 +1,6 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Nitrogen.ViewModels;
 using Nitrogen.Views.MainWindow;
 using Nitrogen.Views.MainView;
 
