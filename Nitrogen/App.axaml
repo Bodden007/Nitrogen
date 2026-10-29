@@ -2,10 +2,26 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Nitrogen.App"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              RequestedThemeVariant="Default">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="/Resources/Styles/ColorBrushes.axaml" />
+                <ResourceInclude Source="/Resources/Styles/Dimensions.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 
     <Application.Styles>
         <FluentTheme />
+        <materialIcons:MaterialIconStyles />
+        <StyleInclude Source="/Resources/Styles/ButtonStyles.axaml" />
+        <StyleInclude Source="/Resources/Styles/TextBlockStyles.axaml" />
+        <StyleInclude Source="/Resources/Styles/TextBoxStyles.axaml" />
+        <StyleInclude Source="/Resources/Styles/BorderStyles.axaml" />
+        <StyleInclude Source="/Resources/Styles/TabItemStyles.axaml" />
     </Application.Styles>
 
 </Application>

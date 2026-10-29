@@ -1,15 +1,154 @@
 
+using System;
+using Avalonia.Media;
 using ReactiveUI;
 
 namespace Nitrogen.Views.MainView;
 
 public class MainViewModel : ReactiveObject
 {
-    private string _greeting = "Welcome to Avalonia!";
+    // TODO: Подключить обновление данных из CoreLink.
 
-    public string Greeting
+    private DateTime _currentTime = DateTime.Now;
+
+    public DateTime CurrentTime
     {
-        get => _greeting;
-        set => this.RaiseAndSetIfChanged(ref _greeting, value);
+        get => _currentTime;
+        private set => this.RaiseAndSetIfChanged(
+            ref _currentTime, value);
+    }
+
+    private ushort[] _registers = new ushort[50];
+
+    public ushort[] Registers
+    {
+        get => _registers;
+        private set => this.RaiseAndSetIfChanged(
+            ref _registers, value);
+    }
+
+    private string _pressure1 = "1500";
+
+    public string Pressure_1
+    {
+        get => _pressure1;
+        private set => this.RaiseAndSetIfChanged(
+            ref _pressure1, value);
+    }
+
+    private string _opko1 = "1800";
+
+    public string Opko_1
+    {
+        get => _opko1;
+        private set => this.RaiseAndSetIfChanged(
+            ref _opko1, value);
+    }
+
+    private string _opkoEdit = "1800";
+
+    public string OpkoEdit
+    {
+        get => _opkoEdit;
+        set => this.RaiseAndSetIfChanged(
+            ref _opkoEdit, value);
+    }
+
+    private string _temperatureOutlet = "96";
+
+    public string TemperatureOutlet
+    {
+        get => _temperatureOutlet;
+        private set => this.RaiseAndSetIfChanged(
+            ref _temperatureOutlet, value);
+    }
+
+    private string _temperatureVaporizer = "85";
+
+    public string TemperatureVaporizer
+    {
+        get => _temperatureVaporizer;
+        private set => this.RaiseAndSetIfChanged(
+            ref _temperatureVaporizer, value);
+    }
+
+    private string _temperatureBath = "75";
+
+    public string TemperatureBath
+    {
+        get => _temperatureBath;
+        private set => this.RaiseAndSetIfChanged(
+            ref _temperatureBath, value);
+    }
+
+    private double _pump1Rpm = 1200;
+
+    public double Pump1Rpm
+    {
+        get => _pump1Rpm;
+        private set => this.RaiseAndSetIfChanged(
+            ref _pump1Rpm, value);
+    }
+
+    private double _pump1ScfStage = 3500;
+
+    public double Pump1ScfStage
+    {
+        get => _pump1ScfStage;
+        private set => this.RaiseAndSetIfChanged(
+            ref _pump1ScfStage, value);
+    }
+
+    private double _pump1TotalScfm = 1500;
+
+    public double Pump1TotalScfm
+    {
+        get => _pump1TotalScfm;
+        private set => this.RaiseAndSetIfChanged(
+            ref _pump1TotalScfm, value);
+    }
+
+    private IBrush _pressureTileBackground =
+        Brushes.Transparent;
+
+    public IBrush PressureTileBackground
+    {
+        get => _pressureTileBackground;
+        private set => this.RaiseAndSetIfChanged(
+            ref _pressureTileBackground, value);
+    }
+
+    private IBrush _pressureHeaderBackground =
+        Brushes.Transparent;
+
+    public IBrush PressureHeaderBackground
+    {
+        get => _pressureHeaderBackground;
+        private set => this.RaiseAndSetIfChanged(
+            ref _pressureHeaderBackground, value);
+    }
+
+    private IBrush _pressureOpkoBackground =
+        new SolidColorBrush(Color.Parse("#FBA9A3"));
+
+    public IBrush PressureOpkoBackground
+    {
+        get => _pressureOpkoBackground;
+        private set => this.RaiseAndSetIfChanged(
+            ref _pressureOpkoBackground, value);
+    }
+
+    public void LoadOpkoEditOnce()
+    {
+        OpkoEdit = Opko_1;
+    }
+
+    // Логика тревоги сохранена из Legacy.
+    // TODO: Передавать StatOpko_1 из CoreLink.
+    public void UpdateOpkoAlarm(double statOpko)
+    {
+        PressureTileBackground = statOpko == 1
+            ? Brushes.Red
+            : Brushes.Transparent;
     }
 }

@@ -1,0 +1,8 @@
+{
+  "files.exclude": {
+    "**/Nitrogen.Desktop": true,
+    "**/Nitrogen.Android": true,
+    "**/Nitrogen.Browser": true,
+    "**/Nitrogen.iOS": true
+  }
+}

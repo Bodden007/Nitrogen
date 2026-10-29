@@ -21,4 +21,9 @@
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="ReactiveUI" />
   </ItemGroup>
+
+  <!--NOTE Third-party UI components -->
+<ItemGroup>
+    <PackageReference Include="Material.Icons.Avalonia" />
+</ItemGroup>
 </Project>
