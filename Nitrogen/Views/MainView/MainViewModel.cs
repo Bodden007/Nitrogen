@@ -2,12 +2,78 @@
 using System;
 using Avalonia.Media;
 using ReactiveUI;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using Nitrogen.Mocks;
+using ReactiveUI.Primitives.Signals;
 
 namespace Nitrogen.Views.MainView;
 
 public class MainViewModel : ReactiveObject
 {
     // TODO: Подключить обновление данных из CoreLink.
+    private readonly CompositeDisposable _subscriptions = new();
+
+    public MainViewModel(ICoreLinkSource source)
+    {
+        Subscribe(source, ValueId.Pressure_1,
+            value => Pressure_1 = value.Value.ToString("0.##"));
+
+        Subscribe(source, ValueId.Opko_1,
+            value => Opko_1 = value.Value.ToString("0.##"));
+
+        Subscribe(source, ValueId.TemperatureOutlet,
+            value => TemperatureOutlet = value.Value.ToString("0.##"));
+
+        Subscribe(source, ValueId.TemperatureVaporizer,
+            value => TemperatureVaporizer = value.Value.ToString("0.##"));
+
+        Subscribe(source, ValueId.TemperatureBath,
+            value => TemperatureBath = value.Value.ToString("0.##"));
+
+        Subscribe(source, ValueId.Pump1Rpm,
+            value => Pump1Rpm = value.Value);
+
+        Subscribe(source, ValueId.Pump1ScfStage,
+            value => Pump1ScfStage = value.Value);
+
+        Subscribe(source, ValueId.Pump1TotalScfm,
+            value => Pump1TotalScfm = value.Value);
+
+        Subscribe(source, ValueId.CementVolumeTotal,
+            value => CementVolumeTotal = value.Value.ToString("0.##"));
+
+        Subscribe(source, ValueId.CementVolumeDs,
+            value => CementVolumeDs = value.Value.ToString("0.##"));
+
+        Subscribe(source, ValueId.CementVolumePs,
+            value => CementVolumePs = value.Value.ToString("0.##"));
+
+        Subscribe(source, ValueId.TotalScfStage,
+            value => TotalScfStage = value.Value);
+
+        Subscribe(source, ValueId.Pump1ScfJob,
+            value => Pump1ScfJob = value.Value);
+
+        Subscribe(source, ValueId.TotalScfJob,
+            value => TotalScfJob = value.Value);
+    }
+
+    private void Subscribe(
+        ICoreLinkSource source,
+        ValueId id,
+        Action<RxValue> update)
+    {
+        _subscriptions.Add(
+            source.Value(id)
+                .WitnessOn(RxSchedulers.MainThreadScheduler)
+                .Subscribe(update));
+    }
+
+    public void Dispose()
+    {
+        _subscriptions.Dispose();
+    }
 
     private DateTime _currentTime = DateTime.Now;
 
