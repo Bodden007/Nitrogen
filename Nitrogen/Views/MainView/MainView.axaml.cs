@@ -235,10 +235,17 @@ public partial class MainView : UserControl
         };
 
         screen.CloseRequested += (_, _) =>
-       {
-           CloseScreen();
-           vm.Dispose();
-       };
+        {
+            if (ScreenHost.Content is UserControl currentScreen)
+            {
+                BackScreen();
+
+                if (ReferenceEquals(ScreenHost.Content, currentScreen))
+                    CloseScreen();
+            }
+
+            vm.Dispose();
+        };
 
         ShowScreen(screen);
     }
@@ -263,7 +270,16 @@ public partial class MainView : UserControl
             DataContext = vm
         };
 
-        screen.CloseRequested += (_, _) => CloseScreen();
+        screen.CloseRequested += (_, _) =>
+        {
+            if (ScreenHost.Content is UserControl currentScreen)
+            {
+                BackScreen();
+
+                if (ReferenceEquals(ScreenHost.Content, currentScreen))
+                    CloseScreen();
+            }
+        };
 
         _ = vm.LoadAsync();
         ShowScreen(screen);
@@ -278,7 +294,16 @@ public partial class MainView : UserControl
             DataContext = DataContext
         };
 
-        screen.CloseRequested += (_, _) => CloseScreen();
+        screen.CloseRequested += (_, _) =>
+        {
+            if (ScreenHost.Content is UserControl currentScreen)
+            {
+                BackScreen();
+
+                if (ReferenceEquals(ScreenHost.Content, currentScreen))
+                    CloseScreen();
+            }
+        };
 
         ShowScreen(screen);
     }
@@ -292,7 +317,16 @@ public partial class MainView : UserControl
             DataContext = DataContext
         };
 
-        screen.CloseRequested += (_, _) => CloseScreen();
+        screen.CloseRequested += (_, _) =>
+        {
+            if (ScreenHost.Content is UserControl currentScreen)
+            {
+                BackScreen();
+
+                if (ReferenceEquals(ScreenHost.Content, currentScreen))
+                    CloseScreen();
+            }
+        };
 
         ShowScreen(screen);
     }
@@ -304,38 +338,29 @@ public partial class MainView : UserControl
     }
 
 
+
     private void ShowMenuScreen()
     {
         var menu = new MenuControl();
 
         menu.PressureRequested += (_, _) =>
-        {
-            BackScreen();
             ShowPressureScreen();
-        };
 
         menu.TemperatureRequested += (_, _) =>
-        {
-            BackScreen();
             ShowTemperatureScreen();
-        };
 
         menu.ScfVolumeRequested += (_, _) =>
-        {
-            BackScreen();
             ShowScfVolumeScreen();
-        };
 
         menu.VolumeRequested += (_, _) =>
-        {
-            BackScreen();
             ShowVolumeScreen();
-        };
 
-        menu.CloseRequested += (_, _) => CloseScreen();
+        menu.CloseRequested += (_, _) =>
+            CloseScreen();
 
         ShowScreen(menu);
     }
+
 
     // NOTE Навигация по окнам
 
