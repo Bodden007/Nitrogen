@@ -4,16 +4,21 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Nitrogen.Views.Menu;
 using Nitrogen.Views.Interfaces;
+using Nitrogen.Views.MainWindow.ScreenHost;
+
+
 
 namespace Nitrogen.Views.MainView;
 
 public partial class MainView : UserControl
 {
+
+    private readonly IScreenNavigator _screenNavigator;
+
     public MainView()
     {
         InitializeComponent();
-
-
+        _screenNavigator = new ScreenNavigator(ScreenHost);
     }
 
     public void HandleKeyDown(KeyEventArgs e)
@@ -21,12 +26,12 @@ public partial class MainView : UserControl
         if (e.Source is TextBox && !IsCommandKey(e.Key))
             return;
 
-      if (ScreenHost.Content is IHotKeyScreen hotKeyScreen)
-{
-    hotKeyScreen.HandleKey(e.Key);
-    e.Handled = true;
-    return;
-}
+        if (ScreenHost.Content is IHotKeyScreen hotKeyScreen)
+        {
+            hotKeyScreen.HandleKey(e.Key);
+            e.Handled = true;
+            return;
+        }
 
         if (e.Key == Key.Escape)
         {
@@ -232,15 +237,33 @@ public partial class MainView : UserControl
         // TODO: ScreenNavigator.ShowScreen()
     }
 
+
     private void ShowTemperatureScreen()
     {
-        // TODO: Создать TemperatureControl и открыть через ScreenNavigator.
+        var screen = new TemperatureControl
+        {
+            DataContext = DataContext
+        };
+
+        screen.CloseRequested += (_, _) => CloseScreen();
+
+        ShowScreen(screen);
     }
+
+
 
     private void ShowVolumeScreen()
     {
-        // TODO: Создать VolumeControl и открыть через ScreenNavigator.
+        var screen = new VolumeControl
+        {
+            DataContext = DataContext
+        };
+
+        screen.CloseRequested += (_, _) => CloseScreen();
+
+        ShowScreen(screen);
     }
+
 
     private void ShowRecordScreen()
     {
@@ -258,31 +281,30 @@ public partial class MainView : UserControl
         ShowScreen(menu);
     }
 
+    // NOTE Навигация по окнам
+
     public void ShowScreen(UserControl screen)
     {
-        ScreenHost.Content = screen;
+        _screenNavigator.ShowScreen(screen);
         ScreenHost.IsVisible = true;
 
         screen.Focus();
-
-        // TODO: Восстановить историю навигации
-        // после переноса остальных экранов.
     }
 
     public void BackScreen()
     {
-        // TODO: ScreenNavigator.BackScreen().
-        // TODO: Восстановить текущий экран и его видимость.
-        // TODO: Восстановить управление фокусом.
+        _screenNavigator.BackScreen();
+        ScreenHost.IsVisible = ScreenHost.Content is not null;
+
+        Focus();
     }
 
     public void CloseScreen()
     {
-        ScreenHost.Content = null;
+        _screenNavigator.CloseScreen();
         ScreenHost.IsVisible = false;
 
         Focus();
-
-        // TODO: Восстановить ScreenNavigator.CloseScreen().
     }
+
 }

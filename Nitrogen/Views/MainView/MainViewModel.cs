@@ -151,4 +151,36 @@ public class MainViewModel : ReactiveObject
             ? Brushes.Red
             : Brushes.Transparent;
     }
+
+
+    // TODO: Получать фактические объёмы цемента из CoreLink.
+    // Пока используются демонстрационные значения из Legacy.
+
+    private string _cementVolumeTotal = "110";
+
+    public string CementVolumeTotal
+    {
+        get => _cementVolumeTotal;
+        set => this.RaiseAndSetIfChanged(
+            ref _cementVolumeTotal, value);
+    }
+
+    private string _cementVolumeDs = "60";
+
+    public string CementVolumeDs
+    {
+        get => _cementVolumeDs;
+        set => this.RaiseAndSetIfChanged(
+            ref _cementVolumeDs, value);
+    }
+
+    private string _cementVolumePs = "50";
+
+    public string CementVolumePs
+    {
+        get => _cementVolumePs;
+        set => this.RaiseAndSetIfChanged(
+            ref _cementVolumePs, value);
+    }
+
 }
