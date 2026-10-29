@@ -46,7 +46,8 @@
                         <TextBlock Grid.Column="0" Classes="menu_title"
                                    Text="Общий цемент"/>
                         <Grid Grid.Column="1">
-                            <TextBox Text="{Binding CementVolumeTotal, Mode=TwoWay}"/>
+                            <TextBox x:Name="TotalVolumeTextBox"
+                                     Text="{Binding CementVolumeTotal, Mode=TwoWay}"/>
                             <TextBlock Classes="hotkey" Text="F3"/>
                         </Grid>
                     </Grid>
@@ -62,7 +63,8 @@
                         <TextBlock Grid.Column="0" Classes="menu_title"
                                    Text="ВС Объем"/>
                         <Grid Grid.Column="1">
-                            <TextBox Text="{Binding CementVolumeDs, Mode=TwoWay}"/>
+                            <TextBox x:Name="DsVolumeTextBox"
+                                     Text="{Binding CementVolumeDs, Mode=TwoWay}"/>
                             <TextBlock Classes="hotkey" Text="F4"/>
                         </Grid>
                     </Grid>
@@ -78,7 +80,8 @@
                         <TextBlock Grid.Column="0" Classes="menu_title"
                                    Text="ПС Объем"/>
                         <Grid Grid.Column="1">
-                            <TextBox Text="{Binding CementVolumePs, Mode=TwoWay}"/>
+                            <TextBox x:Name="PsVolumeTextBox"
+                                     Text="{Binding CementVolumePs, Mode=TwoWay}"/>
                             <TextBlock Classes="hotkey" Text="F5"/>
                         </Grid>
                     </Grid>

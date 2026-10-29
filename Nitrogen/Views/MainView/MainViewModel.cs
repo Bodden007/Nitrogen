@@ -45,15 +45,6 @@ public class MainViewModel : ReactiveObject
             ref _opko1, value);
     }
 
-    private string _opkoEdit = "1800";
-
-    public string OpkoEdit
-    {
-        get => _opkoEdit;
-        set => this.RaiseAndSetIfChanged(
-            ref _opkoEdit, value);
-    }
-
     private string _temperatureOutlet = "96";
 
     public string TemperatureOutlet
@@ -136,11 +127,6 @@ public class MainViewModel : ReactiveObject
         get => _pressureOpkoBackground;
         private set => this.RaiseAndSetIfChanged(
             ref _pressureOpkoBackground, value);
-    }
-
-    public void LoadOpkoEditOnce()
-    {
-        OpkoEdit = Opko_1;
     }
 
     // Логика тревоги сохранена из Legacy.

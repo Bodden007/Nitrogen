@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Nitrogen.Views.Menu;
+using Nitrogen.Views.Menu.Pressure;
 using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.MainWindow.ScreenHost;
 
@@ -219,11 +220,28 @@ public partial class MainView : UserControl
             || key is >= Key.F1 and <= Key.F12;
     }
 
+
     public void ShowPressureScreen()
     {
-        // TODO: ScreenFactory.CreatePressureScreen()
-        // TODO: ScreenNavigator.ShowScreen()
+        if (DataContext is not MainViewModel mainVm)
+            return;
+
+        var vm = new PressureViewModel(mainVm);
+
+        var screen = new PressureControl
+        {
+            DataContext = vm
+        };
+
+        screen.CloseRequested += (_, _) =>
+        {
+            CloseScreen();
+            vm.Dispose();
+        };
+
+        ShowScreen(screen);
     }
+
 
     public void ShowEngineScreen()
     {
@@ -275,6 +293,14 @@ public partial class MainView : UserControl
         // TODO: Пересмотреть жизненный цикл экранов.
         // Рассмотреть повторное использование MenuControl вместо создания при каждом открытии.
         var menu = new MenuControl();
+
+
+        menu.PressureRequested += (_, _) =>
+        {
+            BackScreen();
+            ShowPressureScreen();
+        };
+
 
         menu.CloseRequested += (_, _) => CloseScreen();
 

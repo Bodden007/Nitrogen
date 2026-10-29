@@ -10,6 +10,7 @@ namespace Nitrogen.Views.Menu;
 public partial class MenuControl : UserControl, IHotKeyScreen
 {
     public event EventHandler? CloseRequested;
+    public event EventHandler? PressureRequested;
     public MenuControl()
     {
         InitializeComponent();
@@ -104,9 +105,8 @@ public partial class MenuControl : UserControl, IHotKeyScreen
 
     private void ShowPressureScreen()
     {
-        // TODO: Открыть экран давления.
+        PressureRequested?.Invoke(this, EventArgs.Empty);
     }
-
     private void ShowTemperatureScreen()
     {
         // TODO: Открыть экран температуры.
@@ -139,8 +139,8 @@ public partial class MenuControl : UserControl, IHotKeyScreen
         Environment.Exit(0);
     }
 
- private void CloseMenu()
-{
-    CloseRequested?.Invoke(this, EventArgs.Empty);
-}
+    private void CloseMenu()
+    {
+        CloseRequested?.Invoke(this, EventArgs.Empty);
+    }
 }
