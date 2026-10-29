@@ -1,0 +1,181 @@
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Nitrogen.Views.Menu.SCFVolume"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="Nitrogen.Views.Menu.SCFVolume.ScfVolumeControl"
+             x:DataType="vm:ScfVolumeControlViewModel">
+
+    <Grid Background="{DynamicResource PrimaryGridColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0"
+              Background="{DynamicResource PrimaryHeaderBrush}">
+            <TextBlock Classes="section_label" Text="SCF"/>
+        </Grid>
+
+        <!-- SCF Стадия -->
+        <Border Grid.Row="1">
+            <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0"
+                           Classes="menu_subtext"
+                           Text="SCF Стадия"/>
+                <TextBox x:Name="TotalScfStageEditTextBox"
+                         Grid.Column="1"
+                         Classes="Volume"
+                         Text="{Binding TotalScfStageEdit}"
+                         IsReadOnly="True"/>
+                <TextBlock Grid.Column="1"
+                           Classes="hotkey"
+                           Text="F4"/>
+            </Grid>
+        </Border>
+
+        <!-- A Стадия -->
+        <Border Grid.Row="2">
+            <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0"
+                           Classes="menu_subtext"
+                           Text="A Стадия"/>
+                <TextBox x:Name="Pump1ScfStageTextBox"
+                         Grid.Column="1"
+                         Classes="Volume"
+                         Text="{Binding Pump1ScfStageEdit, Mode=TwoWay}"/>
+                <TextBlock Grid.Column="1"
+                           Classes="hotkey"
+                           Text="F5"/>
+            </Grid>
+        </Border>
+
+        <!-- B Стадия: Legacy содержит фиксированное значение -->
+        <Border Grid.Row="3">
+            <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0"
+                           Classes="menu_subtext"
+                           Text="B Стадия"/>
+                <TextBox Grid.Column="1"
+                         Classes="Volume"
+                         Text="0"/>
+                <TextBlock Grid.Column="1"
+                           Classes="hotkey"
+                           Text="F6"/>
+            </Grid>
+        </Border>
+
+        <!-- SCF Работа -->
+        <Border Grid.Row="4">
+            <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0"
+                           Classes="menu_subtext"
+                           Text="SCF Работа"/>
+                <TextBox x:Name="TotalScfJobTextBox"
+                         Grid.Column="1"
+                         Classes="Volume"
+                         Text="{Binding TotalScfJobEdit}"
+                         IsReadOnly="True"/>
+                <TextBlock Grid.Column="1"
+                           Classes="hotkey"
+                           Text="F7"/>
+            </Grid>
+        </Border>
+
+        <!-- A Работа -->
+        <Border Grid.Row="5">
+            <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0"
+                           Classes="menu_subtext"
+                           Text="A Стадия"/>
+                <TextBox x:Name="Pump1ScfJobTextBox"
+                         Grid.Column="1"
+                         Classes="Volume"
+                         Text="{Binding Pump1ScfJobEdit, Mode=TwoWay}"/>
+                <TextBlock Grid.Column="1"
+                           Classes="hotkey"
+                           Text="F8"/>
+            </Grid>
+        </Border>
+
+        <!-- B Работа: Legacy содержит фиксированное значение -->
+        <Border Grid.Row="6">
+            <Grid ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0"
+                           Classes="menu_subtext"
+                           Text="B Стадия"/>
+                <TextBox Grid.Column="1"
+                         Classes="Volume"
+                         Text="0"/>
+                <TextBlock Grid.Column="1"
+                           Classes="hotkey"
+                           Text="F9"/>
+            </Grid>
+        </Border>
+
+        <!-- Кнопки -->
+        <Grid Grid.Row="7" ColumnDefinitions="*,*,*,*">
+            <Button Grid.Column="0"
+                    Click="Set_Click"
+                    IsEnabled="False">
+                <Grid>
+                    <TextBlock Classes="menu_title"
+                               TextAlignment="Center">
+                        <Run Text="Уст"/>
+                        <LineBreak/>
+                        <Run Text="Значен"/>
+                    </TextBlock>
+                    <TextBlock Classes="hotkey" Text="F1"/>
+                </Grid>
+            </Button>
+
+            <Button Grid.Column="1"
+                    Click="ResetStage_Click"
+                    IsEnabled="False">
+                <Grid>
+                    <TextBlock Classes="menu_title"
+                               TextAlignment="Center">
+                        <Run Text="Сброс"/>
+                        <LineBreak/>
+                        <Run Text="Стад"/>
+                    </TextBlock>
+                    <TextBlock Classes="hotkey" Text="F2"/>
+                </Grid>
+            </Button>
+
+            <Button Grid.Column="2"
+                    Click="ResetJob_Click"
+                    IsEnabled="False">
+                <Grid>
+                    <TextBlock Classes="menu_title"
+                               TextAlignment="Center">
+                        <Run Text="Сброс"/>
+                        <LineBreak/>
+                        <Run Text="Работ"/>
+                    </TextBlock>
+                    <TextBlock Classes="hotkey" Text="F3"/>
+                </Grid>
+            </Button>
+
+            <Button x:Name="Exit"
+                    Grid.Column="3"
+                    Click="Exit_Click">
+                <Grid>
+                    <TextBlock Classes="menu_title" Text="Выход"/>
+                    <TextBlock Classes="hotkey" Text="ESC"/>
+                </Grid>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

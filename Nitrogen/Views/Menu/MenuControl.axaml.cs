@@ -11,6 +11,7 @@ public partial class MenuControl : UserControl, IHotKeyScreen
 {
     public event EventHandler? CloseRequested;
     public event EventHandler? PressureRequested;
+    public event EventHandler? ScfVolumeRequested;
     public MenuControl()
     {
         InitializeComponent();
@@ -117,11 +118,6 @@ public partial class MenuControl : UserControl, IHotKeyScreen
         // TODO: Открыть экран SCF.
     }
 
-    private void ShowVolumeScreen()
-    {
-        // TODO: Открыть экран объёма цемента.
-    }
-
     private void ShowEngineScreen()
     {
         // TODO: Открыть экран двигателя.
@@ -130,6 +126,11 @@ public partial class MenuControl : UserControl, IHotKeyScreen
     private void ShowSettingsScreen()
     {
         // TODO: Открыть экран настроек.
+    }
+
+    private void ShowVolumeScreen()
+    {
+        // TODO: Подключить открытие экрана объёмов.
     }
 
     private void CloseApplication()

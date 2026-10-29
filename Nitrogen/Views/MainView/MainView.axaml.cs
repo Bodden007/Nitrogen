@@ -4,6 +4,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Nitrogen.Views.Menu;
 using Nitrogen.Views.Menu.Pressure;
+using Nitrogen.Views.Menu.SCFVolume;
 using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.MainWindow.ScreenHost;
 
@@ -249,11 +250,21 @@ public partial class MainView : UserControl
         // TODO: ScreenNavigator.ShowScreen()
     }
 
+
     public void ShowScfVolumeScreen()
     {
-        // TODO: ScreenFactory.CreateScfVolumeScreen()
-        // TODO: ScreenNavigator.ShowScreen()
+        var vm = new ScfVolumeControlViewModel();
+
+        var screen = new ScfVolumeControl
+        {
+            DataContext = vm
+        };
+
+        screen.CloseRequested += (_, _) => CloseScreen();
+
+        ShowScreen(screen);
     }
+
 
 
     private void ShowTemperatureScreen()
@@ -299,6 +310,12 @@ public partial class MainView : UserControl
         {
             BackScreen();
             ShowPressureScreen();
+        };
+
+        menu.ScfVolumeRequested += (_, _) =>
+        {
+            BackScreen();
+            ShowScfVolumeScreen();
         };
 
 
