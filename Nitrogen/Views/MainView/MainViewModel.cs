@@ -169,4 +169,31 @@ public class MainViewModel : ReactiveObject
             ref _cementVolumePs, value);
     }
 
+    private double _totalScfStage = 7000;
+
+    public double TotalScfStage
+    {
+        get => _totalScfStage;
+        private set => this.RaiseAndSetIfChanged(
+            ref _totalScfStage, value);
+    }
+
+    private double _pump1ScfJob = 12000;
+
+    public double Pump1ScfJob
+    {
+        get => _pump1ScfJob;
+        private set => this.RaiseAndSetIfChanged(
+            ref _pump1ScfJob, value);
+    }
+
+    private double _totalScfJob = 24000;
+
+    public double TotalScfJob
+    {
+        get => _totalScfJob;
+        private set => this.RaiseAndSetIfChanged(
+            ref _totalScfJob, value);
+    }
+
 }

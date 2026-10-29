@@ -235,10 +235,10 @@ public partial class MainView : UserControl
         };
 
         screen.CloseRequested += (_, _) =>
-        {
-            CloseScreen();
-            vm.Dispose();
-        };
+       {
+           CloseScreen();
+           vm.Dispose();
+       };
 
         ShowScreen(screen);
     }
@@ -253,7 +253,10 @@ public partial class MainView : UserControl
 
     public void ShowScfVolumeScreen()
     {
-        var vm = new ScfVolumeControlViewModel();
+        if (DataContext is not MainViewModel mainVm)
+            return;
+
+        var vm = new ScfVolumeControlViewModel(mainVm);
 
         var screen = new ScfVolumeControl
         {
@@ -262,6 +265,7 @@ public partial class MainView : UserControl
 
         screen.CloseRequested += (_, _) => CloseScreen();
 
+        _ = vm.LoadAsync();
         ShowScreen(screen);
     }
 
@@ -299,17 +303,21 @@ public partial class MainView : UserControl
         // TODO: Создать RecordControl и открыть через ScreenNavigator.
     }
 
+
     private void ShowMenuScreen()
     {
-        // TODO: Пересмотреть жизненный цикл экранов.
-        // Рассмотреть повторное использование MenuControl вместо создания при каждом открытии.
         var menu = new MenuControl();
-
 
         menu.PressureRequested += (_, _) =>
         {
             BackScreen();
             ShowPressureScreen();
+        };
+
+        menu.TemperatureRequested += (_, _) =>
+        {
+            BackScreen();
+            ShowTemperatureScreen();
         };
 
         menu.ScfVolumeRequested += (_, _) =>
@@ -318,6 +326,11 @@ public partial class MainView : UserControl
             ShowScfVolumeScreen();
         };
 
+        menu.VolumeRequested += (_, _) =>
+        {
+            BackScreen();
+            ShowVolumeScreen();
+        };
 
         menu.CloseRequested += (_, _) => CloseScreen();
 

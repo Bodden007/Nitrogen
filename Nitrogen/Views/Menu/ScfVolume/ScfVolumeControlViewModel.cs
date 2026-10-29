@@ -2,12 +2,20 @@
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
+using Nitrogen.Views.MainView;
 using ReactiveUI;
 
 namespace Nitrogen.Views.Menu.SCFVolume;
 
 public sealed class ScfVolumeControlViewModel : ReactiveObject
 {
+    private readonly MainViewModel _mainVm;
+
+    public ScfVolumeControlViewModel(MainViewModel mainVm)
+    {
+        _mainVm = mainVm;
+    }
+
     private string _totalScfStageEdit = string.Empty;
 
     public string TotalScfStageEdit
@@ -46,22 +54,28 @@ public sealed class ScfVolumeControlViewModel : ReactiveObject
 
     public Task LoadAsync()
     {
+        Pump1ScfStageEdit = Format(_mainVm.Pump1ScfStage);
+        TotalScfStageEdit = Format(_mainVm.TotalScfStage);
+        Pump1ScfJobEdit = Format(_mainVm.Pump1ScfJob);
+        TotalScfJobEdit = Format(_mainVm.TotalScfJob);
+
         // TODO [CoreLink/Read]:
-        // Загрузить четыре значения:
-        //
-        // PUMP_1SCFStageLo -> Pump1ScfStageEdit
-        // TotalSCFStageLo  -> TotalScfStageEdit
-        // PUMP_1SCFJobLo   -> Pump1ScfJobEdit
-        // TotalSCFJobLo    -> TotalScfJobEdit
+        // Заменить демонстрационные значения
+        // данными CoreLink.
         //
         // Legacy: REAL из двух регистров,
-        // формат отображения "0.###",
-        // CultureInfo.InvariantCulture.
+        // формат "0.###", InvariantCulture.
         //
         // Rx принадлежит CoreLink.
-        // Nitrogen не выполняет Modbus-опрос.
 
         return Task.CompletedTask;
+    }
+
+    private static string Format(double value)
+    {
+        return value.ToString(
+            "0.###",
+            CultureInfo.InvariantCulture);
     }
 
     // TODO [CoreLink/Command]: Установка значений.

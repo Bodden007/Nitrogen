@@ -12,6 +12,8 @@ public partial class MenuControl : UserControl, IHotKeyScreen
     public event EventHandler? CloseRequested;
     public event EventHandler? PressureRequested;
     public event EventHandler? ScfVolumeRequested;
+    public event EventHandler? TemperatureRequested;
+    public event EventHandler? VolumeRequested;
     public MenuControl()
     {
         InitializeComponent();
@@ -110,12 +112,17 @@ public partial class MenuControl : UserControl, IHotKeyScreen
     }
     private void ShowTemperatureScreen()
     {
-        // TODO: Открыть экран температуры.
+        TemperatureRequested?.Invoke(this, EventArgs.Empty);
     }
 
     private void ShowScfVolumeScreen()
     {
-        // TODO: Открыть экран SCF.
+        ScfVolumeRequested?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void ShowVolumeScreen()
+    {
+        VolumeRequested?.Invoke(this, EventArgs.Empty);
     }
 
     private void ShowEngineScreen()
@@ -126,11 +133,6 @@ public partial class MenuControl : UserControl, IHotKeyScreen
     private void ShowSettingsScreen()
     {
         // TODO: Открыть экран настроек.
-    }
-
-    private void ShowVolumeScreen()
-    {
-        // TODO: Подключить открытие экрана объёмов.
     }
 
     private void CloseApplication()
