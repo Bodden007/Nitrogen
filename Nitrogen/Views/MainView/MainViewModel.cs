@@ -1,73 +1,60 @@
-
 using System;
 using Avalonia.Media;
 using ReactiveUI;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Nitrogen.Mocks;
 using ReactiveUI.Primitives.Signals;
+using CoreLink.Client;
+using CoreLink.Rx.Runtime;
+using Nitrogen.CoreLink;
 
 namespace Nitrogen.Views.MainView;
 
 public class MainViewModel : ReactiveObject
 {
     // TODO: Подключить обновление данных из CoreLink.
+
     private readonly CompositeDisposable _subscriptions = new();
 
-    public MainViewModel(ICoreLinkSource source)
+    public MainViewModel(CoreLinkClient client)
     {
-        Subscribe(source, ValueId.Pressure_1,
+        Subscribe(client, ValueId.Pressure_1,
             value => Pressure_1 = value.Value.ToString("0.##"));
 
-        Subscribe(source, ValueId.Opko_1,
+        Subscribe(client, ValueId.Opko_1,
             value => Opko_1 = value.Value.ToString("0.##"));
 
-        Subscribe(source, ValueId.TemperatureOutlet,
+        Subscribe(client, ValueId.StatOpko_1,
+            value => UpdateOpkoAlarm(value.Value));
+
+        Subscribe(client, ValueId.TemperatureOutlet,
             value => TemperatureOutlet = value.Value.ToString("0.##"));
 
-        Subscribe(source, ValueId.TemperatureVaporizer,
+        Subscribe(client, ValueId.TemperatureVaporizer,
             value => TemperatureVaporizer = value.Value.ToString("0.##"));
 
-        Subscribe(source, ValueId.TemperatureBath,
+        Subscribe(client, ValueId.TemperatureBath,
             value => TemperatureBath = value.Value.ToString("0.##"));
 
-        Subscribe(source, ValueId.Pump1Rpm,
+        Subscribe(client, ValueId.PUMP_1RPM,
             value => Pump1Rpm = value.Value);
 
-        Subscribe(source, ValueId.Pump1ScfStage,
+        Subscribe(client, ValueId.PUMP_1SCFStage,
             value => Pump1ScfStage = value.Value);
 
-        Subscribe(source, ValueId.Pump1TotalScfm,
+        Subscribe(client, ValueId.PUMP_1TotalSCFM,
             value => Pump1TotalScfm = value.Value);
-
-        Subscribe(source, ValueId.CementVolumeTotal,
-            value => CementVolumeTotal = value.Value.ToString("0.##"));
-
-        Subscribe(source, ValueId.CementVolumeDs,
-            value => CementVolumeDs = value.Value.ToString("0.##"));
-
-        Subscribe(source, ValueId.CementVolumePs,
-            value => CementVolumePs = value.Value.ToString("0.##"));
-
-        Subscribe(source, ValueId.TotalScfStage,
-            value => TotalScfStage = value.Value);
-
-        Subscribe(source, ValueId.Pump1ScfJob,
-            value => Pump1ScfJob = value.Value);
-
-        Subscribe(source, ValueId.TotalScfJob,
-            value => TotalScfJob = value.Value);
     }
 
     private void Subscribe(
-        ICoreLinkSource source,
+        CoreLinkClient client,
         ValueId id,
         Action<RxValue> update)
     {
         _subscriptions.Add(
-            source.Value(id)
-                .WitnessOn(RxSchedulers.MainThreadScheduler)
-                .Subscribe(update));
+            client.ObserveValue((int)id)
+    .WitnessOn(RxSchedulers.MainThreadScheduler)
+    .Subscribe(update));
     }
 
     public void Dispose()

@@ -27,4 +27,59 @@
 <ItemGroup>
     <PackageReference Include="Material.Icons.Avalonia" />
 </ItemGroup>
+
+<!--NOTE Corlink.Foudation -->
+<ItemGroup>
+  <!-- CoreLink.Foundation -->
+  <Reference Include="CoreLink.Client">
+    <HintPath>CoreLink\Bin\CoreLink.Client.dll</HintPath>
+    <Private>true</Private>
+  </Reference>
+
+  <Reference Include="CoreLink.Contracts">
+    <HintPath>CoreLink\Bin\CoreLink.Contracts.dll</HintPath>
+    <Private>true</Private>
+  </Reference>
+
+  <Reference Include="CoreLink.Adapter.CSharp">
+    <HintPath>CoreLink\Bin\CoreLink.Adapter.CSharp.dll</HintPath>
+    <Private>true</Private>
+  </Reference>
+
+  <!-- Runtime dependencies -->
+  <Reference Include="CoreLink.Core">
+    <HintPath>CoreLink\Bin\CoreLink.Core.dll</HintPath>
+    <Private>true</Private>
+  </Reference>
+
+  <Reference Include="CoreLink.Transport">
+    <HintPath>CoreLink\Bin\CoreLink.Transport.dll</HintPath>
+    <Private>true</Private>
+  </Reference>
+
+  <Reference Include="CoreLink.Maps">
+    <HintPath>CoreLink\Bin\CoreLink.Maps.dll</HintPath>
+    <Private>true</Private>
+  </Reference>
+
+  <Reference Include="CoreLink.Rx">
+    <HintPath>CoreLink\Bin\CoreLink.Rx.dll</HintPath>
+    <Private>true</Private>
+  </Reference>
+
+  <Reference Include="NModbus">
+    <HintPath>CoreLink\Bin\NModbus.dll</HintPath>
+    <Private>true</Private>
+  </Reference>
+</ItemGroup>
+
+<!-- CoreLink runtime dependencies -->
+<ItemGroup>
+  <None Include="CoreLink\Bin\*.dll"
+        Exclude="CoreLink\Bin\System.Reactive.dll"
+        CopyToOutputDirectory="PreserveNewest"
+        CopyToPublishDirectory="PreserveNewest"
+        TargetPath="%(Filename)%(Extension)" />
+</ItemGroup>
+
 </Project>
