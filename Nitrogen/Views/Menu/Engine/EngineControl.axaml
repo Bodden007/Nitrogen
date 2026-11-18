@@ -1,0 +1,215 @@
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:tacho="using:Nitrogen.Controls.EngineTachometer"
+             xmlns:vm="using:Nitrogen.Views.Menu.Engine"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:Class="Nitrogen.Views.Menu.Engine.EngineControl"
+             x:DataType="vm:EngineViewModel">
+
+    <Grid Background="{DynamicResource PrimaryGridColor}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"
+              Background="{DynamicResource PrimaryHeaderBrush}">
+            <TextBlock Classes="section_label" Text="Двигатель"/>
+        </Grid>
+
+        <!-- Кнопка передач -->
+        <Border Grid.Column="0" Grid.Row="1"
+                Grid.ColumnSpan="2" Grid.RowSpan="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Передача вверх -->
+                <Button Grid.Column="0" Grid.Row="0"
+                        Grid.ColumnSpan="2" Grid.RowSpan="2"
+                        Background="Black"
+                        Click="Up_Click">
+                    <Grid>
+                        <materialIcons:MaterialIcon Grid.Column="0" Grid.Row="1"
+                                                    Kind="TransferUp"
+                                                    Width="80" Height="80"
+                                                    Foreground="Green"/>
+                        <TextBlock Classes="hotkey"
+                                   Foreground="White" Text="F2"/>
+                    </Grid>
+                </Button>
+
+                <!-- Передача Нейтраль -->
+                <Button Grid.Column="1" Grid.Row="2"
+                        Grid.ColumnSpan="2" Grid.RowSpan="2"
+                        Background="Black"
+                        Click="Neutral_Click">
+                    <Grid>
+                        <materialIcons:MaterialIcon Grid.Column="0" Grid.Row="1"
+                                                    Kind="AlphaN"
+                                                    Width="120" Height="120"
+                                                    Foreground="Green"/>
+                        <TextBlock Classes="hotkey"
+                                   Foreground="White" Text="F1"/>
+                    </Grid>
+                </Button>
+
+                <!-- Передача низ -->
+                <Button Grid.Column="0" Grid.Row="4"
+                        Grid.ColumnSpan="2" Grid.RowSpan="2"
+                        Background="Black"
+                        Click="Down_Click">
+                    <Grid>
+                        <materialIcons:MaterialIcon Grid.Column="0" Grid.Row="1"
+                                                    Kind="TransferDown"
+                                                    Width="80" Height="80"
+                                                    Foreground="Green"/>
+                        <TextBlock Classes="hotkey"
+                                   Foreground="White" Text="F3"/>
+                    </Grid>
+                </Button>
+
+                <!-- Индикация передач АКПП -->
+                <!-- Нейтраль -->
+                <Border Grid.Column="3" Grid.Row="0"
+                        Grid.ColumnSpan="2" Background="YellowGreen">
+                    <Grid>
+                        <materialIcons:MaterialIcon Kind="AlphaN"
+                                                    Width="60" Height="60"
+                                                    Foreground="White"/>
+                        <TextBlock Classes="hotkey"
+                                   Foreground="White" Text="F4"/>
+                    </Grid>
+                </Border>
+
+                <!-- 1-5 -->
+                <Border Grid.Column="3" Grid.Row="1"
+                        Grid.ColumnSpan="2" Background="Gray">
+                    <TextBlock Classes="title_transmission" Text="1-5"/>
+                </Border>
+
+                <!-- 1-4 -->
+                <Border Grid.Column="3" Grid.Row="2"
+                        Grid.ColumnSpan="2" Background="Gray">
+                    <TextBlock Classes="title_transmission" Text="1-4"/>
+                </Border>
+
+                <!-- 1-3 -->
+                <Border Grid.Column="3" Grid.Row="3"
+                        Grid.ColumnSpan="2" Background="Gray">
+                    <TextBlock Classes="title_transmission" Text="1-3"/>
+                </Border>
+
+                <!-- 2 -->
+                <Border Grid.Column="3" Grid.Row="4"
+                        Grid.ColumnSpan="2" Background="Gray">
+                    <TextBlock Classes="title_transmission" Text="2"/>
+                </Border>
+
+                <!-- 1 -->
+                <Border Grid.Column="3" Grid.Row="5"
+                        Grid.ColumnSpan="2" Background="Gray">
+                    <TextBlock Classes="title_transmission" Text="1"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Тахо -->
+        <Border Grid.Column="2" Grid.Row="1"
+                Grid.ColumnSpan="2" Background="Black">
+            <Grid ColumnDefinitions="*,*,*,*,*,*,*,*,*,*"
+                  RowDefinitions="*,*,*,*,*,*,*,*,*,*">
+
+                <TextBlock Grid.Column="4" Grid.Row="3"
+                           Grid.ColumnSpan="2" Grid.RowSpan="2"
+                           Classes="title_RPM">
+                    <Run Text="Насос"/>
+                    <LineBreak/>
+                    <Run Text="RPM x1000"/>
+                </TextBlock>
+
+                <TextBlock Grid.Column="4" Grid.Row="7"
+                           Grid.ColumnSpan="2" Classes="title_RPM">
+                    <Run Text="МЧ"/>
+                    <LineBreak/>
+                    <Run Text="{Binding Pump1Hours, StringFormat='{}{0:0}'}"/>
+                </TextBlock>
+
+                <tacho:TachometerControl Grid.Column="0"
+                                         Grid.Row="0"
+                                         Grid.ColumnSpan="10"
+                                         Grid.RowSpan="10"
+                                         CurrentRPM="{Binding Pump1Rpm}"/>
+
+                <materialIcons:MaterialIcon Grid.Column="1" Grid.Row="1"
+                                            Kind="OilLevel"
+                                            Width="{StaticResource MaterialIconWidth}"
+                                            Height="{StaticResource MaterialIconHeight}"
+                                            Foreground="Green"/>
+
+                <materialIcons:MaterialIcon Grid.Column="0" Grid.Row="4"
+                                            Kind="CarBattery"
+                                            Width="{StaticResource MaterialIconWidth}"
+                                            Height="{StaticResource MaterialIconHeight}"
+                                            Foreground="Green"/>
+
+                <materialIcons:MaterialIcon Grid.Column="1" Grid.Row="7"
+                                            Kind="CoolantTemperature"
+                                            Width="{StaticResource MaterialIconWidth}"
+                                            Height="{StaticResource MaterialIconHeight}"
+                                            Foreground="Green"/>
+
+                <materialIcons:MaterialIcon Grid.Column="8" Grid.Row="7"
+                                            Kind="Engine"
+                                            Width="{StaticResource MaterialIconWidth}"
+                                            Height="{StaticResource MaterialIconHeight}"
+                                            Foreground="Yellow"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="2" Grid.Row="2" Background="Black">
+            <TextBlock Classes="menu_title" Foreground="Gray"
+                       HorizontalAlignment="Center" TextAlignment="Center">
+                <Run Text="Двиг"/>
+                <LineBreak/>
+                <Run Text="1"/>
+            </TextBlock>
+        </Border>
+
+        <!-- Выход из Меню -->
+        <Button x:Name="Exit" Grid.Column="3" Grid.Row="2"
+                Click="Exit_Click">
+            <Grid>
+                <TextBlock Classes="menu_title" Text="Выход"/>
+                <TextBlock Classes="hotkey" Text="ESC"/>
+            </Grid>
+        </Button>
+    </Grid>
+</UserControl>

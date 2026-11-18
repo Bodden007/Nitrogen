@@ -138,6 +138,8 @@ public class MainViewModel : ReactiveObject
             ref _temperatureBath, value);
     }
 
+    // TODO [CoreLink]: Демонстрационное значение RPM.
+    // Заменить фактическими данными двигателя из CoreLink.
     private double _pump1Rpm = 1200;
 
     public double Pump1Rpm

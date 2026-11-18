@@ -7,7 +7,7 @@ using Nitrogen.Views.Menu.Pressure;
 using Nitrogen.Views.Menu.SCFVolume;
 using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.MainWindow.ScreenHost;
-
+using Nitrogen.Views.Menu.Engine;
 
 
 namespace Nitrogen.Views.MainView;
@@ -253,8 +253,30 @@ public partial class MainView : UserControl
 
     public void ShowEngineScreen()
     {
-        // TODO: ScreenFactory.CreateEngineScreen()
-        // TODO: ScreenNavigator.ShowScreen()
+        if (DataContext is not MainViewModel mainVm)
+            return;
+
+        var vm = new EngineViewModel(mainVm);
+
+        var screen = new EngineControl
+        {
+            DataContext = vm
+        };
+
+        screen.CloseRequested += (_, _) =>
+        {
+            if (ScreenHost.Content is UserControl currentScreen)
+            {
+                BackScreen();
+
+                if (ReferenceEquals(ScreenHost.Content, currentScreen))
+                    CloseScreen();
+            }
+
+            vm.Dispose();
+        };
+
+        ShowScreen(screen);
     }
 
 
@@ -354,6 +376,9 @@ public partial class MainView : UserControl
 
         menu.VolumeRequested += (_, _) =>
             ShowVolumeScreen();
+
+        menu.EngineRequested += (_, _) =>
+            ShowEngineScreen();
 
         menu.CloseRequested += (_, _) =>
             CloseScreen();

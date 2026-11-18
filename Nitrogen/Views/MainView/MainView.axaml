@@ -250,7 +250,7 @@
                                                  Width="{StaticResource MaterialIconWidth}"
                                                  Height="{StaticResource MaterialIconHeight}" Foreground="Green" />
                     <TextBlock Grid.Column="1" Grid.Row="0" Classes="title_engine"
-                               Text="600 об/м"/>
+                               Text="{Binding Pump1Rpm, StringFormat='{}{0:0} об/м'}"/>
 
                     <materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="1" Kind="CoolantTemperature"
                                                  Width="{StaticResource MaterialIconWidth}"

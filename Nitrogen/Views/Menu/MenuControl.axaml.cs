@@ -14,6 +14,7 @@ public partial class MenuControl : UserControl, IHotKeyScreen
     public event EventHandler? ScfVolumeRequested;
     public event EventHandler? TemperatureRequested;
     public event EventHandler? VolumeRequested;
+    public event EventHandler? EngineRequested;
     public MenuControl()
     {
         InitializeComponent();
@@ -127,7 +128,7 @@ public partial class MenuControl : UserControl, IHotKeyScreen
 
     private void ShowEngineScreen()
     {
-        // TODO: Открыть экран двигателя.
+        EngineRequested?.Invoke(this, EventArgs.Empty);
     }
 
     private void ShowSettingsScreen()
