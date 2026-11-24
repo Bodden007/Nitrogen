@@ -14,20 +14,18 @@ CoreLink владеет Rx и предоставляет используемы�
 
 ## Глобальный граф
 
-Стрелки показывают зависимости от потребителя к поставщику. Две встречные зависимости между группами HMI относятся к разным компонентам. Оболочка создаёт экраны, а экраны используют модель данных и контракты из группы главного экрана. Фактические связи компонентов раскрыты в паспортах.
+Стрелки показывают зависимости от потребителя к поставщику. Главный экран, навигация, меню и прикладные экраны образуют единый модуль HMI. Связи между его компонентами показаны в [паспорте HMI](../Nitrogen/Views/MODULE.md).
 
 ```mermaid
 graph TD
     Hosts["Платформенные хосты"] --> Composition["Композиция приложения"]
-    Composition --> Shell["Главный экран и навигация"]
+    Composition --> HMI["HMI"]
     Composition --> Resources["Общие стили и ресурсы"]
     Composition --> Integration["Интеграция Nitrogen с CoreLink"]
     Composition --> Core["CoreLink · внешнее бинарное ядро"]
-    Shell -->|создание экранов| Screens["Меню и прикладные экраны"]
-    Screens -->|модель данных и контракты экранов| Shell
-    Shell --> Integration
-    Shell --> Core
-    Screens --> Tachometer["Тахометр"]
+    HMI --> Integration
+    HMI --> Core
+    HMI --> Tachometer["Тахометр"]
     Integration --> Core
     Mocks["Временный источник Nitrogen.Mocks"]
 ```
@@ -37,11 +35,10 @@ graph TD
 | Модуль | Назначение | Путь от корня | Зависимости | Паспорт |
 |---|---|---|---|---|
 | Платформенные хосты | Запуск и конфигурация Avalonia | `Nitrogen.Desktop/`, `Nitrogen.Android/`, `Nitrogen.Browser/`, `Nitrogen.iOS/` | Композиция, платформенные пакеты Avalonia | Здесь |
-| Композиция приложения | Запуск ядра, загрузка ресурсов, выбор интерфейса по Lifetime | `Nitrogen/App.axaml*` | CoreLink, интеграция, главный экран и навигация, ресурсы | Здесь |
+| Композиция приложения | Запуск ядра, загрузка ресурсов, выбор интерфейса по Lifetime | `Nitrogen/App.axaml*` | CoreLink, интеграция, HMI, ресурсы | Здесь |
 | CoreLink | Ядро и источник телеметрии | Поставка в `Nitrogen/CoreLink/Bin/` | Полный внутренний граф неизвестен | Граница описана в паспорте интеграции |
 | Интеграция Nitrogen с CoreLink | Карта и идентификаторы наблюдаемых значений | `Nitrogen/CoreLink/` | Контракты CoreLink | [MODULE.md](../Nitrogen/CoreLink/MODULE.md) |
-| Главный экран и навигация | Телеметрия для HMI, маршрутизация клавиш, стек экранов | `Nitrogen/Views/MainView/`, `MainWindow/`, `Interfaces/` и `Common/` внутри `Nitrogen/Views/` | CoreLink, интеграция, меню и экраны, Avalonia и ReactiveUI | [MODULE.md](../Nitrogen/Views/MainView/MODULE.md) |
-| Меню и прикладные экраны | Выбор экрана, отображение данных и действия оператора | `Nitrogen/Views/Menu/` | Модель данных и контракты экранов, тахометр, Avalonia и ReactiveUI | [MODULE.md](../Nitrogen/Views/Menu/MODULE.md) |
+| HMI | Главный экран, телеметрия, маршрутизация клавиш, навигация, меню и действия оператора на прикладных экранах | `Nitrogen/Views/` | CoreLink, интеграция, тахометр, Avalonia, ReactiveUI и System.Reactive | [MODULE.md](../Nitrogen/Views/MODULE.md) |
 | Тахометр | Отрисовка оборотов двигателя | `Nitrogen/Controls/EngineTachometer/` | Avalonia | [MODULE.md](../Nitrogen/Controls/EngineTachometer/MODULE.md) |
 | Общие стили и ресурсы | Стили контролов, цвета и размеры | `Nitrogen/Resources/Styles/` | Avalonia | Здесь |
 | Временный источник | Демонстрационные значения через `ICoreLinkSource.Value(ValueId)` | `Nitrogen/Mocks/` | System.Reactive. В текущей композиции потребитель не найден | Здесь |
