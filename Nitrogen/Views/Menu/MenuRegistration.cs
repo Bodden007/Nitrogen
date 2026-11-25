@@ -1,4 +1,3 @@
-using System;
 using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.Navigation;
 using Nitrogen.Views.Menu.Pressure;
@@ -6,6 +5,7 @@ using Nitrogen.Views.Menu.Engine;
 using Nitrogen.Views.Menu.SCFVolume;
 using Nitrogen.Views.Menu.Temperature;
 using Nitrogen.Views.Menu.Volume;
+using Nitrogen.Views.Settings;
 
 namespace Nitrogen.Views.Menu;
 
@@ -14,15 +14,6 @@ namespace Nitrogen.Views.Menu;
 /// </summary>
 internal sealed class MenuRegistration : IScreenRegistration
 {
-    private readonly Action _showSettings;
-
-    // TODO: Удалить делегат после переноса
-    // SettingsControl на IScreenRegistration.
-    public MenuRegistration(Action showSettings)
-    {
-        _showSettings = showSettings;
-    }
-
     public bool Open(ScreenContext context)
     {
         var screen = new MenuControl();
@@ -43,7 +34,7 @@ internal sealed class MenuRegistration : IScreenRegistration
             context.Open<EngineRegistration>();
 
         screen.SettingsRequested += (_, _) =>
-            _showSettings();
+            context.Open<SettingsRegistration>();
 
         screen.CloseRequested += (_, _) =>
             context.BackScreen();

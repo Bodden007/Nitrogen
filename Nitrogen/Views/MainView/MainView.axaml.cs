@@ -11,9 +11,6 @@ using Nitrogen.Views.Menu.Engine;
 using Nitrogen.Views.Menu.SCFVolume;
 using Nitrogen.Views.Menu.Temperature;
 using Nitrogen.Views.Menu.Volume;
-using Nitrogen.Views.Settings;
-using Nitrogen.Views.Settings.PressureSet;
-using Nitrogen.Views.Settings.SCFSet;
 
 namespace Nitrogen.Views.MainView;
 
@@ -34,12 +31,7 @@ public partial class MainView : UserControl
             ShowScreen,
             BackScreen);
 
-        var menuRegistration = new MenuRegistration(
-            ShowSettingsScreen);
-
-        _screenRegistry = ScreenComposition.Create(
-            context,
-            menuRegistration);
+        _screenRegistry = ScreenComposition.Create(context);
     }
     public void HandleKeyDown(KeyEventArgs e)
     {
@@ -262,59 +254,6 @@ public partial class MainView : UserControl
     {
         _screenRegistry.Open<VolumeRegistration>();
     }
-    private void ShowPressureSetScreen()
-    {
-        if (DataContext is not MainViewModel mainVm)
-            return;
-
-        var vm = new PressureSetControlViewModel(mainVm);
-
-        var screen = new PressureSetControl
-        {
-            DataContext = vm
-        };
-
-        screen.CloseRequested += (_, _) =>
-            BackScreen();
-
-        ShowScreen(screen, vm);
-    }
-    private void ShowScfSetScreen()
-    {
-        if (DataContext is not MainViewModel mainVm)
-            return;
-
-        var vm = new SCFSetControlViewModel(mainVm);
-
-        var screen = new SCFSetControl
-        {
-            DataContext = vm
-        };
-
-        screen.CloseRequested += (_, _) =>
-            BackScreen();
-
-        ShowScreen(screen, vm);
-    }
-    private void ShowDsPumpSetScreen()
-    {
-        var screen = new DsPumpSetControl();
-
-        screen.CloseRequested += (_, _) =>
-            BackScreen();
-
-        ShowScreen(screen);
-    }
-    private void ShowPsPumpSetScreen()
-    {
-        var screen = new PsPumpSetControl();
-
-        screen.CloseRequested += (_, _) =>
-            BackScreen();
-
-        ShowScreen(screen);
-    }
-
     private void ShowRecordScreen()
     {
         // TODO: Создать RecordControl и открыть через ScreenNavigator.
@@ -322,27 +261,6 @@ public partial class MainView : UserControl
     private void ShowMenuScreen()
     {
         _screenRegistry.Open<MenuRegistration>();
-    }
-    private void ShowSettingsScreen()
-    {
-        var screen = new SettingsControl();
-
-        screen.PressureSetRequested += (_, _) =>
-            ShowPressureSetScreen();
-
-        screen.ScfSetRequested += (_, _) =>
-            ShowScfSetScreen();
-
-        screen.DsPumpSetRequested += (_, _) =>
-            ShowDsPumpSetScreen();
-
-        screen.PsPumpSetRequested += (_, _) =>
-            ShowPsPumpSetScreen();
-
-        screen.CloseRequested += (_, _) =>
-            BackScreen();
-
-        ShowScreen(screen);
     }
 
     // NOTE: Навигация по экранам.
