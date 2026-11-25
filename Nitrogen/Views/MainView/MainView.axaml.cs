@@ -8,7 +8,9 @@ using Nitrogen.Views.Menu.SCFVolume;
 using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.MainWindow.ScreenHost;
 using Nitrogen.Views.Menu.Engine;
-
+using Nitrogen.Views.Settings;
+using Nitrogen.Views.Settings.PressureSet;
+using Nitrogen.Views.Settings.SCFSet;
 
 namespace Nitrogen.Views.MainView;
 
@@ -300,6 +302,58 @@ public partial class MainView : UserControl
         ShowScreen(screen);
     }
 
+    private void ShowPressureSetScreen()
+    {
+        if (DataContext is not MainViewModel mainVm)
+            return;
+
+        var vm = new PressureSetControlViewModel(mainVm);
+
+        var screen = new PressureSetControl
+        {
+            DataContext = vm
+        };
+
+        screen.CloseRequested += (_, _) =>
+            BackScreen();
+
+        ShowScreen(screen, vm);
+    }
+    private void ShowScfSetScreen()
+    {
+        if (DataContext is not MainViewModel mainVm)
+            return;
+
+        var vm = new SCFSetControlViewModel(mainVm);
+
+        var screen = new SCFSetControl
+        {
+            DataContext = vm
+        };
+
+        screen.CloseRequested += (_, _) =>
+            BackScreen();
+
+        ShowScreen(screen, vm);
+    }
+    private void ShowDsPumpSetScreen()
+    {
+        var screen = new DsPumpSetControl();
+
+        screen.CloseRequested += (_, _) =>
+            BackScreen();
+
+        ShowScreen(screen);
+    }
+    private void ShowPsPumpSetScreen()
+    {
+        var screen = new PsPumpSetControl();
+
+        screen.CloseRequested += (_, _) =>
+            BackScreen();
+
+        ShowScreen(screen);
+    }
 
     private void ShowRecordScreen()
     {
@@ -327,10 +381,34 @@ public partial class MainView : UserControl
         menu.EngineRequested += (_, _) =>
             ShowEngineScreen();
 
+        menu.SettingsRequested += (_, _) =>
+            ShowSettingsScreen();
+
         menu.CloseRequested += (_, _) =>
             BackScreen();
 
         ShowScreen(menu);
+    }
+    private void ShowSettingsScreen()
+    {
+        var screen = new SettingsControl();
+
+        screen.PressureSetRequested += (_, _) =>
+            ShowPressureSetScreen();
+
+        screen.ScfSetRequested += (_, _) =>
+            ShowScfSetScreen();
+
+        screen.DsPumpSetRequested += (_, _) =>
+            ShowDsPumpSetScreen();
+
+        screen.PsPumpSetRequested += (_, _) =>
+            ShowPsPumpSetScreen();
+
+        screen.CloseRequested += (_, _) =>
+            BackScreen();
+
+        ShowScreen(screen);
     }
 
 

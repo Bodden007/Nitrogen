@@ -15,6 +15,7 @@ public partial class MenuControl : UserControl, IHotKeyScreen
     public event EventHandler? TemperatureRequested;
     public event EventHandler? VolumeRequested;
     public event EventHandler? EngineRequested;
+    public event EventHandler? SettingsRequested;
     public MenuControl()
     {
         InitializeComponent();
@@ -133,7 +134,7 @@ public partial class MenuControl : UserControl, IHotKeyScreen
 
     private void ShowSettingsScreen()
     {
-        // TODO: Открыть экран настроек.
+        SettingsRequested?.Invoke(this, EventArgs.Empty);
     }
 
     private void CloseApplication()
