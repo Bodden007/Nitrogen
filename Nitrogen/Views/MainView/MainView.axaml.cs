@@ -2,12 +2,15 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Nitrogen.Views.Interfaces;
+using Nitrogen.Views.Navigation;
+using Nitrogen.Views.MainWindow.ScreenHost;
 using Nitrogen.Views.Menu;
 using Nitrogen.Views.Menu.Pressure;
-using Nitrogen.Views.Menu.SCFVolume;
-using Nitrogen.Views.Interfaces;
-using Nitrogen.Views.MainWindow.ScreenHost;
 using Nitrogen.Views.Menu.Engine;
+using Nitrogen.Views.Menu.SCFVolume;
+using Nitrogen.Views.Menu.Temperature;
+using Nitrogen.Views.Menu.Volume;
 using Nitrogen.Views.Settings;
 using Nitrogen.Views.Settings.PressureSet;
 using Nitrogen.Views.Settings.SCFSet;
@@ -18,13 +21,26 @@ public partial class MainView : UserControl
 {
 
     private readonly IScreenNavigator _screenNavigator;
+    private readonly ScreenRegistry _screenRegistry;
 
     public MainView()
     {
         InitializeComponent();
-        _screenNavigator = new ScreenNavigator(ScreenHost);
-    }
 
+        _screenNavigator = new ScreenNavigator(ScreenHost);
+
+        var context = new ScreenContext(
+            () => DataContext as MainViewModel,
+            ShowScreen,
+            BackScreen);
+
+        var menuRegistration = new MenuRegistration(
+            ShowSettingsScreen);
+
+        _screenRegistry = ScreenComposition.Create(
+            context,
+            menuRegistration);
+    }
     public void HandleKeyDown(KeyEventArgs e)
     {
         if (e.Source is TextBox && !IsCommandKey(e.Key))
@@ -222,86 +238,30 @@ public partial class MainView : UserControl
             || key == Key.Enter
             || key is >= Key.F1 and <= Key.F12;
     }
-
-
     public void ShowPressureScreen()
     {
-        if (DataContext is not MainViewModel mainVm)
-            return;
-
-        var vm = new PressureViewModel(mainVm);
-
-        var screen = new PressureControl
-        {
-            DataContext = vm
-        };
-
-        screen.CloseRequested += (_, _) => BackScreen();
-
-        ShowScreen(screen, vm);
+        _screenRegistry.Open<PressureRegistration>();
     }
-
 
     public void ShowEngineScreen()
     {
-        if (DataContext is not MainViewModel mainVm)
-            return;
-
-        var vm = new EngineViewModel(mainVm);
-
-        var screen = new EngineControl
-        {
-            DataContext = vm
-        };
-
-        screen.CloseRequested += (_, _) => BackScreen();
-
-        ShowScreen(screen, vm);
+        _screenRegistry.Open<EngineRegistration>();
     }
-
 
     public void ShowScfVolumeScreen()
     {
-        if (DataContext is not MainViewModel mainVm)
-            return;
-
-        var vm = new ScfVolumeControlViewModel(mainVm);
-
-        var screen = new ScfVolumeControl
-        {
-            DataContext = vm
-        };
-
-        screen.CloseRequested += (_, _) => BackScreen();
-
-        ShowScreen(screen);
+        _screenRegistry.Open<ScfVolumeRegistration>();
     }
 
     private void ShowTemperatureScreen()
     {
-        var screen = new TemperatureControl
-        {
-            DataContext = DataContext
-        };
-
-        screen.CloseRequested += (_, _) => BackScreen();
-
-        ShowScreen(screen);
+        _screenRegistry.Open<TemperatureRegistration>();
     }
-
 
     private void ShowVolumeScreen()
     {
-        var screen = new VolumeControl
-        {
-            DataContext = DataContext
-        };
-
-        screen.CloseRequested += (_, _) => BackScreen();
-
-        ShowScreen(screen);
+        _screenRegistry.Open<VolumeRegistration>();
     }
-
     private void ShowPressureSetScreen()
     {
         if (DataContext is not MainViewModel mainVm)
@@ -359,35 +319,9 @@ public partial class MainView : UserControl
     {
         // TODO: Создать RecordControl и открыть через ScreenNavigator.
     }
-
-
-
     private void ShowMenuScreen()
     {
-        var menu = new MenuControl();
-
-        menu.PressureRequested += (_, _) =>
-            ShowPressureScreen();
-
-        menu.TemperatureRequested += (_, _) =>
-            ShowTemperatureScreen();
-
-        menu.ScfVolumeRequested += (_, _) =>
-            ShowScfVolumeScreen();
-
-        menu.VolumeRequested += (_, _) =>
-            ShowVolumeScreen();
-
-        menu.EngineRequested += (_, _) =>
-            ShowEngineScreen();
-
-        menu.SettingsRequested += (_, _) =>
-            ShowSettingsScreen();
-
-        menu.CloseRequested += (_, _) =>
-            BackScreen();
-
-        ShowScreen(menu);
+        _screenRegistry.Open<MenuRegistration>();
     }
     private void ShowSettingsScreen()
     {
@@ -410,9 +344,6 @@ public partial class MainView : UserControl
 
         ShowScreen(screen);
     }
-
-
-    // NOTE Навигация по окнам
 
     // NOTE: Навигация по экранам.
 
