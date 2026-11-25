@@ -1,4 +1,4 @@
-
+using System;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -234,20 +234,9 @@ public partial class MainView : UserControl
             DataContext = vm
         };
 
-        screen.CloseRequested += (_, _) =>
-        {
-            if (ScreenHost.Content is UserControl currentScreen)
-            {
-                BackScreen();
+        screen.CloseRequested += (_, _) => BackScreen();
 
-                if (ReferenceEquals(ScreenHost.Content, currentScreen))
-                    CloseScreen();
-            }
-
-            vm.Dispose();
-        };
-
-        ShowScreen(screen);
+        ShowScreen(screen, vm);
     }
 
 
@@ -263,20 +252,9 @@ public partial class MainView : UserControl
             DataContext = vm
         };
 
-        screen.CloseRequested += (_, _) =>
-        {
-            if (ScreenHost.Content is UserControl currentScreen)
-            {
-                BackScreen();
+        screen.CloseRequested += (_, _) => BackScreen();
 
-                if (ReferenceEquals(ScreenHost.Content, currentScreen))
-                    CloseScreen();
-            }
-
-            vm.Dispose();
-        };
-
-        ShowScreen(screen);
+        ShowScreen(screen, vm);
     }
 
 
@@ -292,22 +270,10 @@ public partial class MainView : UserControl
             DataContext = vm
         };
 
-        screen.CloseRequested += (_, _) =>
-        {
-            if (ScreenHost.Content is UserControl currentScreen)
-            {
-                BackScreen();
+        screen.CloseRequested += (_, _) => BackScreen();
 
-                if (ReferenceEquals(ScreenHost.Content, currentScreen))
-                    CloseScreen();
-            }
-        };
-
-        _ = vm.LoadAsync();
         ShowScreen(screen);
     }
-
-
 
     private void ShowTemperatureScreen()
     {
@@ -316,20 +282,10 @@ public partial class MainView : UserControl
             DataContext = DataContext
         };
 
-        screen.CloseRequested += (_, _) =>
-        {
-            if (ScreenHost.Content is UserControl currentScreen)
-            {
-                BackScreen();
-
-                if (ReferenceEquals(ScreenHost.Content, currentScreen))
-                    CloseScreen();
-            }
-        };
+        screen.CloseRequested += (_, _) => BackScreen();
 
         ShowScreen(screen);
     }
-
 
 
     private void ShowVolumeScreen()
@@ -339,16 +295,7 @@ public partial class MainView : UserControl
             DataContext = DataContext
         };
 
-        screen.CloseRequested += (_, _) =>
-        {
-            if (ScreenHost.Content is UserControl currentScreen)
-            {
-                BackScreen();
-
-                if (ReferenceEquals(ScreenHost.Content, currentScreen))
-                    CloseScreen();
-            }
-        };
+        screen.CloseRequested += (_, _) => BackScreen();
 
         ShowScreen(screen);
     }
@@ -381,7 +328,7 @@ public partial class MainView : UserControl
             ShowEngineScreen();
 
         menu.CloseRequested += (_, _) =>
-            CloseScreen();
+            BackScreen();
 
         ShowScreen(menu);
     }
@@ -389,28 +336,38 @@ public partial class MainView : UserControl
 
     // NOTE Навигация по окнам
 
-    public void ShowScreen(UserControl screen)
-    {
-        _screenNavigator.ShowScreen(screen);
-        ScreenHost.IsVisible = true;
+    // NOTE: Навигация по экранам.
 
-        screen.Focus();
+    public void ShowScreen(
+        UserControl screen,
+        IDisposable? ownedResource = null)
+    {
+        _screenNavigator.ShowScreen(screen, ownedResource);
+
+        UpdateScreenHost();
     }
 
     public void BackScreen()
     {
         _screenNavigator.BackScreen();
-        ScreenHost.IsVisible = ScreenHost.Content is not null;
 
-        Focus();
+        UpdateScreenHost();
     }
 
     public void CloseScreen()
     {
         _screenNavigator.CloseScreen();
-        ScreenHost.IsVisible = false;
 
-        Focus();
+        UpdateScreenHost();
     }
 
+    private void UpdateScreenHost()
+    {
+        ScreenHost.IsVisible = ScreenHost.Content is not null;
+
+        if (ScreenHost.Content is UserControl screen)
+            screen.Focus();
+        else
+            Focus();
+    }
 }
