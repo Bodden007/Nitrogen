@@ -2,118 +2,122 @@
 
 ## Назначение и границы ответственности
 
-Модуль содержит главный экран HMI, Desktop-обёртку, модель данных телеметрии, клавиатурную маршрутизацию и стек дочерних экранов. В HMI также входят меню и прикладные экраны. Меню публикует выбор оператора, главный экран открывает выбранный контрол, а прикладные экраны отображают свойства `MainViewModel` и обрабатывают локальный ввод.
+Модуль содержит главный экран HMI, Desktop-обёртку, модель данных телеметрии, клавиатурную маршрутизацию и стек дочерних экранов. В HMI также входят меню и прикладные экраны. Меню публикуют выбор оператора; локальные регистрации создают экраны, подключают события и передают владение ресурсами навигатору. Главный экран маршрутизирует ввод и обновляет контейнер и фокус.
 
 ## Навигация по экранам
 
-Точки создания экранов и подключение событий находятся в [MainView.axaml.cs](MainView/MainView.axaml.cs). Контракты описаны в [разделе экранов](#меню-и-прикладные-экраны), пути к XAML и ViewModel — в [карте исходников](#карта-исходников).
+[ScreenComposition](Navigation/ScreenComposition.cs) явно подключает 11 регистраций. [ScreenRegistry](Navigation/ScreenRegistry.cs) хранит регистрации по типу, а не экземпляры экранов. [ScreenContext](Navigation/ScreenContext.cs) предоставляет актуальную MainViewModel, открытие зарегистрированного экрана, показ и возврат.
 
-- [Меню](Menu/MenuControl.axaml.cs)
-- [Pressure](Menu/Pressure/PressureControl.axaml.cs)
-- [Engine](Menu/Engine/EngineControl.axaml.cs)
-- [ScfVolume](Menu/ScfVolume/ScfVolumeControl.axaml.cs)
-- [Temperature](Menu/Temperature/TemperatureControl.axaml.cs)
-- [Volume](Menu/Volume/VolumeControl.axaml.cs)
+| Источник | Маршруты |
+|---|---|
+| MainView | F1 Pressure, F2 Temperature, F3 ScfVolume, F4 Volume, F5 Engine, F8 Menu |
+| Menu | F1 Pressure, F2 Temperature, F3 ScfVolume, F4 Volume, F5 Engine, F8 Settings |
+| Settings | F1 PressureSet, F2 ScfSet, F5 DsPumpSet, F6 PsPumpSet |
+
+Settings открывается только из Menu. ESC дочернего экрана возвращает вызывающий экран; при пустом стеке закрывает текущий экран и возвращает MainView.
 
 ## Внутренний граф
 
 ```mermaid
 graph TD
-    Win["MainWindow"] --> Shell
-    Shell --> Data
-    Shell --> Nav["IScreenNavigator / ScreenNavigator"]
-    Shell --> Keys
-    Nav --> Load
-    Data --> Client["CoreLinkClient · внешнее ядро"]
-    Data --> Id["ValueId · модуль интеграции"]
-    Shell["MainView"] --> Menu["MenuControl"]
-    Shell --> Pressure["PressureControl"]
-    Shell --> Engine["EngineControl"]
-    Shell --> Scf["ScfVolumeControl"]
-    Shell --> Temp["TemperatureControl"]
-    Shell --> Volume["VolumeControl"]
-    Pressure --> PVM["PressureViewModel"]
-    Shell --> PVM
-    Engine --> EVM["EngineViewModel"]
-    Shell --> EVM
-    Scf --> SVM["ScfVolumeControlViewModel"]
-    Shell --> SVM
-    Engine --> Tach["TachometerControl · внешний модуль"]
-    PVM --> Data["MainViewModel"]
-    EVM --> Data
-    SVM --> Data
-    Temp --> Data
-    Volume --> Data
-    Menu --> Keys["IHotKeyScreen"]
-    Pressure --> Keys
-    Engine --> Keys
-    Scf --> Keys
-    Temp --> Keys
-    Volume --> Keys
-    Pressure --> Load["IScreenLoadable"]
-    Engine --> Load
-    Scf --> Load
-    Pressure --> Focus["HotKeyFocusMap"]
-    Scf --> Focus
-    Volume --> Focus
-    Request["PressureWriteRequest"] --> Command["PressureCommand"]
+    Win[MainWindow] --> Shell[MainView]
+    Shell --> Data[MainViewModel]
+    Shell --> Comp[ScreenComposition]
+    Shell --> Reg[ScreenRegistry]
+    Comp --> Reg
+    Comp --> Local[11 локальных регистраций]
+    Reg --> Contract[IScreenRegistration]
+    Reg --> Ctx[ScreenContext]
+    Local -.-> Contract
+    Contract --> Ctx
+    Ctx --> Data
+    Ctx -.->|Open через делегат| Reg
+    Ctx -.->|Show / Back через делегаты| Shell
+    Shell --> Nav[IScreenNavigator / ScreenNavigator]
+    Nav --> Entry[ScreenEntry / стек]
+    Nav --> Load[IScreenLoadable]
+    Local --> View[UserControl]
+    Local --> VM[Индивидуальные ViewModel]
+    VM --> Data
+    View --> Keys[IHotKeyScreen]
+    View --> Load
+    View --> Focus[HotKeyFocusMap]
+    Data --> Client[CoreLinkClient · внешнее ядро]
+    Data --> Id[ValueId · интеграция]
+    View --> Tach[TachometerControl · Engine]
 ```
 
 ## Публичные контракты
 
 - `MainWindow()` размещает `MainView` и передаёт ему клавиши окна.
-- `MainView()` создаёт навигатор для своего контейнера. Публичные методы `HandleKeyDown(KeyEventArgs)`, `ShowPressureScreen()`, `ShowEngineScreen()`, `ShowScfVolumeScreen()`, `ShowScreen(UserControl)`, `BackScreen()` и `CloseScreen()` маршрутизируют ввод и меняют содержимое контейнера.
+- `MainView()` создаёт навигатор, контекст и реестр через ScreenComposition. Публичные методы `HandleKeyDown(KeyEventArgs)`, `ShowPressureScreen()`, `ShowEngineScreen()`, `ShowScfVolumeScreen()`, `ShowScreen(UserControl, IDisposable? ownedResource = null)`, `BackScreen()` и `CloseScreen()` маршрутизируют ввод и меняют содержимое контейнера.
 - `MainViewModel(CoreLinkClient)` подписывается на девять значений. Публичные свойства привязки включают давление, порог и индикацию отсечки, температуры, RPM, расход и объёмы, время и регистры. Давление, порог и температуры форматируются строкой `0.##`. RPM, расход и SCF-значения представлены `double`. `UpdateOpkoAlarm(double)` меняет индикацию. `Dispose()` освобождает подписки.
-- `IHotKeyScreen.HandleKey(Key)` — публичный контракт приёма клавиш. Внутренние контракты — `IScreenLoadable.LoadAsync(): Task`, а также `IScreenNavigator.ShowScreen(UserControl)`, `BackScreen()` и `CloseScreen()`.
+- `IHotKeyScreen.HandleKey(Key)` — публичный контракт приёма клавиш. Внутренние контракты — `IScreenLoadable.LoadAsync(): Task`, а также `IScreenNavigator.ShowScreen(UserControl, IDisposable? ownedResource = null)`, `BackScreen()`, `CloseScreen()` и `Dispose()`.
 
 ### Меню и прикладные экраны
 
 | Компонент | Контракт |
 |---|---|
-| `MenuControl` | `HandleKey(Key)`, события `CloseRequested`, `PressureRequested`, `EngineRequested`, `ScfVolumeRequested`, `TemperatureRequested` и `VolumeRequested` |
+| `MenuControl` | `HandleKey(Key)`, события `CloseRequested`, `PressureRequested`, `EngineRequested`, `ScfVolumeRequested`, `TemperatureRequested` `VolumeRequested` и `SettingsRequested` |
+| `SettingsControl` | `HandleKey(Key)`, события `CloseRequested`, `PressureSetRequested`, `ScfSetRequested`, `DsPumpSetRequested`, `PsPumpSetRequested` |
+| PressureSet / SCFSet | `HandleKey(Key)`, `CloseRequested`, `LoadAsync(): Task`; собственные IDisposable ViewModel с заглушками LoadAsync/SaveAsync для CoreLink |
+| DsPumpSet / PsPumpSet | `HandleKey(Key)`, `CloseRequested`; без собственной ViewModel |
 | Дочерние контролы | `HandleKey(Key)` и событие `CloseRequested`. Pressure, Engine и ScfVolume также предоставляют `LoadAsync(): Task` |
 | `PressureViewModel` | Принимает `MainViewModel`, предоставляет `Pressure_1`, `PressureTileBackground` и редактируемый `OpkoEdit`. Методы `LoadAsync`, `SetZero`, `ResetZero`, `SetShutdown` и `Dispose` |
 | `PressureWriteRequest` | Свойства `Command: PressureCommand` и `Value: float?`. Фабрики `SetZero()`, `ResetZero()` и `SetShutdown(float)` |
 | `EngineViewModel` | Принимает `MainViewModel`, предоставляет `Pump1Rpm` в оборотах в минуту и `Pump1Hours` в часах. Методы `LoadAsync`, `Neutral`, `Up`, `Down` и `Dispose` |
 | `ScfVolumeControlViewModel` | Принимает `MainViewModel`, предоставляет строковые свойства редактирования общих и насосных объёмов за стадию и работу. `LoadAsync` форматирует значения как `0.###` с `InvariantCulture` |
 
+## Внутренний контракт регистрации и правила расширения
+
+- `IScreenRegistration.Open(ScreenContext): bool` — единственный обязательный метод. true означает передачу созданного экрана навигатору, а не завершение асинхронной загрузки; false — экран не открыт.
+- `ScreenRegistry.Register<T>(T): bool` и `Open<T>(): bool` ограничены типами class, IScreenRegistration. Идентификатор — typeof(T); строк, общего enum и автоматического поиска через Reflection нет.
+- `ScreenContext.MainViewModel` получает актуальную модель через делегат; `Open<T>()` запрашивает другой зарегистрированный экран, `ShowScreen(UserControl, IDisposable? ownedResource = null)` передаёт экран и ресурс, `BackScreen()` возвращает назад.
+- Один экран — одна папка. Файл Registration.cs располагается рядом с View и ViewModel; отдельная папка Infrastructure ради одного файла не создаётся.
+- Новый экран реализует контракт, создаёт новый контрол и необходимые модели только в Open, подключает CloseRequested к BackScreen, а переходы — к Open<T>. При необходимой, но отсутствующей MainViewModel возвращает false.
+- Индивидуальный IDisposable ресурс передаётся навигатору явно; общая MainViewModel не передаётся во владение. Регистрация не хранит созданные экземпляры, не управляет стеком и фокусом и не содержит прикладных вычислений.
+- Подключить регистрацию одной строкой Register в ScreenComposition и добавить маршрут в вызывающем экране. Алгоритмы реестра и навигатора при обычном расширении не изменяются.
+- Проверить сборку, открытие из предусмотренных источников, горячие клавиши, фокус, возврат, повторное открытие и освобождение подписок. Сохранять существующие контракты и поведение Legacy.
+
 ## Зависимости и интеграция
 
-Используются Avalonia, ReactiveUI, System.Reactive, API ядра и `ValueId`. `MainView` создаёт дочерние экраны. Их модели и привязки потребляют свойства `MainViewModel`. `ScreenNavigator` держит предыдущие экраны в стеке, возвращает верхний при переходе назад и очищает стек при закрытии.
-
-Экраны используют общие UI-контракты. Temperature и Volume связываются с `MainViewModel` напрямую через `DataContext`. Pressure, Engine и ScfVolume получают данные через свои ViewModel. Engine передаёт RPM в отдельный контрол тахометра. В текущей реализации запись команд в CoreLink остаётся TODO.
+Используются Avalonia, ReactiveUI, System.Reactive, API ядра и ValueId. Temperature и Volume используют общую MainViewModel; Pressure, Engine, ScfVolume, PressureSet и SCFSet — индивидуальные модели. Engine использует контрол тахометра. Запись команд и калибровок в CoreLink остаётся TODO.
 
 ## Владение ресурсами и Lifetime
 
-`MainViewModel` владеет `CompositeDisposable`. На Desktop его освобождает `App` при выходе. Для Activity модель создаётся при каждом вызове фабрики. Для Activity и Single View явное освобождение в `App` отсутствует.
+MainViewModel владеет CompositeDisposable. На Desktop его освобождает App при выходе. Для Activity модель создаётся при каждом вызове фабрики. Для Activity и Single View явное освобождение в App отсутствует.
 
-Оболочка создаёт контролы и модели. Pressure и Engine подписываются на `PropertyChanged` главной модели и снимают подписку в `Dispose`. `MainView` вызывает его при `CloseRequested`. Очистка стека навигатора сама по себе освобождение моделей не вызывает. Для ScfVolume оболочка вызывает загрузку модели напрямую перед показом, а навигатор запускает её повторно через контрол.
+Реестр, контекст и регистрации живут вместе с MainView. Контролы и индивидуальные модели создаются по запросу; предварительного создания, пулов и кеширования нет. Навигатор хранит только текущий экран и путь возврата. Pressure, Engine, PressureSet и SCFSet передают IDisposable модели в ScreenEntry. ScfVolume передаёт только контрол; Temperature и Volume используют общую модель без передачи владения.
+
+BackScreen освобождает текущую запись, очищает DataContext и вызывает Dispose переданного ресурса, затем восстанавливает предыдущую запись либо оставляет контейнер пустым. CloseScreen освобождает все записи; Dispose навигатора вызывает CloseScreen. Управляемая память освобождается GC после исчезновения ссылок, принудительный GC не используется. Вызов Dispose навигатора при завершении приложения ещё не подключён.
 
 ## Модель исполнения
 
-Наблюдения CoreLink переключаются через `WitnessOn(RxSchedulers.MainThreadScheduler)`. Навигатор запускает асинхронную загрузку при открытии экрана и не ждёт её окончания. Возврат через стек меняет содержимое контейнера.
-
-Контролы обрабатывают события Avalonia и клавиши. Текущие методы загрузки моделей завершаются через `Task.CompletedTask`. ScfVolume перед завершением заполняет редактируемые строки.
+Наблюдения CoreLink переключаются через WitnessOn(RxSchedulers.MainThreadScheduler). Навигатор запускает LoadAsync при новом открытии без ожидания; возврат не запускает повторную загрузку. ScfVolume больше не загружается отдельно из MainView. MainView обновляет видимость контейнера и фокус после навигации.
 
 ## Обработка ошибок и диагностика
 
-При отсутствии ожидаемого `DataContext` методы открытия Pressure, Engine и ScfVolume завершаются без открытия. Возврат при пустом стеке оставляет текущий экран. Обработка ошибок и Lifetime `LoadAsync` отмечены в навигаторе как TODO. Подписки в главной модели задают обработчик значения, отдельный обработчик ошибки в месте подписки отсутствует.
-
-При отсутствии подходящего `DataContext` загрузка через контролы возвращает завершённую задачу. Контракт результата записи в CoreLink в этих экранах отсутствует.
+Повторная регистрация в ScreenComposition вызывает InvalidOperationException. Отсутствующая регистрация или необходимая модель возвращает false; вызывающие обработчики пока не используют результат. Ошибки создания, передачи владения при исключении и асинхронной загрузки отдельно не обработаны. Отмена загрузки при закрытии не реализована. Контракт результата записи CoreLink отсутствует.
 
 ## Аллокации и ограничения производительности
 
-При каждом открытии создаются новый контрол и обработчик закрытия, а для Pressure, Engine и ScfVolume также новая модель. Обновление давления, порога и температур форматирует числовые значения в строки. ScfVolume форматирует четыре значения в строки при каждом вызове загрузки. На текущем пути открытия оба вызова выполняют форматирование. Частота отрисовок и фактический объём аллокаций не измерены.
+При открытии создаются контрол, обработчики, ScreenEntry и при необходимости индивидуальная модель. При возврате предыдущий экземпляр сохраняется. Форматирование телеметрии и редактируемых значений создаёт строки. Частота отрисовок и объём аллокаций не измерены.
 
 ## Карта исходников
 
 | Файл | Назначение |
 |---|---|
-| `MainView/MainView.axaml`, `MainView/MainView.axaml.cs` | Привязки главного экрана, контейнер, создание экранов и маршрутизация клавиш |
+| `MainView/MainView.axaml`, `MainView/MainView.axaml.cs` | Привязки главного экрана, контейнер, запросы открытия, фокус и маршрутизация клавиш |
 | `MainView/MainViewModel.cs` | Подписки CoreLink, свойства HMI и индикация |
 | `MainWindow/MainWindow.axaml*` | Desktop-обёртка и передача клавиш |
 | `MainWindow/ScreenHost/*.cs` | Внутренний контракт навигатора и стек |
-| `Interfaces/*.cs` | Контракты клавиатуры и загрузки |
+| `Interfaces/*.cs` | Контракты клавиатуры, загрузки и регистрации |
+| `Navigation/ScreenComposition.cs` | Явная композиция регистраций |
+| `Navigation/ScreenRegistry.cs`, `Navigation/ScreenContext.cs` | Типизированное открытие и контекст |
+| `Menu/**/*Registration.cs`, `Settings/**/*Registration.cs` | Локальная композиция экранов и маршруты |
+| `Settings/SettingsControl.axaml*` | Меню настроек |
+| `Settings/PressureSet/*`, `Settings/SCFSet/*` | Калибровки, модели и заглушки CoreLink |
+| `Settings/DsPumpSet/*`, `Settings/PumpSet/*` | Настройки насосов |
 | `Common/HotKeyFocusMap.cs` | Связь клавиш с полями ввода |
 | `Menu/MenuControl.axaml*` | Выбор экрана и события меню |
 | `Menu/Pressure/PressureControl.axaml*`, `Menu/Pressure/PressureViewModel.cs` | Индикация давления, ввод порога, точки обработки действий |
@@ -131,7 +135,7 @@ graph TD
 
 ## Известные ограничения и открытые вопросы
 
-Открытие Record остаётся TODO. Фактические объёмы цемента не подключены к CoreLink в главной модели. Порядок очистки моделей на платформах Activity и Single View и при закрытии экрана в обход `CloseRequested` требует уточнения.
+Открытие Record остаётся TODO. Фактические объёмы цемента не подключены к CoreLink в главной модели. Stages также не реализован. Порядок завершения навигатора и очистки главной модели на Activity и Single View требует уточнения.
 
 ### Прикладные экраны
 
@@ -139,3 +143,6 @@ graph TD
 - Engine. Чтение часов и запись команд трансмиссии остаются TODO.
 - ScfVolume. Часть отображаемых значений демонстрационная. Чтение из CoreLink, установка и сброс объёмов стадии и работы остаются TODO.
 - Volume. Установка и сброс объёмов остаются TODO.
+
+- PressureSet и SCFSet. Чтение и сохранение калибровок остаются заглушками TODO [CoreLink].
+- DsPumpSet и PsPumpSet. Статические экраны без моделей и интеграции с оборудованием.
