@@ -54,7 +54,9 @@ public sealed class ScfVolumeControlViewModel : ReactiveObject
 
     public Task LoadAsync()
     {
-        Pump1ScfStageEdit = Format(_mainVm.Pump1ScfStage);
+        // TODO: Получать числовое значение без единицы измерения
+        // при реализации записи в ПЛК.
+        Pump1ScfStageEdit = _mainVm.Pump1ScfStage;
         TotalScfStageEdit = Format(_mainVm.TotalScfStage);
         Pump1ScfJobEdit = Format(_mainVm.Pump1ScfJob);
         TotalScfJobEdit = Format(_mainVm.TotalScfJob);

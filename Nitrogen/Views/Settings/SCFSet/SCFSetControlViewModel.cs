@@ -13,7 +13,8 @@ public sealed class SCFSetControlViewModel : ReactiveObject, IDisposable
 
     public double Pump1Rpm => _mainVm.Pump1Rpm;
 
-    public double Pump1TotalScfm => _mainVm.Pump1TotalScfm;
+    // NOTE: Текущий расход азота с единицей измерения.
+    public string Pump1TotalScfm => _mainVm.Pump1TotalScfm;
 
     public SCFSetControlViewModel(MainViewModel mainVm)
     {
@@ -52,6 +53,7 @@ public sealed class SCFSetControlViewModel : ReactiveObject, IDisposable
     public Task LoadAsync()
     {
         // TODO [CoreLink]:
+        
         // Загрузка параметров калибровки SCF.
         //
         // Legacy: чтение блока Input Registers.

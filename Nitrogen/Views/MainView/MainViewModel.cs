@@ -18,32 +18,67 @@ public class MainViewModel : ReactiveObject
 
     public MainViewModel(CoreLinkClient client)
     {
+        // NOTE: Единица измерения определяется CoreLink.
+        // Отображение текущего давления.
         Subscribe(client, ValueId.Pressure_1,
-            value => Pressure_1 = value.Value.ToString("0.##"));
+            value => Pressure_1 = string.IsNullOrEmpty(value.Unit)
+                ? value.Value.ToString("0.##")
+                : $"{value.Value:0.##} {value.Unit}");
 
+        // Отображение порога отсечки.
         Subscribe(client, ValueId.Opko_1,
-            value => Opko_1 = value.Value.ToString("0.##"));
+            value => Opko_1 = string.IsNullOrEmpty(value.Unit)
+                ? value.Value.ToString("0.##")
+                : $"{value.Value:0.##} {value.Unit}");
 
+        // Аварийная индикация по статусу ПЛК.
         Subscribe(client, ValueId.StatOpko_1,
             value => UpdateOpkoAlarm(value.Value));
 
+        // Отображение температуры выхода.
         Subscribe(client, ValueId.TemperatureOutlet,
-            value => TemperatureOutlet = value.Value.ToString("0.##"));
+           value => TemperatureOutlet = string.IsNullOrEmpty(value.Unit)
+               ? value.Value.ToString("0.##")
+               : $"{value.Value:0.##} {value.Unit}");
 
+        // Отображение температуры вапорайзера.
         Subscribe(client, ValueId.TemperatureVaporizer,
-            value => TemperatureVaporizer = value.Value.ToString("0.##"));
+            value => TemperatureVaporizer = string.IsNullOrEmpty(value.Unit)
+                ? value.Value.ToString("0.##")
+                : $"{value.Value:0.##} {value.Unit}");
 
+        // Отображение температуры бани.
         Subscribe(client, ValueId.TemperatureBath,
-            value => TemperatureBath = value.Value.ToString("0.##"));
+            value => TemperatureBath = string.IsNullOrEmpty(value.Unit)
+                ? value.Value.ToString("0.##")
+                : $"{value.Value:0.##} {value.Unit}");
 
-        Subscribe(client, ValueId.PUMP_1RPM,
-            value => Pump1Rpm = value.Value);
+        // NOTE: Обороты насоса.
+        // Числовое значение используется тахометром,
+        // строковое — для отображения с единицей измерения.
+        Subscribe(client, ValueId.PUMP_1RPM, value =>
+        {
+            Pump1Rpm = value.Value;
 
+            Pump1RpmText = string.IsNullOrEmpty(value.Unit)
+                ? value.Value.ToString("0")
+                : $"{value.Value:0} {value.Unit}";
+        });
+
+        // NOTE: Объём азота за текущую стадию.
+        // Единица измерения определяется CoreLink.
         Subscribe(client, ValueId.PUMP_1SCFStage,
-            value => Pump1ScfStage = value.Value);
+            value => Pump1ScfStage = string.IsNullOrEmpty(value.Unit)
+                ? value.Value.ToString("0.###")
+                : $"{value.Value:0.###} {value.Unit}");
 
+        // NOTE: Текущий расход азота.
+        // Единица измерения определяется CoreLink
+        // в соответствии с системой измерения ПЛК.
         Subscribe(client, ValueId.PUMP_1TotalSCFM,
-            value => Pump1TotalScfm = value.Value);
+            value => Pump1TotalScfm = string.IsNullOrEmpty(value.Unit)
+                ? value.Value.ToString("0.###")
+                : $"{value.Value:0.###} {value.Unit}");
     }
 
     private void Subscribe(
@@ -125,9 +160,18 @@ public class MainViewModel : ReactiveObject
             ref _temperatureBath, value);
     }
 
-    // TODO [CoreLink]: Демонстрационное значение RPM.
+    // NOTE: Отображение оборотов с единицей измерения.
+    private string _pump1RpmText = string.Empty;
+
+    public string Pump1RpmText
+    {
+        get => _pump1RpmText;
+        private set => this.RaiseAndSetIfChanged(
+            ref _pump1RpmText, value);
+    }
+
     // Заменить фактическими данными двигателя из CoreLink.
-    private double _pump1Rpm = 1200;
+    private double _pump1Rpm;
 
     public double Pump1Rpm
     {
@@ -136,18 +180,21 @@ public class MainViewModel : ReactiveObject
             ref _pump1Rpm, value);
     }
 
-    private double _pump1ScfStage = 3500;
+    // NOTE: Форматированное значение объёма азота за стадию.
+    private string _pump1ScfStage = string.Empty;
 
-    public double Pump1ScfStage
+    public string Pump1ScfStage
     {
         get => _pump1ScfStage;
         private set => this.RaiseAndSetIfChanged(
             ref _pump1ScfStage, value);
     }
 
-    private double _pump1TotalScfm = 1500;
+    // NOTE: Форматированное значение текущего расхода азота.
+    // Используется исключительно для отображения в HMI.
+    private string _pump1TotalScfm = string.Empty;
 
-    public double Pump1TotalScfm
+    public string Pump1TotalScfm
     {
         get => _pump1TotalScfm;
         private set => this.RaiseAndSetIfChanged(

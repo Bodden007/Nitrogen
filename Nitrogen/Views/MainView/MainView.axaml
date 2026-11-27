@@ -35,7 +35,6 @@
                 <Grid Grid.Row="0" Background="{DynamicResource PrimaryHeaderBrush}">
                     <Border Classes="press_main" Background="{Binding PressureTileBackground}"
                             IsHitTestVisible="False"/>
-
                     <TextBlock Classes="section_label" Text="Давление"/>
                     <TextBlock Classes="hotkey" Text="F1"/>
                 </Grid>
@@ -83,14 +82,14 @@
                                HorizontalAlignment="Left"
                                Text="Выход" IsVisible="False" />
                     <TextBlock x:Name="ValueTempOut" Classes="menu_title"
-                               Text="{Binding TemperatureOutlet, StringFormat='{}{0} °C'}"/>
+                               Text="{Binding TemperatureOutlet}"/>
                 </Grid>
                 <Grid Grid.Row="2">
                     <TextBlock x:Name="TempExc" Classes="menu_subtext"
                                HorizontalAlignment="Left"
                                Text="Вапор." IsVisible="False" />
                     <TextBlock x:Name="ValueVaporizer" Classes="menu_subtext"
-                               Text="{Binding TemperatureVaporizer, StringFormat='{}{0} °C'}"
+                               Text="{Binding TemperatureVaporizer}"
                                IsVisible="False" />
                     <TextBlock Classes="hotkey"  VerticalAlignment="Bottom"
                                Text="2"/>
@@ -115,9 +114,9 @@
                                HorizontalAlignment="Left"
                                Text="A" IsVisible="False" />
                     <TextBlock x:Name="ValueRate" Classes="menu_title"
-                               Text="{Binding Pump1TotalScfm, StringFormat='{}{0:0.###}'}"/>
+                               Text="{Binding Pump1TotalScfm}"/>
                     <TextBlock x:Name="ValueRate_A" Classes="menu_subtext"
-                               Text="{Binding Pump1ScfStage, StringFormat='{}{0:0.###}'}"
+                               Text="{Binding Pump1ScfStage}"
                                IsVisible="False" />
                 </Grid>
                 <Grid Grid.Row="2">
@@ -250,7 +249,7 @@
                                                  Width="{StaticResource MaterialIconWidth}"
                                                  Height="{StaticResource MaterialIconHeight}" Foreground="Green" />
                     <TextBlock Grid.Column="1" Grid.Row="0" Classes="title_engine"
-                               Text="{Binding Pump1Rpm, StringFormat='{}{0:0} об/м'}"/>
+                               Text="{Binding Pump1RpmText}"/>
 
                     <materialIcons:MaterialIcon  Grid.Column="0" Grid.Row="1" Kind="CoolantTemperature"
                                                  Width="{StaticResource MaterialIconWidth}"
