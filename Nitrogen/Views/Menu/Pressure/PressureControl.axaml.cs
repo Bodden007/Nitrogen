@@ -1,4 +1,3 @@
-
 using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -23,28 +22,33 @@ public partial class PressureControl :
         _focusMap.Add(Key.F4, OpkoTextBox);
     }
 
-    public void HandleKey(Key key)
+    public async void HandleKey(Key key)
     {
         if (_focusMap.Focus(key))
             return;
 
+        if (key == Key.Escape)
+        {
+            CloseRequested?.Invoke(this, EventArgs.Empty);
+            return;
+        }
+
+        if (DataContext is not PressureViewModel vm)
+            return;
+
         switch (key)
         {
-            case Key.Escape:
-                CloseRequested?.Invoke(this, EventArgs.Empty);
-                break;
-
             case Key.F1:
-                // TODO [CoreLink]: SetZero.
+                await vm.SetZeroAsync();
                 break;
 
             case Key.F2:
-                // TODO [CoreLink]: ResetZero.
+                await vm.ResetZeroAsync();
                 break;
 
             case Key.F3:
             case Key.Enter:
-                // TODO [CoreLink]: SetShutdown.
+                await vm.SetShutdownAsync();
                 break;
         }
     }
@@ -56,25 +60,28 @@ public partial class PressureControl :
             : Task.CompletedTask;
     }
 
-    private void SetZero_Click(
+    private async void SetZero_Click(
         object? sender,
         RoutedEventArgs e)
     {
-        // TODO [CoreLink]: SetZero.
+        if (DataContext is PressureViewModel vm)
+            await vm.SetZeroAsync();
     }
 
-    private void ResetZero_Click(
+    private async void ResetZero_Click(
         object? sender,
         RoutedEventArgs e)
     {
-        // TODO [CoreLink]: ResetZero.
+        if (DataContext is PressureViewModel vm)
+            await vm.ResetZeroAsync();
     }
 
-    private void SetShutdown_Click(
+    private async void SetShutdown_Click(
         object? sender,
         RoutedEventArgs e)
     {
-        // TODO [CoreLink]: SetShutdown.
+        if (DataContext is PressureViewModel vm)
+            await vm.SetShutdownAsync();
     }
 
     private void Exit_Click(

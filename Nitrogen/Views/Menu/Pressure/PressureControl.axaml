@@ -127,7 +127,7 @@
                     Grid.Column="3"
                     Click="Exit_Click">
                 <Grid>
-                    <TextBlock Classes="menu_title" Text="Выход"/>
+                    <TextBlock Classes="menu_title" Text="Назад"/>
                     <TextBlock Classes="hotkey" Text="ESC"/>
                 </Grid>
             </Button>

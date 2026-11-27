@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Nitrogen.Views.Interfaces;
 using Nitrogen.Views.MainView;
+using CoreLink.Client;
 
 namespace Nitrogen.Views.Navigation;
 
@@ -30,6 +31,9 @@ internal sealed class ScreenContext
 
     public MainViewModel? MainViewModel =>
         _getMainViewModel();
+
+    public CoreLinkClient? Client =>
+        MainViewModel?.Client;
 
     /// <summary>
     /// Подключение механизма межэкранной навигации.

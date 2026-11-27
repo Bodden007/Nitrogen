@@ -13,7 +13,10 @@ internal sealed class PressureRegistration : IScreenRegistration
         if (context.MainViewModel is not { } mainVm)
             return false;
 
-        var vm = new PressureViewModel(mainVm);
+        if (context.Client is not { } client)
+            return false;
+
+        var vm = new PressureViewModel(mainVm, client);
 
         var screen = new PressureControl
         {

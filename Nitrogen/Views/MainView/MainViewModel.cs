@@ -16,9 +16,15 @@ public class MainViewModel : ReactiveObject
 
     private readonly CompositeDisposable _subscriptions = new();
 
+    // NOTE: Общий клиент CoreLink.
+    // Владельцем жизненного цикла остаётся App.
+    public CoreLinkClient Client { get; }
+
     public MainViewModel(CoreLinkClient client)
     {
         // NOTE: Единица измерения определяется CoreLink.
+        Client = client;
+
         // Отображение текущего давления.
         Subscribe(client, ValueId.Pressure_1,
             value => Pressure_1 = string.IsNullOrEmpty(value.Unit)
@@ -26,10 +32,14 @@ public class MainViewModel : ReactiveObject
                 : $"{value.Value:0.##} {value.Unit}");
 
         // Отображение порога отсечки.
-        Subscribe(client, ValueId.Opko_1,
-            value => Opko_1 = string.IsNullOrEmpty(value.Unit)
-                ? value.Value.ToString("0.##")
-                : $"{value.Value:0.##} {value.Unit}");
+        Subscribe(client, ValueId.Opko_1, value =>
+        {
+            Opko_1Value = (float)value.Value;
+
+            Opko_1 = string.IsNullOrEmpty(value.Unit)
+                ? $"{value.Value:0.##}"
+                : $"{value.Value:0.##} {value.Unit}";
+        });
 
         // Аварийная индикация по статусу ПЛК.
         Subscribe(client, ValueId.StatOpko_1,
@@ -124,6 +134,7 @@ public class MainViewModel : ReactiveObject
             ref _pressure1, value);
     }
 
+    public float? Opko_1Value { get; private set; }
     private string _opko1 = "1800";
 
     public string Opko_1
